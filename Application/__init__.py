@@ -1,8 +1,6 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
-
+from Application.extensions import db
+from Application.Routes.Pokedex import pokedex_bp
 
 def create_app() -> Flask:
     app = Flask(__name__)

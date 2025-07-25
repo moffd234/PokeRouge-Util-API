@@ -1,4 +1,4 @@
-from Application import db
+from Application.extensions import db
 
 
 class Pokemon(db.Model):
