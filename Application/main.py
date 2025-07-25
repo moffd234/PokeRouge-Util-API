@@ -1,14 +1,6 @@
-from flask import Flask
+from Application import create_app
 
-def create_app() -> Flask:
-    application: Flask = Flask(__name__)
-
-    # Blueprints will go here
-
-    return application
-
+app = create_app()
 
 if __name__ == '__main__':
-    app: Flask = create_app()
     app.run(debug=True)
-
