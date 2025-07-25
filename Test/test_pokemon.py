@@ -1,0 +1,28 @@
+def test_pokemon_constructor(example_pokemon):
+    assert example_pokemon.id is not None
+    assert example_pokemon.name == "BULBASAUR"
+    assert example_pokemon.generation == 1
+    assert example_pokemon.sub_legendary == False
+    assert example_pokemon.legendary == False
+    assert example_pokemon.mythical == False
+    assert example_pokemon.category == "Seed Pokemon"
+    assert example_pokemon.type_1 == "GRASS"
+    assert example_pokemon.type_2 == "POISON"
+    assert example_pokemon.ability_1 == "OVERGROW"
+    assert example_pokemon.ability_2 is None
+    assert example_pokemon.hidden_ability == "CHLOROPHYLL"
+    assert example_pokemon.height == 0.7
+    assert example_pokemon.weight == 6.9
+    assert example_pokemon.base_total == 318
+    assert example_pokemon.base_hp == 45
+    assert example_pokemon.base_attack == 49
+    assert example_pokemon.base_defense == 49
+    assert example_pokemon.base_sp_attack == 65
+    assert example_pokemon.base_sp_defense == 65
+    assert example_pokemon.base_speed == 45
+    assert example_pokemon.catch_rate == 45
+    assert example_pokemon.base_friendship == 50
+    assert example_pokemon.base_exp == 64
+    assert example_pokemon.growth_rate == "MEDIUM_SLOW"
+    assert example_pokemon.male_percent == 87.5
+    assert example_pokemon.gender_diffs == False
