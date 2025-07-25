@@ -33,7 +33,7 @@ class Pokemon(db.Model):
     base_friendship = db.Column(db.Integer, nullable=False)
     base_exp = db.Column(db.Integer, nullable=False)
     growth_rate = db.Column(db.String(15), nullable=False)
-    male_percent = db.Column(db.Float, nullable=False)
+    male_percent = db.Column(db.Float, nullable=True)
     gender_diffs = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
