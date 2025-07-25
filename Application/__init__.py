@@ -7,6 +7,8 @@ def create_app() -> Flask:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pokerouge.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    app.register_blueprint(pokedex_bp)
+
     db.init_app(app)
 
     with app.app_context():
