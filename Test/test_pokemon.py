@@ -29,7 +29,7 @@ def test_pokemon_constructor(example_pokemon):
 
 def test_pokemon_to_dict(example_pokemon):
     expected: dict = {
-            id: 1,
+            "id": 1,
             "name": "BULBASAUR",
             "generation": 1,
             "category": "Seed Pokemon",
