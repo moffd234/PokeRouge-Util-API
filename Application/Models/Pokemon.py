@@ -2,6 +2,39 @@ from Application.extensions import db
 
 
 class Pokemon(db.Model):
+    def __init__(self, name: str, generation: int, sub_legendary: bool, legendary: bool, mythical: bool, category: str,
+                 type_1: str, type_2: str | None, ability_1: str, ability_2: str | None, hidden_ability: str,
+                 height: float, weight: float, base_total: int, base_hp: int, base_attack: int, base_defense: int,
+                 base_sp_attack: int, base_sp_defense: int, base_speed: int, catch_rate: int, base_friendship: int,
+                 base_exp: int, growth_rate: str, male_percent: float | None, gender_diffs: bool):
+        self.name: str = name
+        self.generation: int = generation
+        self.sub_legendary: bool = sub_legendary
+        self.legendary: bool = legendary
+        self.mythical: bool = mythical
+        self.category: str = category
+        self.type_1: str = type_1
+        self.type_2: str | None= type_2
+        self.ability_1: str = ability_1
+        self.ability_2: str | None = ability_2
+        self.hidden_ability: str = hidden_ability
+        self.height: float = height
+        self.weight: float = weight
+        self.base_total: int = base_total
+        self.base_hp: int = base_hp
+        self.base_attack: int = base_attack
+        self.base_defense: int = base_defense
+        self.base_sp_attack: int = base_sp_attack
+        self.base_sp_defense: int = base_sp_defense
+        self.base_speed: int = base_speed
+        self.catch_rate: int = catch_rate
+        self.base_friendship: int = base_friendship
+        self.base_exp: int = base_exp
+        self.growth_rate: str = growth_rate
+        self.male_percent: float | None = male_percent
+        self.gender_diffs: bool = gender_diffs
+
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12), unique=True, nullable=False)
     generation = db.Column(db.Integer, nullable=False)
@@ -41,6 +74,7 @@ class Pokemon(db.Model):
 
     def to_dict(self) -> dict:
         return {
+            id: self.id,
             "name": self.name,
             "generation": self.generation,
             "category": self.category,
