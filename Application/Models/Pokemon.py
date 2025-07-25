@@ -74,7 +74,7 @@ class Pokemon(db.Model):
 
     def to_dict(self) -> dict:
         return {
-            id: self.id,
+            "id": self.id,
             "name": self.name,
             "generation": self.generation,
             "category": self.category,
