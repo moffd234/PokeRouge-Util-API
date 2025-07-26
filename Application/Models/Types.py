@@ -26,10 +26,11 @@ class Types(Enum):
     NORMAL = ([], ["Fighting"], ["Rock", "Steel"], [], ["Ghost"],[])
     FIRE = (["Grass", "Bug", "Ice", "Steel"], ["Water", "Ground", "Rock"], ["Fire", "Grass", "Ice", "Steel", "Fairy", "Bug"],
             ["Fire", "Water", "Rock", "Dragon"], [], [])
-    WATER = (['Fire', "Ground", "Rock"], ["Grass", "Electric"], ["Steel", "Water", "Frre", "Ice"],
+    WATER = (['Fire', "Ground", "Rock"], ["Grass", "Electric"], ["Steel", "Water", "Fire", "Ice"],
              ["Water", "Grass", "Dragon"], [], [])
-    GRASS = (["Water", "Ground", "Rock"], ["Fire", "Flying", "Bug", "Poison", "Ice"], ["Grass", "Water", "Fire", "Ice"],
-             ["Water", "Grass", "Dragon"], [], [])
+    GRASS = (["Water", "Ground", "Rock"], ["Fire", "Flying", "Bug", "Poison", "Ice"],
+             ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"], ["Water", "Electric", "Grass"], [], [])
+
     ELECTRIC = (["Water", "Flying"], ["Ground"], ["Electric", "Flying", "Steel"], ["Grass", "Electric", "Dragon"],
                 ["Ground"], [])
     ICE = (["Grass", "Ground", "Flying", "Dragon"], ["Fire", "Fighting", "Rock", "Steel"], ["Ice"],
@@ -39,7 +40,7 @@ class Types(Enum):
     POISON = (["Grass", "Fairy"], ["Ground", "Psychic"], ["Grass", "Fighting", "Poison", "Bug", "Fairy"],
               ["Poison", "Ground", "Rock", "Ghost"], ["Steel"], [])
     GROUND = (["Electric", "Fire", "Poison", "Rock", "Steel"], ["Water", "Grass", "Ice"], ["Poison", "Rock"],
-              ["Grass", "Bug"], ["Ground"], ["Electric"])
+              ["Grass", "Bug"], ["Flying"], ["Electric"])
     FLYING = (["Fighting", "Grass", "Bug"], ["Electric", "Ice", "Rock"], ["Fighting", "Grass", "Bug"],
               ["Electric", "Rock", "Steel"], ["Ground"], [])
     PSYCHIC = (["Fighting", "Poison"], ["Bug", "Ghost", "Dark"], ["Fighting", "Psychic"], ["Psychic", "Steel"],
@@ -49,9 +50,9 @@ class Types(Enum):
     ROCK = (["Fire", "Ice", "Flying", "Bug"], ["Water", "Grass", "Fighting", "Ground", "Steel"],
             ["Normal", "Fire", "Poison", "Flying"], ["Fighting", "Ground", "Steel"], [], [])
     GHOST = (["Psychic", "Ghost"], ["Ghost", "Dark"], ["Poison", "Bug"], ["Dark"], [], ["Normal", "Fighting"])
-    DRAGON = (["Dragon"], ["Dragon", "Fairy"], ["Fire", "Grass", "Water", "Electric"], ["Steel"], ["Fairy"], [])
+    DRAGON = (["Dragon"], ["Dragon", "Fairy"], ["Fire", "Grass", "Water", "Electric"], ["Steel"], [], ["Fairy"])
     DARK = (["Psychic", "Ghost"], ["Fighting", "Bug", "Fairy"], ["Ghost", "Dark"], ["Fighting", "Fairy"],
-            ["Psychic"], [])
+            [], ["Psychic"])
     STEEL = (["Ice", "Rock", "Fairy"], ["Fire", "Fighting", "Ground"],
              ["Normal", "Grass", "Ice", "Flying", "Psychic", "Bug", "Rock", "Dragon", "Steel", "Fairy"],
              ["Fire", "Water", "Electric", "Steel"], [], [])
