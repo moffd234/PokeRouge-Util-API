@@ -20,3 +20,13 @@ class Types(abc.ABC):
         self.weak_from = weak_from
         self.no_effect_to = no_effect_to
         self.no_effect_from = no_effect_from
+
+    def get_full_type_info(self) -> dict:
+        return {
+            "super_effective_to": self.super_effective_to,
+            "super_effective_from": self.super_effective_from,
+            "weak_to": self.weak_to,
+            "weak_from": self.weak_from,
+            "no_effect_to": self.no_effect_to,
+            "no_effect_from": self.no_effect_from,
+        }
