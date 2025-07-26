@@ -48,11 +48,15 @@ class Types(Enum):
            ["Fire", "Fighting", "Poison", "Flying", "Ghost", "Steel", "Fairy"], [], [])
     ROCK = (["Fire", "Ice", "Flying", "Bug"], ["Water", "Grass", "Fighting", "Ground", "Steel"],
             ["Normal", "Fire", "Poison", "Flying"], ["Fighting", "Ground", "Steel"], [], [])
-    GHOST = ()
-    DRAGON = ()
-    DARK = ()
-    STEEL = ()
-    FAIRY = ()
+    GHOST = (["Psychic", "Ghost"], ["Ghost", "Dark"], ["Poison", "Bug"], ["Dark"], [], ["Normal", "Fighting"])
+    DRAGON = (["Dragon"], ["Dragon", "Fairy"], ["Fire", "Grass", "Water", "Electric"], ["Steel"], ["Fairy"], [])
+    DARK = (["Psychic", "Ghost"], ["Fighting", "Bug", "Fairy"], ["Ghost", "Dark"], ["Fighting", "Fairy"],
+            ["Psychic"], [])
+    STEEL = (["Ice", "Rock", "Fairy"], ["Fire", "Fighting", "Ground"],
+             ["Normal", "Grass", "Ice", "Flying", "Psychic", "Bug", "Rock", "Dragon", "Steel", "Fairy"],
+             ["Fire", "Water", "Electric", "Steel"], [], [])
+    FAIRY = (["Dragon", "Fighting", "Dark"], ["Poison", "Steel"], ["Fighting", "Bug", "Dark"],
+             ["Fire", "Poison", "Steel"], [], [])
 
     def to_dict(self) -> dict[str, list[str]]:
         return {
