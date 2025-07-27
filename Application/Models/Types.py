@@ -37,12 +37,14 @@ class Types(Enum):
             ["Fire", "Grass", "Ice", "Steel", "Fairy", "Bug"],
             ["Fire", "Water", "Rock", "Dragon"], [], [],
             ["Normal", "Fighting", "Flying", "Poison", "Ground", "Ghost", "Electric", "Psychic", "Dark", "Fairy"],
-            [None])
+            ["Normal", "Fighting", "Flying", "Poison", "Ghost", "Electric", "Psychic", "Dragon", "Dark"])
 
     WATER = (['Fire', "Ground", "Rock"], ["Grass", "Electric"], ["Steel", "Water", "Fire", "Ice"],
              ["Water", "Grass", "Dragon"], [], [],
              ["Normal", "Fighting", "Flying", "Poison", "Bug", "Ghost", "Steel", "Electric", "Psychic", "Ice", "Dark",
-              "Fairy"], [None])
+              "Fairy"],
+             ["Normal", "Fighting," "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Psychic", "Dragon", "Dark",
+              "Fairy"])
     GRASS = (["Water", "Ground", "Rock"], ["Fire", "Flying", "Bug", "Poison", "Ice"],
              ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"], ["Water", "Electric", "Grass"], [], [],
              ["Normal", "Fighting", "Ghost", "Electric", "Psychic", "Ice", "Dark", "Fairy"], [None])
