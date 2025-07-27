@@ -27,115 +27,115 @@ class Types(Enum):
         self.offensively_neutral = offensively_neutral
         self.defensively_neutral = defensively_neutral
 
-    NORMAL = ([], ["Fighting"], ["Rock", "Steel"], [], ["Ghost"],
-              ["Normal", "Fighting", "Flying", "Poison", "Ground", "Bug", "FIre", "Water", "Grass", "Electric",
-               "Psychic", "Ice", "Dragon", "Dark", "Fairy"],
-              ["Normal", "Flying", "Poison", "Ground", "Rock", "Bug", "Steel", "Fire", "Water", "Grass", "Electric",
-               "Psychic", "Ice", "Dragon", "Dark", "Fairy"],
-              ["Normal", "Flying", "Poison", "Ground", "Rock", "Bug", "Steel", "Fire", "Water", "Grass", "Electric",
-               "Psychic", "Ice", "Dragon", "Dark", "Fairy"])
+    NORMAL = ([], ["FIGHTING"], ["ROCK", "STEEL"], [], ["GHOST"],
+              ["NORMAL", "FIGHTING", "FLYING", "POISON", "GROUND", "BUG", "FIRE", "WATER", "GRASS", "ELECTRIC",
+               "PSYCHIC", "ICE", "DRAGON", "DARK", "FAIRY"],
+              ["NORMAL", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC",
+               "PSYCHIC", "ICE", "DRAGON", "DARK", "FAIRY"],
+              ["NORMAL", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC",
+               "PSYCHIC", "ICE", "DRAGON", "DARK", "FAIRY"])
 
-    FIRE = (["Grass", "Bug", "Ice", "Steel"], ["Water", "Ground", "Rock"],
-            ["Fire", "Grass", "Ice", "Steel", "Fairy", "Bug"],
-            ["Fire", "Water", "Rock", "Dragon"], [], [],
-            ["Normal", "Fighting", "Flying", "Poison", "Ground", "Ghost", "Electric", "Psychic", "Dark", "Fairy"],
-            ["Normal", "Fighting", "Flying", "Poison", "Ghost", "Electric", "Psychic", "Dragon", "Dark"])
+    FIRE = (["GRASS", "BUG", "ICE", "STEEL"], ["WATER", "GROUND", "ROCK"],
+            ["FIRE", "GRASS", "ICE", "STEEL", "FAIRY", "BUG"],
+            ["FIRE", "WATER", "ROCK", "DRAGON"], [], [],
+            ["NORMAL", "FIGHTING", "FLYING", "POISON", "GROUND", "GHOST", "ELECTRIC", "PSYCHIC", "DARK", "FAIRY"],
+            ["NORMAL", "FIGHTING", "FLYING", "POISON", "GHOST", "ELECTRIC", "PSYCHIC", "DRAGON", "DARK"])
 
-    WATER = (['Fire', "Ground", "Rock"], ["Grass", "Electric"], ["Steel", "Water", "Fire", "Ice"],
-             ["Water", "Grass", "Dragon"], [], [],
-             ["Normal", "Fighting", "Flying", "Poison", "Bug", "Ghost", "Steel", "Electric", "Psychic", "Ice", "Dark",
-              "Fairy"],
-             ["Normal", "Fighting," "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Psychic", "Dragon", "Dark",
-              "Fairy"])
-    GRASS = (["Water", "Ground", "Rock"], ["Fire", "Flying", "Bug", "Poison", "Ice"],
-             ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"], ["Water", "Electric", "Grass"], [], [],
-             ["Normal", "Fighting", "Ghost", "Electric", "Psychic", "Ice", "Dark", "Fairy"],
-             ["Normal", "Fighting", "Rock", "Ghost", "Steel", "Psychic", "Dragon", "Dark", "Fairy"])
+    WATER = (['FIRE', "GROUND", "ROCK"], ["GRASS", "ELECTRIC"], ["STEEL", "WATER", "FIRE", "ICE"],
+             ["WATER", "GRASS", "DRAGON"], [], [],
+             ["NORMAL", "FIGHTING", "FLYING", "POISON", "BUG", "GHOST", "STEEL", "ELECTRIC", "PSYCHIC", "ICE", "DARK",
+              "FAIRY"],
+             ["NORMAL", "FIGHTING," "FLYING", "POISON", "GROUND", "ROCK", "BUG", "GHOST", "PSYCHIC", "DRAGON", "DARK",
+              "FAIRY"])
+    GRASS = (["WATER", "GROUND", "ROCK"], ["FIRE", "FLYING", "BUG", "POISON", "ICE"],
+             ["FIRE", "GRASS", "POISON", "FLYING", "BUG", "DRAGON", "STEEL"], ["WATER", "ELECTRIC", "GRASS"], [], [],
+             ["NORMAL", "FIGHTING", "GHOST", "ELECTRIC", "PSYCHIC", "ICE", "DARK", "FAIRY"],
+             ["NORMAL", "FIGHTING", "ROCK", "GHOST", "STEEL", "PSYCHIC", "DRAGON", "DARK", "FAIRY"])
 
-    ELECTRIC = (["Water", "Flying"], ["Ground"], ["Electric", "Flying", "Steel"], ["Grass", "Electric", "Dragon"],
-                ["Ground"], [],
-                ["Normal", "Fighting", "Poison", "Rock", "Bug", "Ghost", "Steel", "Fire", "Psychic", "Ice", "Dark",
-                 "Fairy"],
-                ["Normal", "Fighting", "Poison", "Rock", "Bug", "Ghost", "Fire", "Water", "Grass", "Psychic", "Ice",
-                 "Dragon", "Dark", "Fairy"])
+    ELECTRIC = (["WATER", "FLYING"], ["GROUND"], ["ELECTRIC", "FLYING", "STEEL"], ["GRASS", "ELECTRIC", "DRAGON"],
+                ["GROUND"], [],
+                ["NORMAL", "FIGHTING", "POISON", "ROCK", "BUG", "GHOST", "STEEL", "FIRE", "PSYCHIC", "ICE", "DARK",
+                 "FAIRY"],
+                ["NORMAL", "FIGHTING", "POISON", "ROCK", "BUG", "GHOST", "FIRE", "WATER", "GRASS", "PSYCHIC", "ICE",
+                 "DRAGON", "DARK", "FAIRY"])
 
-    ICE = (["Grass", "Ground", "Flying", "Dragon"], ["Fire", "Fighting", "Rock", "Steel"], ["Ice"],
-           ["Fire", "Water", "Steel"], [], [],
-           ["Normal", "Fighting", "Poison", "Rock", "Bug", "Ghost", "Electric", "Psychic", "Dark", "Fairy"],
-           ["Normal", "Flying", "Poison", "Ground", "Bug", "Ghost", "Water", "Grass", "Electric", "Psychic", "Dragon",
-            "Dark", "Fairy"])
+    ICE = (["GRASS", "GROUND", "FLYING", "DRAGON"], ["FIRE", "FIGHTING", "ROCK", "STEEL"], ["ICE"],
+           ["FIRE", "WATER", "STEEL"], [], [],
+           ["NORMAL", "FIGHTING", "POISON", "ROCK", "BUG", "GHOST", "ELECTRIC", "PSYCHIC", "DARK", "FAIRY"],
+           ["NORMAL", "FLYING", "POISON", "GROUND", "BUG", "GHOST", "WATER", "GRASS", "ELECTRIC", "PSYCHIC", "DRAGON",
+            "DARK", "FAIRY"])
 
-    FIGHTING = (["Normal", "Steel", "Ice", "Rock", "Dark"], ["Psychic", "Fairy", "Flying"], ["Bug", "Rock", "Dark"],
-                ["Poison", "Flying", "Psychic", "Bug", "Fairy"], [], [],
-                ["Fighting", "Ground", "Fire", "Water", "Grass", "Electric", "Dragon"],
-                ["Normal", "fighting", "Poison", "Ground", "Ghost", "Steel", "Fire", "Water", "Grass", "Electric",
-                 "Ice", "Dragon"])
+    FIGHTING = (["NORMAL", "STEEL", "ICE", "ROCK", "DARK"], ["PSYCHIC", "FAIRY", "FLYING"], ["BUG", "ROCK", "DARK"],
+                ["POISON", "FLYING", "PSYCHIC", "BUG", "FAIRY"], [], [],
+                ["FIGHTING", "GROUND", "FIRE", "WATER", "GRASS", "ELECTRIC", "DRAGON"],
+                ["NORMAL", "fighting", "POISON", "GROUND", "GHOST", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC",
+                 "ICE", "DRAGON"])
 
-    POISON = (["Grass", "Fairy"], ["Ground", "Psychic"], ["Grass", "Fighting", "Poison", "Bug", "Fairy"],
-              ["Poison", "Ground", "Rock", "Ghost"], ["Steel"], [],
-              ["Normal", "Fighting", "Flying", "Bug", "Fire", "Water", "Electric", "Psychic", "Ice", "Dragon", "Dark"],
-              ["Normal", "Flying", "Rock", "Ghost", "Steel", "Fire", "Water", "Electric", "Ice", "Dragon", "Dark"])
+    POISON = (["GRASS", "FAIRY"], ["GROUND", "PSYCHIC"], ["GRASS", "FIGHTING", "POISON", "BUG", "FAIRY"],
+              ["POISON", "GROUND", "ROCK", "GHOST"], ["STEEL"], [],
+              ["NORMAL", "FIGHTING", "FLYING", "BUG", "FIRE", "WATER", "ELECTRIC", "PSYCHIC", "ICE", "DRAGON", "DARK"],
+              ["NORMAL", "FLYING", "ROCK", "GHOST", "STEEL", "FIRE", "WATER", "ELECTRIC", "ICE", "DRAGON", "DARK"])
 
-    GROUND = (["Electric", "Fire", "Poison", "Rock", "Steel"], ["Water", "Grass", "Ice"], ["Poison", "Rock"],
-              ["Grass", "Bug"], ["Flying"], ["Electric"],
-              ["Normal", "Fighting", "Ground", "Ghost", "Water", "Psychic", "Ice", "Dragon", "Dark", "Fairy"],
-              ["Normal", "Fighting", "Flying", "Ground", "Bug", "Ghost", "Steel", "Fire", "Psychic", "Dragon", "Dark",
-               "Fairy"])
+    GROUND = (["ELECTRIC", "FIRE", "POISON", "ROCK", "STEEL"], ["WATER", "GRASS", "ICE"], ["POISON", "ROCK"],
+              ["GRASS", "BUG"], ["FLYING"], ["ELECTRIC"],
+              ["NORMAL", "FIGHTING", "GROUND", "GHOST", "WATER", "PSYCHIC", "ICE", "DRAGON", "DARK", "FAIRY"],
+              ["NORMAL", "FIGHTING", "FLYING", "GROUND", "BUG", "GHOST", "STEEL", "FIRE", "PSYCHIC", "DRAGON", "DARK",
+               "FAIRY"])
 
-    FLYING = (["Fighting", "Grass", "Bug"], ["Electric", "Ice", "Rock"], ["Fighting", "Grass", "Bug"],
-              ["Electric", "Rock", "Steel"], ["Ground"], [],
-              ["Normal", "Flying", "Poison", "Ground", "Ghost", "Fire", "Water", "Psychic", "Ice", "Dragon", "Dark",
-               "Fairy"],
-              ["Normal", "Flying", "Poison", "Ghost", "Steel", "Fire", "Water", "Psychic", "Dragon", "Dark", "Fairy"])
+    FLYING = (["FIGHTING", "GRASS", "BUG"], ["ELECTRIC", "ICE", "ROCK"], ["FIGHTING", "GRASS", "BUG"],
+              ["ELECTRIC", "ROCK", "STEEL"], ["GROUND"], [],
+              ["NORMAL", "FLYING", "POISON", "GROUND", "GHOST", "FIRE", "WATER", "PSYCHIC", "ICE", "DRAGON", "DARK",
+               "FAIRY"],
+              ["NORMAL", "FLYING", "POISON", "GHOST", "STEEL", "FIRE", "WATER", "PSYCHIC", "DRAGON", "DARK", "FAIRY"])
 
-    PSYCHIC = (["Fighting", "Poison"], ["Bug", "Ghost", "Dark"], ["Fighting", "Psychic"], ["Psychic", "Steel"],
-               ["Dark"], [],
-               ["Normal", "Flying", "Ground", "Rock", "Bug", "Ghost", "Fire", "Water", "Grass", "Electric", "Ice",
-                "Dragon", "Fairy"],
-               ["Normal", "Flying", "Poison", "Ground", "Rock", "Steel", "Fire", "Water", "Grass", "Electric", "Ice",
-                "Dragon", "Fairy"])
+    PSYCHIC = (["FIGHTING", "POISON"], ["BUG", "GHOST", "DARK"], ["FIGHTING", "PSYCHIC"], ["PSYCHIC", "STEEL"],
+               ["DARK"], [],
+               ["NORMAL", "FLYING", "GROUND", "ROCK", "BUG", "GHOST", "FIRE", "WATER", "GRASS", "ELECTRIC", "ICE",
+                "DRAGON", "FAIRY"],
+               ["NORMAL", "FLYING", "POISON", "GROUND", "ROCK", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC", "ICE",
+                "DRAGON", "FAIRY"])
 
-    BUG = (["Grass", "Psychic", "Dark"], ["Fire", "Flying", "Rock"], ["Grass", "Fighting", "Ground"],
-           ["Fire", "Fighting", "Poison", "Flying", "Ghost", "Steel", "Fairy"], [], [],
-           ["Normal", "Ground", "Rock", "Bug", "Water", "Electric", "Ice", "Dragon"],
-           ["Normal", "Poison", "Bug", "Ghost", "Steel", "Water", "Electric", "Psychic", "Ice", "Dragon", "Dark",
-            "Fairy"])
+    BUG = (["GRASS", "PSYCHIC", "DARK"], ["FIRE", "FLYING", "ROCK"], ["GRASS", "FIGHTING", "GROUND"],
+           ["FIRE", "FIGHTING", "POISON", "FLYING", "GHOST", "STEEL", "FAIRY"], [], [],
+           ["NORMAL", "GROUND", "ROCK", "BUG", "WATER", "ELECTRIC", "ICE", "DRAGON"],
+           ["NORMAL", "POISON", "BUG", "GHOST", "STEEL", "WATER", "ELECTRIC", "PSYCHIC", "ICE", "DRAGON", "DARK",
+            "FAIRY"])
 
-    ROCK = (["Fire", "Ice", "Flying", "Bug"], ["Water", "Grass", "Fighting", "Ground", "Steel"],
-            ["Normal", "Fire", "Poison", "Flying"], ["Fighting", "Ground", "Steel"], [], [],
-            ["Normal", "Poison", "Rock", "Ghost", "Water", "Grass", "Electric", "Psychic", "Dragon", "Dark", "Fairy"],
-            ["Rock", "Bug", "Ghost", "Electric", "Psychic", "Ice", "Dragon", "Dark", "Fairy"])
+    ROCK = (["FIRE", "ICE", "FLYING", "BUG"], ["WATER", "GRASS", "FIGHTING", "GROUND", "STEEL"],
+            ["NORMAL", "FIRE", "POISON", "FLYING"], ["FIGHTING", "GROUND", "STEEL"], [], [],
+            ["NORMAL", "POISON", "ROCK", "GHOST", "WATER", "GRASS", "ELECTRIC", "PSYCHIC", "DRAGON", "DARK", "FAIRY"],
+            ["ROCK", "BUG", "GHOST", "ELECTRIC", "PSYCHIC", "ICE", "DRAGON", "DARK", "FAIRY"])
 
-    GHOST = (["Psychic", "Ghost"], ["Ghost", "Dark"], ["Poison", "Bug"], ["Dark"], [], ["Normal", "Fighting"],
-             ["Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Steel", "Fire", "Water", "Grass", "Electric",
-              "Ice", "Dragon", "Fairy"],
-             ["Flying", "Ground", "Rock", "Steel", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon",
-              "Fairy"])
+    GHOST = (["PSYCHIC", "GHOST"], ["GHOST", "DARK"], ["POISON", "BUG"], ["DARK"], [], ["NORMAL", "FIGHTING"],
+             ["FIGHTING", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC",
+              "ICE", "DRAGON", "FAIRY"],
+             ["FLYING", "GROUND", "ROCK", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC", "PSYCHIC", "ICE", "DRAGON",
+              "FAIRY"])
 
-    DRAGON = (["Dragon"], ["Dragon", "Fairy"], ["Fire", "Grass", "Water", "Electric"], ["Steel"], [], ["Fairy"],
-              ["Normal", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Fire", "Water", "Grass",
-               "Electric", "Psychic", "Ice", "Dark"],
-              ["Normal", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Steel", "Psychic", "Dark"])
+    DRAGON = (["DRAGON"], ["DRAGON", "FAIRY"], ["FIRE", "GRASS", "WATER", "ELECTRIC"], ["STEEL"], [], ["FAIRY"],
+              ["NORMAL", "FIGHTING", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "GHOST", "FIRE", "WATER", "GRASS",
+               "ELECTRIC", "PSYCHIC", "ICE", "DARK"],
+              ["NORMAL", "FIGHTING", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "GHOST", "STEEL", "PSYCHIC", "DARK"])
 
-    DARK = (["Psychic", "Ghost"], ["Fighting", "Bug", "Fairy"],
-            ["Ghost", "Dark"], ["Fighting", "Fairy"], [], ["Psychic"],
-            ["Normal", "Flying", "Poison", "Ground", "Rock", "Bug", "Steel", "Fire", "Water", "Grass", "Electric",
-             "Ice", "Dragon"],
-            ["Normal", "Flying", "Poison", "Ground", "Rock", "Steel", "Fire", "Water", "Grass", "Electric", "Ice",
-             "Dragon"])
+    DARK = (["PSYCHIC", "GHOST"], ["FIGHTING", "BUG", "FAIRY"],
+            ["GHOST", "DARK"], ["FIGHTING", "FAIRY"], [], ["PSYCHIC"],
+            ["NORMAL", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC",
+             "ICE", "DRAGON"],
+            ["NORMAL", "FLYING", "POISON", "GROUND", "ROCK", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC", "ICE",
+             "DRAGON"])
 
-    STEEL = (["Ice", "Rock", "Fairy"], ["Fire", "Fighting", "Ground"],
-             ["Normal", "Grass", "Ice", "Flying", "Psychic", "Bug", "Rock", "Dragon", "Steel", "Fairy"],
-             ["Fire", "Water", "Electric", "Steel"], [], [],
-             ["Normal", "Fighting", "Flying", "Poison", "Ground", "Bug", "Ghost", "Grass", "Psychic", "Dragon", "Dark"],
-             ["Ghost", "Water", "Electric", "Dark"])
+    STEEL = (["ICE", "ROCK", "FAIRY"], ["FIRE", "FIGHTING", "GROUND"],
+             ["NORMAL", "GRASS", "ICE", "FLYING", "PSYCHIC", "BUG", "ROCK", "DRAGON", "STEEL", "FAIRY"],
+             ["FIRE", "WATER", "ELECTRIC", "STEEL"], [], [],
+             ["NORMAL", "FIGHTING", "FLYING", "POISON", "GROUND", "BUG", "GHOST", "GRASS", "PSYCHIC", "DRAGON", "DARK"],
+             ["GHOST", "WATER", "ELECTRIC", "DARK"])
 
-    FAIRY = (["Dragon", "Fighting", "Dark"], ["Poison", "Steel"], ["Fighting", "Bug", "Dark"],
-             ["Fire", "Poison", "Steel"], [], [],
-             ["Normal", "Flying", "Ground", "Rock", "Bug", "Ghost", "Water", "Grass", "Electric", "Psychic", "Ice",
-              "Fairy"],
-             ["Normal", "Flying", "Ground", "Rock", "Ghost", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice",
-              "Fairy"])
+    FAIRY = (["DRAGON", "FIGHTING", "DARK"], ["POISON", "STEEL"], ["FIGHTING", "BUG", "DARK"],
+             ["FIRE", "POISON", "STEEL"], [], [],
+             ["NORMAL", "FLYING", "GROUND", "ROCK", "BUG", "GHOST", "WATER", "GRASS", "ELECTRIC", "PSYCHIC", "ICE",
+              "FAIRY"],
+             ["NORMAL", "FLYING", "GROUND", "ROCK", "GHOST", "FIRE", "WATER", "GRASS", "ELECTRIC", "PSYCHIC", "ICE",
+              "FAIRY"])
 
     def to_dict(self) -> dict[str, list[str]]:
         return {
