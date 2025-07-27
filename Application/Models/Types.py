@@ -15,6 +15,8 @@ class Types(Enum):
         :param defensively_strong: A list of type names that this type takes reduced damage from (takes half damage from).
         :param no_effect_to: A list of type names that this type cannot affect (deals no damage to).
         :param no_effect_from: A list of type names that cannot affect this type (takes no damage from).
+        :param offensively_neutral: A list of type names that are neutral against this type (deals 1x damage from ).
+        :param defensively_neutral: A list of type names that are neutral against this type (takes 1x damage from).
         """
         self.offensively_strong = offensively_strong
         self.defensively_weak = defensively_weak
