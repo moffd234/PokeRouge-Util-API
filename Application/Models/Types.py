@@ -51,10 +51,12 @@ class Types(Enum):
                  "Fairy"], [None])
 
     ICE = (["Grass", "Ground", "Flying", "Dragon"], ["Fire", "Fighting", "Rock", "Steel"], ["Ice"],
-           ["Fire", "Water", "Steel"], [], [])
+           ["Fire", "Water", "Steel"], [], [],
+           ["Normal", "Fighting", "Poison", "Rock", "Bug", "Ghost", "Electric", "Psychic", "Dark", "Fairy"], [None])
 
     FIGHTING = (["Normal", "Steel", "Ice", "Rock", "Dark"], ["Psychic", "Fairy", "Flying"], ["Bug", "Rock", "Dark"],
-                ["Poison", "Flying", "Psychic", "Bug", "Fairy"], [], [])
+                ["Poison", "Flying", "Psychic", "Bug", "Fairy"], [], [],
+                ["Fighting", "Ground", "Fire", "Water", "Grass", "Electric", "Dragon"], [None])
 
     POISON = (["Grass", "Fairy"], ["Ground", "Psychic"], ["Grass", "Fighting", "Poison", "Bug", "Fairy"],
               ["Poison", "Ground", "Rock", "Ghost"], ["Steel"], [])
