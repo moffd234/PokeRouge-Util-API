@@ -47,20 +47,27 @@ class Types(Enum):
               "Fairy"])
     GRASS = (["Water", "Ground", "Rock"], ["Fire", "Flying", "Bug", "Poison", "Ice"],
              ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"], ["Water", "Electric", "Grass"], [], [],
-             ["Normal", "Fighting", "Ghost", "Electric", "Psychic", "Ice", "Dark", "Fairy"], [None])
+             ["Normal", "Fighting", "Ghost", "Electric", "Psychic", "Ice", "Dark", "Fairy"],
+             ["Normal", "Fighting", "Rock", "Ghost", "Steel", "Psychic", "Dragon", "Dark", "Fairy"])
 
     ELECTRIC = (["Water", "Flying"], ["Ground"], ["Electric", "Flying", "Steel"], ["Grass", "Electric", "Dragon"],
                 ["Ground"], [],
                 ["Normal", "Fighting", "Poison", "Rock", "Bug", "Ghost", "Steel", "Fire", "Psychic", "Ice", "Dark",
-                 "Fairy"], [None])
+                 "Fairy"],
+                ["Normal", "Fighting", "Poison", "Rock", "Bug", "Ghost", "Fire", "Water", "Grass", "Psychic", "Ice",
+                 "Dragon", "Dark", "Fairy"])
 
     ICE = (["Grass", "Ground", "Flying", "Dragon"], ["Fire", "Fighting", "Rock", "Steel"], ["Ice"],
            ["Fire", "Water", "Steel"], [], [],
-           ["Normal", "Fighting", "Poison", "Rock", "Bug", "Ghost", "Electric", "Psychic", "Dark", "Fairy"], [None])
+           ["Normal", "Fighting", "Poison", "Rock", "Bug", "Ghost", "Electric", "Psychic", "Dark", "Fairy"],
+           ["Normal", "Flying", "Poison", "Ground", "Bug", "Ghost", "Water", "Grass", "Electric", "Psychic", "Dragon",
+            "Dark", "Fairy"])
 
     FIGHTING = (["Normal", "Steel", "Ice", "Rock", "Dark"], ["Psychic", "Fairy", "Flying"], ["Bug", "Rock", "Dark"],
                 ["Poison", "Flying", "Psychic", "Bug", "Fairy"], [], [],
-                ["Fighting", "Ground", "Fire", "Water", "Grass", "Electric", "Dragon"], [None])
+                ["Fighting", "Ground", "Fire", "Water", "Grass", "Electric", "Dragon"],
+                ["Normal", "fighting", "Poison", "Ground", "Ghost", "Steel", "Fire", "Water", "Grass", "Electric",
+                 "Ice", "Dragon"])
 
     POISON = (["Grass", "Fairy"], ["Ground", "Psychic"], ["Grass", "Fighting", "Poison", "Bug", "Fairy"],
               ["Poison", "Ground", "Rock", "Ghost"], ["Steel"], [],
