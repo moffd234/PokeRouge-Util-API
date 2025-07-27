@@ -59,10 +59,13 @@ class Types(Enum):
                 ["Fighting", "Ground", "Fire", "Water", "Grass", "Electric", "Dragon"], [None])
 
     POISON = (["Grass", "Fairy"], ["Ground", "Psychic"], ["Grass", "Fighting", "Poison", "Bug", "Fairy"],
-              ["Poison", "Ground", "Rock", "Ghost"], ["Steel"], [])
+              ["Poison", "Ground", "Rock", "Ghost"], ["Steel"], [],
+              ["Normal", "Fighting", "Flying", "Bug", "Fire", "Water", "Electric", "Psychic", "Ice", "Dragon", "Dark"],
+              [None])
 
     GROUND = (["Electric", "Fire", "Poison", "Rock", "Steel"], ["Water", "Grass", "Ice"], ["Poison", "Rock"],
-              ["Grass", "Bug"], ["Flying"], ["Electric"])
+              ["Grass", "Bug"], ["Flying"], ["Electric"],
+              ["Normal", "Fighting", "Ground", "Ghost", "Water", "Psychic", "Ice", "Dragon", "Dark", "Fairy"], [None])
 
     FLYING = (["Fighting", "Grass", "Bug"], ["Electric", "Ice", "Rock"], ["Fighting", "Grass", "Bug"],
               ["Electric", "Rock", "Steel"], ["Ground"], [])
