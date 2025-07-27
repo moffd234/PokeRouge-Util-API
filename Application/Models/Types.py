@@ -126,12 +126,14 @@ class Types(Enum):
              ["Normal", "Grass", "Ice", "Flying", "Psychic", "Bug", "Rock", "Dragon", "Steel", "Fairy"],
              ["Fire", "Water", "Electric", "Steel"], [], [],
              ["Normal", "Fighting", "Flying", "Poison", "Ground", "Bug", "Ghost", "Grass", "Psychic", "Dragon", "Dark"],
-             [None])
+             ["Ghost", "Water", "Electric", "Dark"])
 
     FAIRY = (["Dragon", "Fighting", "Dark"], ["Poison", "Steel"], ["Fighting", "Bug", "Dark"],
              ["Fire", "Poison", "Steel"], [], [],
              ["Normal", "Flying", "Ground", "Rock", "Bug", "Ghost", "Water", "Grass", "Electric", "Psychic", "Ice",
-              "Fairy"], [None])
+              "Fairy"],
+             ["Normal", "Flying", "Ground", "Rock", "Ghost", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice",
+              "Fairy"])
 
     def to_dict(self) -> dict[str, list[str]]:
         return {
