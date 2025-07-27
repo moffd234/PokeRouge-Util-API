@@ -15,11 +15,15 @@ class WeaknessService:
 
     @staticmethod
     def get_offensive_weaknesses(type_1: Types, type_2: Types) -> list[str]:
-        combined_weaknesses: list[str] = list(set(type_1.offensively_weak + type_2.offensively_weak))
+        combined_weaknesses: set[str] = set(type_1.offensively_weak + type_2.offensively_weak)
         output: list[str] = []
 
         for weakness in combined_weaknesses:
-            if weakness not in type_1.defensively_strong and weakness not in type_2.defensively_strong:
+            if weakness in type_1.no_effect_to or weakness in type_2.no_effect_to:
+                output.append(weakness)
+                continue
+
+            if weakness in type_1.defensively_strong and weakness in type_2.defensively_strong:
                 output.append(weakness)
 
         return output
