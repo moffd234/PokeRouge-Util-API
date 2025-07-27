@@ -5,7 +5,7 @@ class Types(Enum):
 
     def __init__(self, offensively_strong: list[str], defensively_weak: list[str],
                  offensively_weak: list[str], defensively_strong: list[str], no_effect_to: list[str],
-                 no_effect_from: list[str]):
+                 no_effect_from: list[str], offensively_neutral: list[str], defensively_neutral: list[str]):
         """
         Initialize a type interaction profile for a Pokémon type.
 
@@ -22,8 +22,14 @@ class Types(Enum):
         self.defensively_strong = defensively_strong
         self.no_effect_to = no_effect_to
         self.no_effect_from = no_effect_from
+        self.offensively_neutral = offensively_neutral
+        self.defensively_neutral = defensively_neutral
 
-    NORMAL = ([], ["Fighting"], ["Rock", "Steel"], [], ["Ghost"], [])
+    NORMAL = ([], ["Fighting"], ["Rock", "Steel"], [], ["Ghost"],
+              ["Normal", "Fighting", "Flying", "Poison", "Ground", "Bug", "FIre", "Water", "Grass", "Electric",
+               "Psychic", "Ice", "Dragon", "Dark", "Fairy"],
+              ["Normal", "Flying", "Poison", "Ground", "Rock", "Bug", "Steel", "Fire", "Water", "Grass", "Electric",
+               "Psychic", "Ice", "Dragon", "Dark", "Fairy"])
     FIRE = (["Grass", "Bug", "Ice", "Steel"], ["Water", "Ground", "Rock"],
             ["Fire", "Grass", "Ice", "Steel", "Fairy", "Bug"],
             ["Fire", "Water", "Rock", "Dragon"], [], [])
