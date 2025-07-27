@@ -12,3 +12,14 @@ class WeaknessService:
             return Types[cleaned_type]
         except KeyError:
             raise ValueError(f"Unknown type: {type_name}")
+
+    @staticmethod
+    def get_offensive_weaknesses(type_1: Types, type_2: Types) -> list[str]:
+        combined_weaknesses: list[str] = list(set(type_1.offensively_weak + type_2.offensively_weak))
+        output: list[str] = []
+
+        for weakness in combined_weaknesses:
+            if weakness not in type_1.defensively_strong and weakness not in type_2.defensively_strong:
+                output.append(weakness)
+
+        return output
