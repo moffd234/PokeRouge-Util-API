@@ -68,13 +68,18 @@ class Types(Enum):
               ["Normal", "Fighting", "Ground", "Ghost", "Water", "Psychic", "Ice", "Dragon", "Dark", "Fairy"], [None])
 
     FLYING = (["Fighting", "Grass", "Bug"], ["Electric", "Ice", "Rock"], ["Fighting", "Grass", "Bug"],
-              ["Electric", "Rock", "Steel"], ["Ground"], [])
+              ["Electric", "Rock", "Steel"], ["Ground"], [],
+              ["Normal", "Flying", "Poison", "Ground", "Ghost", "Fire", "Water", "Psychic", "Ice", "Dragon", "Dark",
+               "Fairy"], [None])
 
     PSYCHIC = (["Fighting", "Poison"], ["Bug", "Ghost", "Dark"], ["Fighting", "Psychic"], ["Psychic", "Steel"],
-               ["Dark"], [])
+               ["Dark"], [],
+               ["Normal", "Flying", "Ground", "Rock", "Bug", "Ghost", "Fire", "Water", "Grass", "Electric", "Ice",
+                "Dragon", "Fairy"], [None])
 
     BUG = (["Grass", "Psychic", "Dark"], ["Fire", "Flying", "Rock"], ["Grass", "Fighting", "Ground"],
-           ["Fire", "Fighting", "Poison", "Flying", "Ghost", "Steel", "Fairy"], [], [])
+           ["Fire", "Fighting", "Poison", "Flying", "Ghost", "Steel", "Fairy"], [], [],
+           ["Normal", "Ground", "Rock", "Bug", "Water", "Electric", "Ice", "Dragon"], [None])
 
     ROCK = (["Fire", "Ice", "Flying", "Bug"], ["Water", "Grass", "Fighting", "Ground", "Steel"],
             ["Normal", "Fire", "Poison", "Flying"], ["Fighting", "Ground", "Steel"], [], [])
