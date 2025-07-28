@@ -91,7 +91,8 @@ class TypeUtils:
 
     def get_does_not_take_damage_from(self, defender: str) -> list[str]:
         defender = defender.lower()
+
         if defender not in self.types:
             raise ValueError(f"'{defender.title()}' is not a valid type")
 
-        return [attacker for attacker, multiplier in self.types.items() if multiplier == 0]
+        return [attacker for attacker in self.types if self.types[attacker][defender] == 0]
