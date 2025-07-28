@@ -89,7 +89,7 @@ class TypeUtils:
 
         return output
 
-    def get_immunities_to(self, defender: str) -> list[str]:
+    def get_does_not_affect(self, defender: str) -> list[str]:
         defender = defender.lower()
         if defender not in self.types:
             raise ValueError(f"'{defender.title()}' is not a valid type")
