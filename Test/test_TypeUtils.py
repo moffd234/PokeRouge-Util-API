@@ -104,3 +104,56 @@ def test_get_defensive_weakness_value_type_2_doesnt_exist(type_utils):
         type_utils.get_defensive_weaknesses("sound", "fire")
 
     assert str(error.value) == "'Sound' is not a valid type"
+
+
+def test_get_immunities_ghost(type_utils):
+    expected: list[str] = ["normal", "fighting"]
+    actual: list[str] = type_utils.get_immunities("ghost")
+
+    assert sorted(actual) == sorted(expected)
+
+
+def test_get_immunities_flying(type_utils):
+    expected: list[str] = ["ground"]
+    actual: list[str] = type_utils.get_immunities("flying")
+
+    assert sorted(actual) == sorted(expected)
+
+
+def test_get_immunities_ground(type_utils):
+    expected: list[str] = ["electric"]
+    actual: list[str] = type_utils.get_immunities("ground")
+
+    assert sorted(actual) == sorted(expected)
+
+
+def test_get_immunities_poison(type_utils):
+    expected: list[str] = ["poison"]
+    actual: list[str] = type_utils.get_immunities("steel")
+
+    assert sorted(actual) == sorted(expected)
+
+
+def test_get_immunities_dark(type_utils):
+    expected: list[str] = ["psychic"]
+    actual: list[str] = type_utils.get_immunities("dark")
+
+    assert sorted(actual) == sorted(expected)
+
+def test_get_immunities_normal(type_utils):
+    expected: list[str] = ["ghost"]
+    actual: list[str] = type_utils.get_immunities("normal")
+
+    assert sorted(actual) == sorted(expected)
+
+def test_get_immunities_fair(type_utils):
+    expected: list[str] = ["dragon"]
+    actual: list[str] = type_utils.get_immunities("fairy")
+
+    assert sorted(actual) == sorted(expected)
+
+def test_get_immunities_type_does_not_exist(type_utils):
+    with pytest.raises(ValueError) as error:
+        type_utils.get_immunities("sound")
+
+    assert str(error.value) == "'Sound' is not a valid type"

@@ -89,7 +89,7 @@ class TypeUtils:
 
         return output
 
-    def get_does_not_take_damage_from(self, defender: str) -> list[str]:
+    def get_immunities(self, defender: str) -> list[str]:
         defender = defender.lower()
 
         if defender not in self.types:
