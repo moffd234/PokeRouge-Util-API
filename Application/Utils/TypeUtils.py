@@ -54,3 +54,11 @@ class TypeUtils:
                       "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 2, "ghost": 1, "dragon": 1,
                       "dark": 1, "steel": 0.5}
         }
+
+    def get_offensive_weaknesses(self, atk_type: str) -> list:
+        if atk_type.lower() not in self.types:
+            raise ValueError(f"'{atk_type}' is not a valid type")
+
+        matchups: dict[str: str] = self.types[atk_type.lower()]
+
+        return [defender for defender, multiplier in matchups.items() if multiplier == 0.5]
