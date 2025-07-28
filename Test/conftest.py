@@ -3,6 +3,7 @@ from flask import Flask
 
 from Application import create_app, db
 from Application.Models.Pokemon import Pokemon
+from Application.Utils.TypeUtils import TypeUtils
 
 
 @pytest.fixture
@@ -38,4 +39,8 @@ def example_pokemon(app):
 
     db.session.delete(bulbasaur)
     db.session.commit()
+
+@pytest.fixture
+def type_utils():
+    return TypeUtils()
 
