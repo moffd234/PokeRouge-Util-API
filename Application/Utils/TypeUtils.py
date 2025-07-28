@@ -1,7 +1,7 @@
 class TypeUtils:
 
     def __init__(self):
-        self.types: dict = {
+        self.types: dict[str: dict] = {
             "normal": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 1,
                        "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 0.5, "ghost": 0,
                        "dragon": 1, "dark": 1, "steel": 0.5},
@@ -62,3 +62,26 @@ class TypeUtils:
         matchups: dict[str: str] = self.types[atk_type.lower()]
 
         return [defender for defender, multiplier in matchups.items() if multiplier == 0.5]
+
+    def get_defensive_weaknesses(self, type_1: str, type_2: str | None) -> list:
+        type_1 = type_1.lower()
+        if type_1 not in self.types:
+            raise ValueError(f"'{type_1}' is not a valid type")
+
+        if type_2 is not None:
+            type_2 = type_2.lower()
+            if type_2 not in self.types:
+                raise ValueError(f"'{type_2}' is not a valid type")
+
+        output: list[str] = []
+
+        for attacker in self.types:
+            multiplier = self.types[attacker][type_1]
+
+            if type_2:
+                multiplier *= self.types[attacker][type_2]
+
+            if multiplier > 1.0:
+                output.append(attacker)
+
+        return output
