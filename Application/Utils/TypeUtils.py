@@ -60,7 +60,7 @@ class TypeUtils:
 
     def get_offensive_weaknesses(self, atk_type: str) -> list:
         if atk_type.lower() not in self.types:
-            raise ValueError(f"'{atk_type}' is not a valid type")
+            raise ValueError(f"'{atk_type.title()}' is not a valid type")
 
         matchups: dict[str: str] = self.types[atk_type.lower()]
 
@@ -69,12 +69,12 @@ class TypeUtils:
     def get_defensive_weaknesses(self, type_1: str, type_2: str | None) -> list:
         type_1 = type_1.lower()
         if type_1 not in self.types:
-            raise ValueError(f"'{type_1}' is not a valid type")
+            raise ValueError(f"'{type_1.title()}' is not a valid type")
 
         if type_2 is not None:
             type_2 = type_2.lower()
             if type_2 not in self.types:
-                raise ValueError(f"'{type_2}' is not a valid type")
+                raise ValueError(f"'{type_2.title()}' is not a valid type")
 
         output: list[str] = []
 
@@ -92,6 +92,6 @@ class TypeUtils:
     def get_immunities_to(self, defender: str) -> list[str]:
         defender = defender.lower()
         if defender not in self.types:
-            raise ValueError(f"'{defender}' is not a valid type")
+            raise ValueError(f"'{defender.title()}' is not a valid type")
 
         return [attacker for attacker, multiplier in self.types.items() if multiplier == 0]
