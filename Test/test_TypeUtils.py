@@ -140,11 +140,13 @@ def test_get_immunities_dark(type_utils):
 
     assert sorted(actual) == sorted(expected)
 
+
 def test_get_immunities_normal(type_utils):
     expected: list[str] = ["ghost"]
     actual: list[str] = type_utils.get_immunities("normal")
 
     assert sorted(actual) == sorted(expected)
+
 
 def test_get_immunities_fair(type_utils):
     expected: list[str] = ["dragon"]
@@ -152,11 +154,20 @@ def test_get_immunities_fair(type_utils):
 
     assert sorted(actual) == sorted(expected)
 
+
 def test_get_immunities_type_does_not_exist(type_utils):
     with pytest.raises(ValueError) as error:
         type_utils.get_immunities("sound")
 
     assert str(error.value) == "'Sound' is not a valid type"
+
+# Tests for a type that does not have any immunities
+def test_get_immunities_fire(type_utils):
+    expected: list[str] = []
+    actual: list[str] = type_utils.get_immunities("fire")
+
+    assert actual == expected
+
 
 def test_get_immune_defenders_normal(type_utils):
     expected: list[str] = ["ghost"]
@@ -164,11 +175,13 @@ def test_get_immune_defenders_normal(type_utils):
 
     assert sorted(actual) == sorted(expected)
 
+
 def test_get_immune_defenders_fighting(type_utils):
     expected: list[str] = ["ghost"]
     actual: list[str] = type_utils.get_immune_defenders("fighting")
 
     assert sorted(actual) == sorted(expected)
+
 
 def test_get_immune_defenders_electric(type_utils):
     expected: list[str] = ["ground"]
@@ -197,14 +210,24 @@ def test_get_immune_defenders_psychic(type_utils):
 
     assert sorted(actual) == sorted(expected)
 
+
 def test_get_immune_defenders_dragon(type_utils):
     expected: list[str] = ["fairy"]
     actual: list[str] = type_utils.get_immunities("dragon")
 
     assert sorted(actual) == sorted(expected)
 
+
 def test_get_immune_defenders_type_does_not_exist(type_utils):
     with pytest.raises(ValueError) as error:
         type_utils.get_immune_defenders("sound")
 
     assert str(error.value) == "'Sound' is not a valid type"
+
+
+# Tests for a type that does not have any immune defenders
+def test_get_immune_defenders_fire(type_utils):
+    expected: list[str] = []
+    actual: list[str] = type_utils.get_immune_defenders("fire")
+
+    assert actual == expected
