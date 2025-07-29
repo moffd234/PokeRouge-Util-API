@@ -45,3 +45,9 @@ def get_immunities(type_1: str, type_2: str = None) -> tuple[Response, int] | Re
     output: list = type_util.get_immunities(type_1, type_2)
 
     return return_output(output)
+
+@weaknesses_bp.route('weaknesses/immune-defenders/<string:type_1>', methods=['GET'])
+def get_immune_defenders(type_1: str) -> tuple[Response, int] | Response:
+    output: list = type_util.get_immune_defenders(type_1)
+
+    return return_output(output)
