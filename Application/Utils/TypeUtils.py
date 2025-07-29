@@ -92,13 +92,29 @@ class TypeUtils:
 
         return output
 
-    def get_immunities(self, defender: str) -> list[str]:
-        defender = defender.lower()
+    def get_immunities(self, type_1: str, type_2) -> list[str]:
+        type_1 = type_1.lower()
 
-        if defender not in self.types:
-            raise ValueError(f"'{defender.title()}' is not a valid type")
+        if type_1 not in self.types:
+            raise ValueError(f"'{type_1.title()}' is not a valid type")
 
-        return [attacker for attacker in self.types if self.types[attacker][defender] == 0]
+        if type_2 is not None:
+            type_2 = type_2.lower()
+            if type_2 not in self.types:
+                raise ValueError(f"'{type_2.title()}' is not a valid type")
+
+        output: list[str] = []
+
+        for attacker in self.types:
+            multiplier = self.types[attacker][type_1]
+
+            if type_2:
+                multiplier *= self.types[attacker][type_2]
+
+            if multiplier == 0:
+                output.append(attacker)
+
+        return output
 
     def get_immune_defenders(self, attacker: str) -> list[str]:
         attacker = attacker.lower()
