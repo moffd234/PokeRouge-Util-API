@@ -2,6 +2,7 @@ from flask import Response
 
 
 def test_pokedex_success(client, example_pokemon):
+    example_pokemon = example_pokemon["bulbasaur"]
     expected_pokemon_info: dict = example_pokemon.to_dict()
     expected_status_code: int = 200
 

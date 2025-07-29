@@ -1,5 +1,7 @@
 import pytest
 
+from Application.Models.Pokemon import Pokemon
+
 
 def test_get_offensive_weakness_fire(type_utils):
     expected: list[str] = ["fire", "water", "rock", "dragon"]

@@ -1,4 +1,5 @@
 def test_pokemon_constructor(example_pokemon):
+    example_pokemon = example_pokemon["bulbasaur"]
     assert example_pokemon.id is not None
     assert example_pokemon.name == "BULBASAUR"
     assert example_pokemon.generation == 1
@@ -28,6 +29,7 @@ def test_pokemon_constructor(example_pokemon):
     assert example_pokemon.gender_diffs == False
 
 def test_pokemon_to_dict(example_pokemon):
+    example_pokemon = example_pokemon["bulbasaur"]
     expected: dict = {
             "id": 1,
             "name": "BULBASAUR",
