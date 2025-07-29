@@ -281,3 +281,38 @@ def test_get_immune_defenders_mixed_case(type_utils):
     actual: list[str] = type_utils.get_immune_defenders("NoRmAl")
     assert actual == sorted(expected)
 
+
+def test_get_weakness_summary_bulbasaur(type_utils, example_pokemon):
+    expected: dict = {
+        "offensive_weaknesses": {"grass": sorted(["flying", "poison", "bug", "steel", "fire", "grass", "dragon"]),
+                                 "poison": sorted(["poison", "ground", "rock", "ghost"])},
+        "defensive_weaknesses": sorted(["flying", "fire", "psychic", "ice"]),
+        "immunities": [],
+        "immune_defenders": {"grass": [], "poison": ["steel"]},
+    }
+
+    actual: dict = type_utils.get_weakness_summary(example_pokemon["bulbasaur"])
+
+    assert actual == expected
+
+
+def test_get_weakness_summary_lunala(type_utils, example_pokemon):
+    expected: dict = {
+
+        "offensive_weaknesses": {"psychic": sorted(["steel", "psychic"]), "ghost": ["dark"]},
+        "defensive_weaknesses": sorted(["ghost", "dark"]),
+        "immunities": sorted(["normal", "fighting"]),
+        "immune_defenders": {"psychic": ["dark"], "ghost": ["normal"]},
+    }
+
+    actual: dict = type_utils.get_weakness_summary(example_pokemon["lunala"])
+
+    assert actual == expected
+
+
+def test_get_weakness_summary_invalid_type(type_utils, example_pokemon):
+    pokemon: Pokemon = example_pokemon["fake"]
+    expected: dict = {"error": "'Sound' is not a valid type"}
+    actual: dict = type_utils.get_weakness_summary(pokemon)
+
+    assert actual == expected
