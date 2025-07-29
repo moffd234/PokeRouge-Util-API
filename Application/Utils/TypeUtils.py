@@ -1,3 +1,6 @@
+from Application.Models.Pokemon import Pokemon
+
+
 class TypeUtils:
 
     def __init__(self):
@@ -161,3 +164,30 @@ class TypeUtils:
         attacker_matchups = self.types[attacker]
 
         return [defender for defender, multiplier in attacker_matchups.items() if multiplier == 0]
+
+    def get_weakness_summary(self, pokemon_species: Pokemon):
+        """
+        Returns a summary of type-based interactions for the given Pokémon species.
+
+        This method will raise a ValueError if any of the Pokémon's types are not valid or unrecognized.
+
+        :param pokemon_species: The Pokémon whose type weaknesses and immunities are being analyzed.
+        :return: A dictionary summarizing offensive weaknesses, defensive weaknesses, immunities, and immune defenders.
+        """
+        try:
+            offensive_weaknesses = {pokemon_species.type_1: self.get_offensive_weaknesses(pokemon_species.type_1)}
+            immune_defenders = {pokemon_species.type_1: self.get_immune_defenders(pokemon_species.type_1)}
+
+            if pokemon_species.type_2:
+                offensive_weaknesses[pokemon_species.type_2] = self.get_offensive_weaknesses(pokemon_species.type_2)
+                immune_defenders[pokemon_species.type_2] = self.get_immune_defenders(pokemon_species.type_2)
+
+            return {
+                "offensive_weaknesses": offensive_weaknesses,
+                "defensive_weaknesses": self.get_defensive_weaknesses(pokemon_species.type_1, pokemon_species.type_2),
+                "immunities": self.get_immunities(pokemon_species.type_1, pokemon_species.type_2),
+                "immune_defenders": immune_defenders
+            }
+
+        except ValueError as error:
+            return {"error": str(error)}
