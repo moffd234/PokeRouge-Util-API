@@ -144,6 +144,15 @@ class TypeUtils:
         return output
 
     def get_immune_defenders(self, attacker: str) -> list[str]:
+        """
+        Returns a list of defending types that are completely immune (0x damage)
+        to the given attacking type.
+
+        This method will raise a ValueError if the attacker type is not recognized.
+
+        :param attacker: The attacking Pokémon type.
+        :return: A list of defending types immune to the given attacker.
+        """
         attacker = attacker.lower()
 
         if attacker not in self.types:
