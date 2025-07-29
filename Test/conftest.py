@@ -59,6 +59,8 @@ def example_pokemon(app):
     yield pokemon
 
     db.session.delete(bulbasaur)
+    db.session.delete(lunala)
+    db.session.delete(fake)
     db.session.commit()
 
 
