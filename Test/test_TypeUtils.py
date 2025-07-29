@@ -155,11 +155,18 @@ def test_get_immunities_fair(type_utils):
     assert sorted(actual) == sorted(expected)
 
 
+def test_get_immunities_mixed_case(type_utils):
+    expected: list[str] = ["normal", "fighting"]
+    actual: list[str] = type_utils.get_immunities("GhOsT")
+    assert sorted(actual) == sorted(expected)
+
+
 def test_get_immunities_type_does_not_exist(type_utils):
     with pytest.raises(ValueError) as error:
         type_utils.get_immunities("sound")
 
     assert str(error.value) == "'Sound' is not a valid type"
+
 
 # Tests for a type that does not have any immunities
 def test_get_immunities_fire(type_utils):
@@ -231,3 +238,9 @@ def test_get_immune_defenders_fire(type_utils):
     actual: list[str] = type_utils.get_immune_defenders("fire")
 
     assert actual == expected
+
+
+def test_get_immune_defenders_mixed_case(type_utils):
+    expected: list[str] = ["ghost"]
+    actual: list[str] = type_utils.get_immune_defenders("NoRmAl")
+    assert sorted(actual) == sorted(expected)
