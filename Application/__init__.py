@@ -1,4 +1,6 @@
 from flask import Flask
+
+from Application.Routes.Weakness import weaknesses_bp
 from Application.extensions import db
 from Application.Routes.Pokedex import pokedex_bp
 
@@ -8,6 +10,7 @@ def create_app() -> Flask:
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     app.register_blueprint(pokedex_bp)
+    app.register_blueprint(weaknesses_bp)
 
     db.init_app(app)
 
