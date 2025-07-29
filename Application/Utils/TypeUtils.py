@@ -65,7 +65,6 @@ class TypeUtils:
         This method will raise a ValueError if the given attacking type is not recognized.
 
         :param atk_type: The attacking Pokémon type.
-        :type atk_type: str
         :return: List of defending types that resist the given attacking type.
         """
         atk_type = atk_type.lower()
@@ -78,6 +77,16 @@ class TypeUtils:
         return [defender for defender, multiplier in matchups.items() if multiplier == 0.5]
 
     def get_defensive_weaknesses(self, type_1: str, type_2: str | None) -> list:
+        """
+        Returns a list of attacking types that deal super-effective damage (>1x)
+        to the given combination of defending types.
+
+        This method will raise a ValueError if either `type_1` or `type_2` is not recognized.
+
+        :param type_1: The primary defending type.
+        :param type_2: The secondary defending type, or None.
+        :return: A list of attacking types that are strong against the given type combination.
+        """
         type_1 = type_1.lower()
 
         if type_1 not in self.types:
