@@ -38,3 +38,10 @@ def get_defensive_weaknesses(type_1: str, type_2: str = None):
     output: list = type_util.get_defensive_weaknesses(type_1, type_2)
 
     return_output(output)
+
+@weaknesses_bp.route('weaknesses/immunities/<string:type_1>', methods=['GET'])
+@weaknesses_bp.route('weaknesses/immunities/<string:type_1>/<string:type_2>', methods=['GET'])
+def get_immunities(type_1: str, type_2: str = None):
+    output: list = type_util.get_immunities(type_1, type_2)
+
+    return_output(output)
