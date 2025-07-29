@@ -96,3 +96,13 @@ class TypeUtils:
             raise ValueError(f"'{defender.title()}' is not a valid type")
 
         return [attacker for attacker in self.types if self.types[attacker][defender] == 0]
+
+    def get_immune_defenders(self, attacker: str) -> list[str]:
+        attacker = attacker.lower()
+
+        if attacker not in self.types:
+            raise ValueError(f"'{attacker.title()}' is not a valid type")
+
+        attacker_matchups = self.types[attacker]
+
+        return [defender for defender, multiplier in attacker_matchups.items() if multiplier == 0]
