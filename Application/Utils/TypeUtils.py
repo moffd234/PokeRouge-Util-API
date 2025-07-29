@@ -59,6 +59,15 @@ class TypeUtils:
         }
 
     def get_offensive_weaknesses(self, atk_type: str) -> list:
+        """
+        Returns a list of defending types that take half damage (0.5x) from the given attacking type.
+
+        This method will raise a ValueError if the given attacking type is not recognized.
+
+        :param atk_type: The attacking Pokémon type.
+        :type atk_type: str
+        :return: List of defending types that resist the given attacking type.
+            """
         atk_type = atk_type.lower()
 
         if atk_type not in self.types:
