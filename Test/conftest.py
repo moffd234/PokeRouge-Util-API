@@ -51,9 +51,9 @@ def example_pokemon(app):
 
     pokemon: dict[str: Pokemon] = {"bulbasaur": bulbasaur, "lunala": lunala, "fake": fake}
 
-    for pokemon in pokemon.values():
-        db.session.add(pokemon)
-
+    db.session.add(bulbasaur)
+    db.session.add(lunala)
+    db.session.add(fake)
     db.session.commit()
 
     yield pokemon
