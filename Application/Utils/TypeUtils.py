@@ -175,17 +175,20 @@ class TypeUtils:
         :return: A dictionary summarizing offensive weaknesses, defensive weaknesses, immunities, and immune defenders.
         """
         try:
-            offensive_weaknesses = {pokemon_species.type_1: self.get_offensive_weaknesses(pokemon_species.type_1)}
-            immune_defenders = {pokemon_species.type_1: self.get_immune_defenders(pokemon_species.type_1)}
+            type_1 = pokemon_species.type_1.lower()
+            type_2 = pokemon_species.type_2.lower()
+            
+            offensive_weaknesses = {type_1: self.get_offensive_weaknesses(type_1)}
+            immune_defenders = {type_1: self.get_immune_defenders(type_1)}
 
-            if pokemon_species.type_2:
-                offensive_weaknesses[pokemon_species.type_2] = self.get_offensive_weaknesses(pokemon_species.type_2)
-                immune_defenders[pokemon_species.type_2] = self.get_immune_defenders(pokemon_species.type_2)
+            if type_2:
+                offensive_weaknesses[type_2] = self.get_offensive_weaknesses(type_2)
+                immune_defenders[type_2] = self.get_immune_defenders(type_2)
 
             return {
                 "offensive_weaknesses": offensive_weaknesses,
-                "defensive_weaknesses": self.get_defensive_weaknesses(pokemon_species.type_1, pokemon_species.type_2),
-                "immunities": self.get_immunities(pokemon_species.type_1, pokemon_species.type_2),
+                "defensive_weaknesses": self.get_defensive_weaknesses(type_1, type_2),
+                "immunities": self.get_immunities(type_1, type_2),
                 "immune_defenders": immune_defenders
             }
 
