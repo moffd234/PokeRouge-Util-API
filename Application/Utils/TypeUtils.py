@@ -111,6 +111,15 @@ class TypeUtils:
         return output
 
     def get_immunities(self, type_1: str, type_2) -> list[str]:
+        """
+        Returns a list of attacking types that deal no damage (0x) to the given defending type(s).
+
+        This method will raise a ValueError if either `type_1` or `type_2` is not recognized.
+
+        :param type_1: The primary defending type.
+        :param type_2: The secondary defending type, or None.
+        :return: A list of attacking types the Pokémon is immune to.
+        """
         type_1 = type_1.lower()
 
         if type_1 not in self.types:
