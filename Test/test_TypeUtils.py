@@ -154,6 +154,22 @@ def test_get_immunities_fair(type_utils):
 
     assert sorted(actual) == sorted(expected)
 
+def test_get_immunities_fire_steel(type_utils):
+    expected: list[str] = ["poison"]
+    actual: list[str] = type_utils.get_immunities("fire", "steel")
+    assert sorted(actual) == sorted(expected)
+
+# Test for a dual-type that gets itself as 2 of the immunities
+def test_get_immunities_ghost_normal(type_utils):
+    expected: list[str] = ["fighting", "ghost", "normal"]
+    actual: list[str] = type_utils.get_immunities("ghost", "normal")
+    assert sorted(actual) == sorted(expected)
+
+# Test for a dual-type that gets 1 type's weakness as its immunity
+def test_get_immunities_electric_flying(type_utils):
+    expected: list[str] = ["ground"]
+    actual: list[str] = type_utils.get_immunities("electric", "flying")
+    assert sorted(actual) == sorted(expected)
 
 def test_get_immunities_mixed_case(type_utils):
     expected: list[str] = ["normal", "fighting"]
@@ -180,6 +196,12 @@ def test_get_immunities_fire(type_utils):
     expected: list[str] = []
     actual: list[str] = type_utils.get_immunities("fire", None)
 
+    assert actual == expected
+
+# Test for dual-type that does not have any immunities
+def test_get_immunities_fire_water(type_utils):
+    expected: list[str] = []
+    actual: list[str] = type_utils.get_immunities("fire", "water")
     assert actual == expected
 
 
