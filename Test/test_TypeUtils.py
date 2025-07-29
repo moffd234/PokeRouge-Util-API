@@ -206,14 +206,14 @@ def test_get_immune_defenders_poison(type_utils):
 
 def test_get_immune_defenders_psychic(type_utils):
     expected: list[str] = ["dark"]
-    actual: list[str] = type_utils.get_immunities("psychic")
+    actual: list[str] = type_utils.get_immune_defenders("psychic")
 
     assert sorted(actual) == sorted(expected)
 
 
 def test_get_immune_defenders_dragon(type_utils):
     expected: list[str] = ["fairy"]
-    actual: list[str] = type_utils.get_immunities("dragon")
+    actual: list[str] = type_utils.get_immune_defenders("dragon")
 
     assert sorted(actual) == sorted(expected)
 
