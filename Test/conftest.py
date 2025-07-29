@@ -1,6 +1,5 @@
 import pytest
 from flask import Flask
-
 from Application import create_app, db
 from Application.Models.Pokemon import Pokemon
 from Application.Utils.TypeUtils import TypeUtils
@@ -8,9 +7,11 @@ from Application.Utils.TypeUtils import TypeUtils
 
 @pytest.fixture
 def app():
-    app: Flask = create_app()
-    app.config['TESTING'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"
+    app: Flask = create_app({
+        'TESTING': True,
+        'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
+        'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+    })
 
     with app.app_context():
         db.create_all()
