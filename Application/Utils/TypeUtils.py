@@ -75,7 +75,7 @@ class TypeUtils:
         if atk_type not in self.types:
             raise ValueError(f"'{atk_type.title()}' is not a valid type")
 
-        matchups: dict[str: str] = self.types[atk_type]
+        matchups: dict[str, float] = self.types[atk_type]
 
         return sorted([defender for defender, multiplier in matchups.items() if multiplier == 0.5])
 
@@ -177,7 +177,7 @@ class TypeUtils:
         try:
             type_1 = pokemon_species.type_1.lower()
             type_2 = pokemon_species.type_2.lower()
-            
+
             offensive_weaknesses = {type_1: self.get_offensive_weaknesses(type_1)}
             immune_defenders = {type_1: self.get_immune_defenders(type_1)}
 

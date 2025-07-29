@@ -43,13 +43,13 @@ def example_pokemon(app):
                               male_percent=None, gender_diffs=False)
 
     fake: Pokemon = Pokemon(name="FAKE_POKEMON", generation=7, sub_legendary=False, legendary=True, mythical=False,
-                              category="Moone Pokémon", type_1="Sound", type_2="Sound", height=4, weight=120,
-                              ability_1="SHADOW_SHIELD", ability_2="NONE", hidden_ability="NONE", base_total=680,
-                              base_hp=137, base_attack=113, base_defense=89, base_sp_attack=137, base_sp_defense=107,
-                              base_speed=97, catch_rate=3, base_friendship=0, base_exp=340, growth_rate="SLOW",
-                              male_percent=None, gender_diffs=False)
+                            category="Moone Pokémon", type_1="Sound", type_2="Sound", height=4, weight=120,
+                            ability_1="SHADOW_SHIELD", ability_2="NONE", hidden_ability="NONE", base_total=680,
+                            base_hp=137, base_attack=113, base_defense=89, base_sp_attack=137, base_sp_defense=107,
+                            base_speed=97, catch_rate=3, base_friendship=0, base_exp=340, growth_rate="SLOW",
+                            male_percent=None, gender_diffs=False)
 
-    pokemon: dict[str: Pokemon] = {"bulbasaur": bulbasaur, "lunala": lunala, "fake": fake}
+    pokemon: dict[str, Pokemon] = {"bulbasaur": bulbasaur, "lunala": lunala, "fake": fake}
 
     db.session.add(bulbasaur)
     db.session.add(lunala)
