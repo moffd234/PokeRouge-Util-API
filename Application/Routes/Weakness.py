@@ -1,10 +1,18 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, Response
 
 from Application.Models.Pokemon import Pokemon
 from Application.Utils.TypeUtils import TypeUtils
 
 weaknesses_bp: Blueprint = Blueprint("weaknesses_bp", __name__)
 type_util: TypeUtils = TypeUtils()
+
+
+def return_output(output: dict | list) -> tuple[Response, int] | Response:
+    if "error" in output:
+        return jsonify(output), 400
+
+    return jsonify(output)
+
 
 @weaknesses_bp.route('/weaknesses/summary/<string:pokemon_species>', methods=['GET'])
 def get_weakness_summary(pokemon_species: str):
@@ -14,17 +22,11 @@ def get_weakness_summary(pokemon_species: str):
         return jsonify({'message': 'Pokemon not found'}), 404
 
     output: dict = type_util.get_weakness_summary(pokemon)
+    return return_output(output)
 
-    if "error" in output:
-        return jsonify(output), 400
-
-    return jsonify(output)
 
 @weaknesses_bp.route('weaknesses/offensive/<string:pokemon_type>', methods=['GET'])
 def get_offensive_weaknesses(pokemon_type: str):
     output: list = type_util.get_offensive_weaknesses(pokemon_type)
 
-    if "error" in output:
-        return jsonify(output), 400
-
-    return jsonify(output)
+    return return_output(output)
