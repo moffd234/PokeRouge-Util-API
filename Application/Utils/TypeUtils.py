@@ -77,7 +77,7 @@ class TypeUtils:
 
         matchups: dict[str: str] = self.types[atk_type]
 
-        return [defender for defender, multiplier in matchups.items() if multiplier == 0.5]
+        return sorted([defender for defender, multiplier in matchups.items() if multiplier == 0.5])
 
     def get_defensive_weaknesses(self, type_1: str, type_2: str | None) -> list:
         """
@@ -111,7 +111,7 @@ class TypeUtils:
             if multiplier > 1.0:
                 output.append(attacker)
 
-        return output
+        return sorted(output)
 
     def get_immunities(self, type_1: str, type_2) -> list[str]:
         """
@@ -144,7 +144,7 @@ class TypeUtils:
             if multiplier == 0:
                 output.append(attacker)
 
-        return output
+        return sorted(output)
 
     def get_immune_defenders(self, attacker: str) -> list[str]:
         """
@@ -163,7 +163,7 @@ class TypeUtils:
 
         attacker_matchups = self.types[attacker]
 
-        return [defender for defender, multiplier in attacker_matchups.items() if multiplier == 0]
+        return sorted([defender for defender, multiplier in attacker_matchups.items() if multiplier == 0])
 
     def get_weakness_summary(self, pokemon_species: Pokemon):
         """
