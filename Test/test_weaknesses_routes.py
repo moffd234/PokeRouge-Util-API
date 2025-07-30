@@ -88,36 +88,12 @@ def test_get_offensive_weakness_empty_str(client):
     assert actual.json == expected_response
     assert actual.status_code == 404
 
-
-def test_get_offensive_weakness_fire(client):
-    expected_list: list[str] = type_util.get_offensive_weaknesses("fire")
+@pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
+def test_get_offensive_weakness_valid_types(client, valid_type):
+    expected_list: list[str] = type_util.get_offensive_weaknesses(valid_type)
     expected_status: int = 200
 
-    response: Response = client.get('/weaknesses/offensive/fire')
-    actual_list: Response = response.json
-    actual_status: int = response.status_code
-
-    assert actual_list == expected_list
-    assert actual_status == expected_status
-
-
-def test_get_offensive_weakness_ghost(client):
-    expected_list: list[str] = type_util.get_offensive_weaknesses("ghost")
-    expected_status: int = 200
-
-    response: Response = client.get('/weaknesses/offensive/ghost')
-    actual_list: Response = response.json
-    actual_status: int = response.status_code
-
-    assert actual_list == expected_list
-    assert actual_status == expected_status
-
-
-def test_get_offensive_weakness_mixed_case(client):
-    expected_list: list[str] = type_util.get_offensive_weaknesses("ghost")
-    expected_status: int = 200
-
-    response: Response = client.get('/weaknesses/offensive/gHosT')
+    response: Response = client.get(f'/weaknesses/offensive/{valid_type}')
     actual_list: Response = response.json
     actual_status: int = response.status_code
 
