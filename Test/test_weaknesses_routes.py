@@ -151,12 +151,14 @@ def test_get_defensive_weakness_invalid_type(client, invalid_type):
     assert response.status_code == expected_status
     assert response.json.get("error") == expected_error_message
 
+
 # ============================================================
 # /weaknesses/defensive/<type>/<type>
 # ============================================================
 @pytest.mark.parametrize("bad_route", ["", "/", "ghost/water"])
 def test_get_defensive_weakness_multitype_bad_routes(client, bad_route):
     assert_empty_response(client, f'/weaknesses/defensive/poison/{bad_route}')
+
 
 @pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
 def test_get_defensive_weakness_valid_multitype(client, valid_type):
@@ -170,11 +172,43 @@ def test_get_defensive_weakness_valid_multitype(client, valid_type):
     assert actual_list == expected_list
     assert actual_status == expected_status
 
+
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_defensive_weakness_invalid_multitype(client, invalid_type):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
     expected_status: int = 404
 
     response: Response = client.get(f"/weaknesses/defensive/dragon/{invalid_type}")
+    assert response.status_code == expected_status
+    assert response.json.get("error") == expected_error_message
+
+# ============================================================
+# /weaknesses/immunities/<type>
+# ============================================================
+
+@pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
+def test_get_immunities_bad_route(client, bad_route):
+    assert_empty_response(client, f'/weaknesses/immunities/{bad_route}')
+
+
+@pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
+def test_get_immunities_valid_types(client, valid_type):
+    expected_list: list[str] = type_util.get_immunities(valid_type, None)
+    expected_status: int = 200
+
+    response: Response = client.get(f'/weaknesses/immunities/{valid_type}')
+    actual_list: Response = response.json
+    actual_status: int = response.status_code
+
+    assert actual_list == expected_list
+    assert actual_status == expected_status
+
+
+@pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
+def test_get_immunities_invalid_type(client, invalid_type):
+    expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
+    expected_status: int = 404
+
+    response: Response = client.get("/weaknesses/immunities/" + invalid_type)
     assert response.status_code == expected_status
     assert response.json.get("error") == expected_error_message
