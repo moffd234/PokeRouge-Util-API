@@ -29,11 +29,7 @@ def test_incomplete_weakness_route(client, example_pokemon):
 # ============================================================
 
 def test_get_weakness_summary_pokemon_empty_str(client, example_pokemon):
-    expected_response: None = None
-    actual: Response = client.get('/weaknesses/summary/')
-
-    assert actual.json == expected_response
-    assert actual.status_code == 404
+    assert_empty_response(client, '/weaknesses/')
 
 
 def test_get_weakness_summary(client, example_pokemon):
@@ -97,21 +93,9 @@ def test_get_weakness_summary_pokemon_empty_space(client, example_pokemon):
 # /weaknesses/offensive/<type>
 # ============================================================
 
-def test_get_offensive_weakness_empty_str(client):
-    expected_response: None = None
-    actual: Response = client.get('/weaknesses/offensive/')
-
-    assert actual.json == expected_response
-    assert actual.status_code == 404
-
-
-def test_get_offensive_weakness_trailing_slash(client):
-    expected_response: None = None
-    actual: Response = client.get('/weaknesses/offensive/fire/')
-
-    assert actual.json == expected_response
-    assert actual.status_code == 404
-
+@pytest.mark.parametrize("bad_route", ["", "/"])
+def test_get_offensive_weakness_empty_str(client, bad_route):
+    assert_empty_response(client, f'/weaknesses/offensive/{bad_route}')
 
 @pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
 def test_get_offensive_weakness_valid_types(client, valid_type):
