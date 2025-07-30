@@ -61,7 +61,7 @@ class TypeUtils:
                       "dragon": 2, "dark": 2, "steel": 0.5, "fairy": 1},
         }
 
-    def get_offensive_weaknesses(self, atk_type: str) -> list:
+    def get_offensive_weaknesses(self, atk_type: str) -> list[str]:
         """
         Returns a list of defending types that take half damage (0.5x) from the given attacking type.
 
@@ -79,7 +79,7 @@ class TypeUtils:
 
         return sorted([defender for defender, multiplier in matchups.items() if multiplier == 0.5])
 
-    def get_defensive_weaknesses(self, type_1: str, type_2: str | None) -> list:
+    def get_defensive_weaknesses(self, type_1: str, type_2: str | None) -> list[str]:
         """
         Returns a list of attacking types that deal super-effective damage (>1x)
         to the given combination of defending types.

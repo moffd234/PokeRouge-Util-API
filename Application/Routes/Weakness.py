@@ -13,10 +13,11 @@ def return_output(output: dict | list) -> tuple[Response, int] | Response:
 
     return jsonify(output)
 
-def call_and_catch(func: callable, *args, **kwargs) -> tuple[Response, int] | Response:
+def call_and_catch(func: callable, *args) -> tuple[Response, int] | Response:
     try:
-        output = func(*args, **kwargs)
+        output: list = func(*args)
         return return_output(output)
+
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
 
