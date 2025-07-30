@@ -2,6 +2,10 @@ from unittest.mock import patch
 
 from flask import Response
 
+from Application.Utils.TypeUtils import TypeUtils
+
+type_util: TypeUtils = TypeUtils()
+
 
 def test_incomplete_weakness_route(client, example_pokemon):
     expected_response: None = None
@@ -74,3 +78,86 @@ def test_get_weakness_summary_pokemon_empty_space(client, example_pokemon):
 
     assert actual.json == expected_response
     assert actual.status_code == 404
+
+
+def test_get_offensive_weakness_empty_str(client):
+    expected_response: None = None
+    actual: Response = client.get('/weaknesses/offensive/')
+
+    assert actual.json == expected_response
+    assert actual.status_code == 404
+
+
+def test_get_offensive_weakness_fire(client):
+    expected_list: list[str] = type_util.get_offensive_weaknesses("fire")
+    expected_status: int = 200
+
+    response: Response = client.get('/weaknesses/offensive/fire')
+    actual_list: Response = response.json
+    actual_status: int = response.status_code
+
+    assert actual_list == expected_list
+    assert actual_status == expected_status
+
+def test_get_offensive_weakness_ghost(client):
+    expected_list: list[str] = type_util.get_offensive_weaknesses("ghost")
+    expected_status: int = 200
+
+    response: Response = client.get('/weaknesses/offensive/ghost')
+    actual_list: Response = response.json
+    actual_status: int = response.status_code
+
+    assert actual_list == expected_list
+    assert actual_status == expected_status
+
+def test_get_offensive_weakness_mixed_case(client):
+    expected_list: list[str] = type_util.get_offensive_weaknesses("ghost")
+    expected_status: int = 200
+
+    response: Response = client.get('/weaknesses/offensive/gHosT')
+    actual_list: Response = response.json
+    actual_status: int = response.status_code
+
+    assert actual_list == expected_list
+    assert actual_status == expected_status
+
+def test_get_offensive_weakness_type_not_found(client):
+    expected_error_message: str = "'Sound' is not a valid type"
+    expected_status: int = 404
+
+    response: Response = client.get('/weaknesses/offensive/sound')
+    actual_error_message: Response = response.json["error"]
+    actual_status: int = response.status_code
+
+    assert actual_error_message == expected_error_message
+    assert actual_status == expected_status
+
+
+def test_get_offensive_weakness_trailing_slash(client):
+    expected_response: None = None
+    actual: Response = client.get('/weaknesses/offensive/fire/')
+
+    assert actual.json == expected_response
+    assert actual.status_code == 404
+
+def test_get_offensive_weakness_valid_type_with_spaces(client):
+    expected_error_message: str = "' Fire ' is not a valid type"
+    expected_status: int = 404
+
+    response: Response = client.get('/weaknesses/offensive/ fire ')
+    actual_error_message: Response = response.json["error"]
+    actual_status: int = response.status_code
+
+    assert actual_error_message == expected_error_message
+    assert actual_status == expected_status
+
+def test_get_offensive_weakness_empty_space(client):
+    expected_error_message: str = "' ' is not a valid type"
+    expected_status: int = 404
+
+    response: Response = client.get('/weaknesses/offensive/ ')
+    actual_error_message: Response = response.json["error"]
+    actual_status: int = response.status_code
+
+    assert actual_error_message == expected_error_message
+    assert actual_status == expected_status
