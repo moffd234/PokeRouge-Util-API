@@ -15,6 +15,9 @@ def test_incomplete_weakness_route(client, example_pokemon):
     assert actual.json == expected_response
     assert actual.status_code == 404
 
+# ============================================================
+# /weaknesses/summary/<pokemon>
+# ============================================================
 
 def test_get_weakness_summary_pokemon_empty_str(client, example_pokemon):
     expected_response: None = None
@@ -80,6 +83,9 @@ def test_get_weakness_summary_pokemon_empty_space(client, example_pokemon):
     assert actual.json == expected_response
     assert actual.status_code == 404
 
+# ============================================================
+# /weaknesses/offensive/<type>
+# ============================================================
 
 def test_get_offensive_weakness_empty_str(client):
     expected_response: None = None
