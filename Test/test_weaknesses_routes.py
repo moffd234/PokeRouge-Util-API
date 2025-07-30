@@ -8,12 +8,21 @@ from Application.Utils.TypeUtils import TypeUtils
 type_util: TypeUtils = TypeUtils()
 
 
+def assert_empty_response(client, route: str):
+    expected_response: None = None
+    actual: Response = client.get(f'/weaknesses/{route}')
+
+    assert actual.json == expected_response
+    assert actual.status_code == 404
+
+
 def test_incomplete_weakness_route(client, example_pokemon):
     expected_response: None = None
     actual: Response = client.get('/weaknesses/')
 
     assert actual.json == expected_response
     assert actual.status_code == 404
+
 
 # ============================================================
 # /weaknesses/summary/<pokemon>
@@ -83,6 +92,7 @@ def test_get_weakness_summary_pokemon_empty_space(client, example_pokemon):
     assert actual.json == expected_response
     assert actual.status_code == 404
 
+
 # ============================================================
 # /weaknesses/offensive/<type>
 # ============================================================
@@ -93,6 +103,15 @@ def test_get_offensive_weakness_empty_str(client):
 
     assert actual.json == expected_response
     assert actual.status_code == 404
+
+
+def test_get_offensive_weakness_trailing_slash(client):
+    expected_response: None = None
+    actual: Response = client.get('/weaknesses/offensive/fire/')
+
+    assert actual.json == expected_response
+    assert actual.status_code == 404
+
 
 @pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
 def test_get_offensive_weakness_valid_types(client, valid_type):
@@ -107,14 +126,6 @@ def test_get_offensive_weakness_valid_types(client, valid_type):
     assert actual_status == expected_status
 
 
-def test_get_offensive_weakness_trailing_slash(client):
-    expected_response: None = None
-    actual: Response = client.get('/weaknesses/offensive/fire/')
-
-    assert actual.json == expected_response
-    assert actual.status_code == 404
-
-
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_offensive_weakness_invalid_type(client, invalid_type):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
@@ -123,3 +134,7 @@ def test_get_offensive_weakness_invalid_type(client, invalid_type):
     response: Response = client.get("/weaknesses/offensive/" + invalid_type)
     assert response.status_code == expected_status
     assert response.json.get("error") == expected_error_message
+
+# ============================================================
+# /weaknesses/defensive/<type>
+# ============================================================
