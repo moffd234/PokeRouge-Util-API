@@ -87,28 +87,12 @@ def test_get_immunities_type_does_not_exist_mono_type(type_utils, input_type):
 
     assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
-
-def test_get_immunities_type_2_does_not_exist(type_utils):
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_immunities_does_not_exist_dual_type(type_utils, input_type):
     with pytest.raises(ValueError) as error:
-        type_utils.get_immunities("fire", "sound")
+        type_utils.get_immunities("fire", input_type)
 
-    assert str(error.value) == "'Sound' is not a valid type"
-
-
-# Tests for a type that does not have any immunities
-def test_get_immunities_fire(type_utils):
-    expected: list[str] = []
-    actual: list[str] = type_utils.get_immunities("fire", None)
-
-    assert actual == expected
-
-
-# Test for dual-type that does not have any immunities
-def test_get_immunities_fire_water(type_utils):
-    expected: list[str] = []
-    actual: list[str] = type_utils.get_immunities("fire", "water")
-    assert actual == expected
-
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
 def test_get_immune_defenders_normal(type_utils):
     expected: list[str] = ["ghost"]
