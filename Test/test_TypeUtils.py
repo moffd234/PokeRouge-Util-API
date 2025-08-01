@@ -126,51 +126,13 @@ def test_get_immunities_both_types_do_not_exist(type_utils):
 # get_immune_defenders(self, attacker: str) -> list[str]:
 # ========================================================================================
 
-def test_get_immune_defenders_normal(type_utils):
-    expected: list[str] = ["ghost"]
-    actual: list[str] = type_utils.get_immune_defenders("normal")
-
-    assert actual == sorted(expected)
-
-
-def test_get_immune_defenders_fighting(type_utils):
-    expected: list[str] = ["ghost"]
-    actual: list[str] = type_utils.get_immune_defenders("fighting")
-
-    assert actual == sorted(expected)
-
-
-def test_get_immune_defenders_electric(type_utils):
-    expected: list[str] = ["ground"]
-    actual: list[str] = type_utils.get_immune_defenders("electric")
-
-    assert actual == sorted(expected)
-
-
-def test_get_immune_defenders_ground(type_utils):
-    expected: list[str] = ["flying"]
-    actual: list[str] = type_utils.get_immune_defenders("ground")
-
-    assert actual == sorted(expected)
-
-
-def test_get_immune_defenders_poison(type_utils):
-    expected: list[str] = ["steel"]
-    actual: list[str] = type_utils.get_immune_defenders("poison")
-
-    assert actual == sorted(expected)
-
-
-def test_get_immune_defenders_psychic(type_utils):
-    expected: list[str] = ["dark"]
-    actual: list[str] = type_utils.get_immune_defenders("psychic")
-
-    assert actual == sorted(expected)
-
-
-def test_get_immune_defenders_dragon(type_utils):
-    expected: list[str] = ["fairy"]
-    actual: list[str] = type_utils.get_immune_defenders("dragon")
+@pytest.mark.parametrize("input_type, expected", [
+    ("normal", ["ghost"]), ("fighting", ["ghost"]), ("fire", []), ("fIrE", []), ("nOrmAl", ["ghost"]),
+    ("electric", ["ground"]), ("ground", ["flying"]), ("poison", ["steel"]), ("psychic", ["dark"]),
+    ("dragon", ["fairy"])
+])
+def test_get_immune_defenders_valid_types(type_utils, input_type, expected):
+    actual: list[str] = type_utils.get_immune_defenders(input_type)
 
     assert actual == sorted(expected)
 
