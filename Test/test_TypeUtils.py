@@ -51,13 +51,12 @@ def test_get_defensive_weakness_type_1_doesnt_exist(type_utils, input_type):
 
     assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
-
-def test_get_defensive_weakness_value_type_2_doesnt_exist(type_utils):
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_defensive_weakness_type_2_doesnt_exist(type_utils, input_type):
     with pytest.raises(ValueError) as error:
-        type_utils.get_defensive_weaknesses("sound", "fire")
+        type_utils.get_defensive_weaknesses("fire", input_type)
 
-    assert str(error.value) == "'Sound' is not a valid type"
-
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
 def test_get_immunities_ghost(type_utils):
     expected: list[str] = ["normal", "fighting"]
