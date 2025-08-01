@@ -70,29 +70,12 @@ def test_get_immunities_valid_mono_type(type_utils, input_type, expected):
     assert actual == sorted(expected)
 
 
-def test_get_immunities_fire_steel(type_utils):
-    expected: list[str] = ["poison"]
-    actual: list[str] = type_utils.get_immunities("fire", "steel")
-    assert actual == sorted(expected)
-
-
-# Test for a dual-type that gets itself as 2 of the immunities
-def test_get_immunities_ghost_normal(type_utils):
-    expected: list[str] = ["fighting", "ghost", "normal"]
-    actual: list[str] = type_utils.get_immunities("ghost", "normal")
-    assert actual == sorted(expected)
-
-
-# Test for a dual-type that gets 1 type's weakness as its immunity
-def test_get_immunities_electric_flying(type_utils):
-    expected: list[str] = ["ground"]
-    actual: list[str] = type_utils.get_immunities("electric", "flying")
-    assert actual == sorted(expected)
-
-
-def test_get_immunities_mixed_case(type_utils):
-    expected: list[str] = ["normal", "fighting"]
-    actual: list[str] = type_utils.get_immunities("GhOsT", None)
+@pytest.mark.parametrize("input_type_1, input_type_2, expected", [
+    ("fire", "steel", ["poison"]), ("FiRe", "steel", ["poison"]), ("FiRe", "sTeEl", ["poison"]),
+    ("fire", "sTeEl", ["poison"]), ("ghost", "normal", ["fighting", "ghost", "normal"]), ("electric", "flying", ["ground"])
+])
+def test_get_immunities_valid_dual_type(type_utils, input_type_1, input_type_2, expected):
+    actual: list[str] = type_utils.get_immunities(input_type_1, input_type_2)
     assert actual == sorted(expected)
 
 
