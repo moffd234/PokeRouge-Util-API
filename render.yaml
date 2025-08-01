@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: pokemon-weakness-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn Application.main:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
