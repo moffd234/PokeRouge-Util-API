@@ -79,11 +79,12 @@ def test_get_immunities_valid_dual_type(type_utils, input_type_1, input_type_2, 
     assert actual == sorted(expected)
 
 
-def test_get_immunities_type_does_not_exist(type_utils):
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_immunities_type_does_not_exist_mono_type(type_utils, input_type):
     with pytest.raises(ValueError) as error:
-        type_utils.get_immunities("sound", None)
+        type_utils.get_immunities(input_type, None)
 
-    assert str(error.value) == "'Sound' is not a valid type"
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
 
 def test_get_immunities_type_2_does_not_exist(type_utils):
