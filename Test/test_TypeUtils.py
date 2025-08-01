@@ -62,7 +62,7 @@ def test_get_defensive_weakness_type_2_doesnt_exist(type_utils, input_type):
 
 @pytest.mark.parametrize("input_type, expected", [
     ("ghost", ["normal", "fighting"]), ("flying", ["ground"]), ("ground", ["electric"]), ("steel", ["poison"]),
-    ("dark", ["psychic"]), ("normal", ["ghost"]), ("fairy", ["dragon"]), ("fAiRy", ["dragon"]),
+    ("dark", ["psychic"]), ("normal", ["ghost"]), ("fairy", ["dragon"]), ("fAiRy", ["dragon"]), ("fire", [])
 ])
 def test_get_immunities_valid_mono_type(type_utils, input_type, expected):
     actual: list[str] = type_utils.get_immunities(input_type, None)
@@ -72,7 +72,8 @@ def test_get_immunities_valid_mono_type(type_utils, input_type, expected):
 
 @pytest.mark.parametrize("input_type_1, input_type_2, expected", [
     ("fire", "steel", ["poison"]), ("FiRe", "steel", ["poison"]), ("FiRe", "sTeEl", ["poison"]),
-    ("fire", "sTeEl", ["poison"]), ("ghost", "normal", ["fighting", "ghost", "normal"]), ("electric", "flying", ["ground"])
+    ("fire", "sTeEl", ["poison"]), ("ghost", "normal", ["fighting", "ghost", "normal"]), ("electric", "flying", ["ground"]),
+    ("fire", "water", [])
 ])
 def test_get_immunities_valid_dual_type(type_utils, input_type_1, input_type_2, expected):
     actual: list[str] = type_utils.get_immunities(input_type_1, input_type_2)
