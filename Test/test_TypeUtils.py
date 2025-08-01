@@ -51,6 +51,7 @@ def test_get_defensive_weakness_type_1_doesnt_exist(type_utils, input_type):
 
     assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
+
 @pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
 def test_get_defensive_weakness_type_2_doesnt_exist(type_utils, input_type):
     with pytest.raises(ValueError) as error:
@@ -58,51 +59,13 @@ def test_get_defensive_weakness_type_2_doesnt_exist(type_utils, input_type):
 
     assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
-def test_get_immunities_ghost(type_utils):
-    expected: list[str] = ["normal", "fighting"]
-    actual: list[str] = type_utils.get_immunities("ghost", None)
 
-    assert actual == sorted(expected)
-
-
-def test_get_immunities_flying(type_utils):
-    expected: list[str] = ["ground"]
-    actual: list[str] = type_utils.get_immunities("flying", None)
-
-    assert actual == sorted(expected)
-
-
-def test_get_immunities_ground(type_utils):
-    expected: list[str] = ["electric"]
-    actual: list[str] = type_utils.get_immunities("ground", None)
-
-    assert actual == sorted(expected)
-
-
-def test_get_immunities_poison(type_utils):
-    expected: list[str] = ["poison"]
-    actual: list[str] = type_utils.get_immunities("steel", None)
-
-    assert actual == sorted(expected)
-
-
-def test_get_immunities_dark(type_utils):
-    expected: list[str] = ["psychic"]
-    actual: list[str] = type_utils.get_immunities("dark", None)
-
-    assert actual == sorted(expected)
-
-
-def test_get_immunities_normal(type_utils):
-    expected: list[str] = ["ghost"]
-    actual: list[str] = type_utils.get_immunities("normal", None)
-
-    assert actual == sorted(expected)
-
-
-def test_get_immunities_fair(type_utils):
-    expected: list[str] = ["dragon"]
-    actual: list[str] = type_utils.get_immunities("fairy", None)
+@pytest.mark.parametrize("input_type, expected", [
+    ("ghost", ["normal", "fighting"]), ("flying", ["ground"]), ("ground", ["electric"]), ("steel", ["poison"]),
+    ("dark", ["psychic"]), ("normal", ["ghost"]), ("fairy", ["dragon"])
+])
+def test_get_immunities_valid_mono_type(type_utils, input_type, expected):
+    actual: list[str] = type_utils.get_immunities(input_type, None)
 
     assert actual == sorted(expected)
 
