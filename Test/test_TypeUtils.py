@@ -13,6 +13,7 @@ def test_get_offensive_weakness_valid(type_utils, input_type, expected):
 
     assert actual == sorted(expected)
 
+
 @pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
 def test_get_offensive_weakness_type_doesnt_exist(type_utils, input_type):
     with pytest.raises(ValueError) as error:
@@ -21,9 +22,13 @@ def test_get_offensive_weakness_type_doesnt_exist(type_utils, input_type):
     assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
 
-def test_get_defensive_weakness_fire(type_utils):
-    expected: list[str] = ["ground", "rock", "water"]
-    actual: list[str] = type_utils.get_defensive_weaknesses("fire", None)
+@pytest.mark.parametrize("input_type, expected", [
+    ("fire", ["ground", "rock", "water"]), ("fIrE", ["ground", "rock", "water"]), ("normal", ["fighting"]),
+    ("fighting", ["flying", "psychic", "fairy"]), ("flying", ["rock", "electric", "ice"]),
+    ("poison", ["ground", "psychic"]), ("dark", ["fighting", "bug", "fairy"])
+])
+def test_get_defensive_weakness_valid_type(type_utils, input_type, expected):
+    actual: list[str] = type_utils.get_defensive_weaknesses(input_type, None)
 
     assert actual == sorted(expected)
 
