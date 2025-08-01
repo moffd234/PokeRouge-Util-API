@@ -94,6 +94,18 @@ def test_get_immunities_does_not_exist_dual_type(type_utils, input_type):
 
     assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
+def test_get_immunities_first_type_does_not_exist(type_utils):
+    with pytest.raises(ValueError) as error:
+        type_utils.get_immunities("sound", "fire")
+
+    assert str(error.value) == f"'Sound' is not a valid type"
+
+def test_get_immunities_both_types_do_not_exist(type_utils):
+    with pytest.raises(ValueError) as error:
+        type_utils.get_immunities("sound", "music")
+
+    assert str(error.value) == f"'Sound' is not a valid type"
+
 def test_get_immune_defenders_normal(type_utils):
     expected: list[str] = ["ghost"]
     actual: list[str] = type_utils.get_immune_defenders("normal")
