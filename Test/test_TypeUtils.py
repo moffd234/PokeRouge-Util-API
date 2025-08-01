@@ -3,44 +3,13 @@ import pytest
 from Application.Models.Pokemon import Pokemon
 
 
-def test_get_offensive_weakness_fire(type_utils):
-    expected: list[str] = ["fire", "water", "rock", "dragon"]
-    actual: list[str] = type_utils.get_offensive_weaknesses("fire")
-
-    assert actual == sorted(expected)
-
-
-def test_get_offensive_weakness_grass(type_utils):
-    expected: list[str] = ["flying", "poison", "bug", "fire", "steel", "grass", "dragon"]
-    actual: list[str] = type_utils.get_offensive_weaknesses("grass")
-
-    assert actual == sorted(expected)
-
-
-def test_get_offensive_weakness_ghost(type_utils):
-    expected: list[str] = ["dark"]
-    actual: list[str] = type_utils.get_offensive_weaknesses("ghost")
-
-    assert actual == sorted(expected)
-
-
-def test_get_fairy_offensive_weakness(type_utils):
-    expected: list[str] = ["poison", "steel", "fire"]
-    actual: list[str] = type_utils.get_offensive_weaknesses("fairy")
-
-    assert actual == sorted(expected)
-
-
-def test_get_offensive_weakness_fire_uppercase(type_utils):
-    expected: list[str] = ["fire", "water", "rock", "dragon"]
-    actual: list[str] = type_utils.get_offensive_weaknesses("FIRE")
-
-    assert actual == sorted(expected)
-
-
-def test_get_offensive_weakness_fire_mix_case(type_utils):
-    expected: list[str] = ["fire", "water", "rock", "dragon"]
-    actual: list[str] = type_utils.get_offensive_weaknesses("fIrE")
+@pytest.mark.parametrize("input_type, expected", [
+    ("fire", ["fire", "water", "rock", "dragon"]), ("fIrE", ["fire", "water", "rock", "dragon"]),
+    ("grass", ["flying", "poison", "bug", "fire", "steel", "grass", "dragon"]),
+    ("ghost", ["dark"]), ("fairy", ["poison", "steel", "fire"]), ("normal", ["rock", "steel"])
+])
+def test_get_offensive_weakness_valid(type_utils, input_type, expected):
+    actual: list[str] = type_utils.get_offensive_weaknesses(input_type)
 
     assert actual == sorted(expected)
 
