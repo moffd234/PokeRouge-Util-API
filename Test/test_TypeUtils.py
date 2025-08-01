@@ -136,26 +136,12 @@ def test_get_immune_defenders_valid_types(type_utils, input_type, expected):
 
     assert actual == sorted(expected)
 
-
-def test_get_immune_defenders_type_does_not_exist(type_utils):
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_immune_defenders_type_does_not_exist(type_utils, input_type):
     with pytest.raises(ValueError) as error:
-        type_utils.get_immune_defenders("sound")
+        type_utils.get_immune_defenders(input_type)
 
-    assert str(error.value) == "'Sound' is not a valid type"
-
-
-# Tests for a type that does not have any immune defenders
-def test_get_immune_defenders_fire(type_utils):
-    expected: list[str] = []
-    actual: list[str] = type_utils.get_immune_defenders("fire")
-
-    assert actual == expected
-
-
-def test_get_immune_defenders_mixed_case(type_utils):
-    expected: list[str] = ["ghost"]
-    actual: list[str] = type_utils.get_immune_defenders("NoRmAl")
-    assert actual == sorted(expected)
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
 
 # ========================================================================================
