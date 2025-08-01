@@ -27,3 +27,23 @@ jobs:
         run: |
           pip install pytest
           PYTHONPATH=$(pwd) pytest
+
+  deploy-render:
+    needs: build
+    runs-on: ubuntu-latest
+    if: success()
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Push to render branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git checkout -B render
+          git push origin render --force
