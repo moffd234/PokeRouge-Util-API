@@ -182,3 +182,7 @@ def test_get_weakness_summary_invalid_type(type_utils, example_pokemon):
     actual: dict = type_utils.get_weakness_summary(pokemon)
 
     assert actual == expected
+
+
+def test_builds_is_working():
+    assert 1 == 2
