@@ -45,11 +45,11 @@ def test_get_defensive_weakness_valid_dual_type(type_utils, input_type_1, input_
 
 
 @pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
-def test_get_defensive_weakness_value_type_1_doesnt_exist(type_utils, input_type):
+def test_get_defensive_weakness_type_1_doesnt_exist(type_utils, input_type):
     with pytest.raises(ValueError) as error:
-        type_utils.get_defensive_weaknesses({input_type}, "sound")
+        type_utils.get_defensive_weaknesses(input_type, "fire")
 
-    assert str(error.value) == f"{input_type.title} is not a valid type"
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
 
 
 def test_get_defensive_weakness_value_type_2_doesnt_exist(type_utils):
