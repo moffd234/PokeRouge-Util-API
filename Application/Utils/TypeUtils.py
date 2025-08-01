@@ -95,10 +95,12 @@ class TypeUtils:
         if type_1 not in self.types:
             raise ValueError(f"'{type_1.title()}' is not a valid type")
 
-        if type_2 is not None:
-            type_2 = type_2.lower()
-            if type_2 not in self.types:
-                raise ValueError(f"'{type_2.title()}' is not a valid type")
+        if type_2 is None or type_2 == type_1:
+            return sorted([attacker for attacker in self.types if self.types[attacker][type_1] > 1.0])
+
+        type_2 = type_2.lower()
+        if type_2 not in self.types:
+            raise ValueError(f"'{type_2.title()}' is not a valid type")
 
         output: list[str] = []
 
