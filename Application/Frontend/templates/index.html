@@ -1,2 +1,28 @@
 {% extends "base.html" %}
 
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center vh-100 text-center">
+    <main class="px-3"><h1>Pokerouge Utilities</h1>
+        <p class="lead"> A collection of helpful tools and resources to enhance your Pokémon Rouge experience <br>
+            from type weakness checking to team analysis and biome exploration.</p>
+        <p class="lead">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                Explore Tools
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<!--                Add links to page transitions-->
+                <li><a class="dropdown-item" href="#">Type Weakness Checker</a></li>
+                <li><a class="dropdown-item" href="#">Team Builder</a></li>
+                <li><a class="dropdown-item" href="#">Biome Browser</a></li>
+            </ul>
+        </div>
+
+    </main>
+</div>
+
+{% endblock %}
