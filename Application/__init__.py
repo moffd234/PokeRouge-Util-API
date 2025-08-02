@@ -5,7 +5,7 @@ from Application.extensions import db
 
 
 def create_app(test_config: dict = None) -> Flask:
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder="./Frontend/templates", static_folder="./Frontend/static")
 
     if test_config:
         app.config.update(test_config)
