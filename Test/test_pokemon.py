@@ -1,12 +1,15 @@
-def test_pokemon_constructor(example_pokemon):
-    example_pokemon = example_pokemon["bulbasaur"]
+from Application.Models.Pokemon import Pokemon
+
+
+def test_pokemon_constructor():
+    example_pokemon = Pokemon.query.filter_by(name="BULBASAUR").first()
     assert example_pokemon.id is not None
     assert example_pokemon.name == "BULBASAUR"
     assert example_pokemon.generation == 1
     assert example_pokemon.sub_legendary == False
     assert example_pokemon.legendary == False
     assert example_pokemon.mythical == False
-    assert example_pokemon.category == "Seed Pokemon"
+    assert example_pokemon.category == "Seed Pokémon"
     assert example_pokemon.type_1 == "GRASS"
     assert example_pokemon.type_2 == "POISON"
     assert example_pokemon.ability_1 == "OVERGROW"
@@ -28,13 +31,13 @@ def test_pokemon_constructor(example_pokemon):
     assert example_pokemon.male_percent == 87.5
     assert example_pokemon.gender_diffs == False
 
-def test_pokemon_to_dict(example_pokemon):
-    example_pokemon = example_pokemon["bulbasaur"]
+def test_pokemon_to_dict():
+    example_pokemon = Pokemon.query.filter_by(name="BULBASAUR").first()
     expected: dict = {
             "id": 1,
             "name": "BULBASAUR",
             "generation": 1,
-            "category": "Seed Pokemon",
+            "category": "Seed Pokémon",
             "legendary_status": {
                 "sub_legendary": False,
                 "legendary": False,
