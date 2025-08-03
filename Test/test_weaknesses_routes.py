@@ -16,7 +16,7 @@ def assert_empty_response(client, route: str):
     assert actual.status_code == 404
 
 
-def test_incomplete_weakness_route(client, example_pokemon):
+def test_incomplete_weakness_route(client):
     expected_response: None = None
     actual: Response = client.get('/weaknesses/')
 
@@ -28,11 +28,11 @@ def test_incomplete_weakness_route(client, example_pokemon):
 # /weaknesses/summary/<pokemon>
 # ============================================================
 
-def test_get_weakness_summary_pokemon_empty_str(client, example_pokemon):
+def test_get_weakness_summary_pokemon_empty_str(client):
     assert_empty_response(client, '/weaknesses/')
 
 
-def test_get_weakness_summary(client, example_pokemon):
+def test_get_weakness_summary(client):
     expected_summary: dict = {
         "offensive_weaknesses": {"grass": sorted(["flying", "poison", "bug", "steel", "fire", "grass", "dragon"]),
                                  "poison": sorted(["poison", "ground", "rock", "ghost"])},
@@ -47,7 +47,7 @@ def test_get_weakness_summary(client, example_pokemon):
     assert actual.status_code == 200
 
 
-def test_get_weakness_summary_mixed_case(client, example_pokemon):
+def test_get_weakness_summary_mixed_case(client):
     expected_summary: dict = {
         "offensive_weaknesses": {"grass": sorted(["flying", "poison", "bug", "steel", "fire", "grass", "dragon"]),
                                  "poison": sorted(["poison", "ground", "rock", "ghost"])},
@@ -62,7 +62,7 @@ def test_get_weakness_summary_mixed_case(client, example_pokemon):
     assert actual.status_code == 200
 
 
-def test_get_weakness_summary_pokemon_not_found(client, example_pokemon):
+def test_get_weakness_summary_pokemon_not_found(client):
     expected_response: dict[str, str] = {"message": "Pokemon not found"}
     actual: Response = client.get('/weaknesses/summary/bulba')
 
@@ -72,7 +72,7 @@ def test_get_weakness_summary_pokemon_not_found(client, example_pokemon):
 
 @patch("Application.Routes.Weakness.TypeUtils.get_weakness_summary",
        return_value={"error": "'Sound' is not a valid type"})
-def test_get_mock_get_summary(mock_type_util, client, example_pokemon):
+def test_get_mock_get_summary(mock_type_util, client):
     expected_response: dict[str, str] = {"error": "'Sound' is not a valid type"}
     actual: Response = client.get('/weaknesses/summary/bulbasaur')
 
@@ -81,7 +81,7 @@ def test_get_mock_get_summary(mock_type_util, client, example_pokemon):
     assert actual.status_code == 400
 
 
-def test_get_weakness_summary_pokemon_empty_space(client, example_pokemon):
+def test_get_weakness_summary_pokemon_empty_space(client):
     expected_response: dict[str, str] = {"message": "Pokemon not found"}
     actual: Response = client.get('/weaknesses/summary/ ')
 
