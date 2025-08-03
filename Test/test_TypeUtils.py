@@ -148,7 +148,7 @@ def test_get_immune_defenders_type_does_not_exist(type_utils, input_type):
 # get_weakness_summary(self, pokemon_species: Pokemon):
 # ========================================================================================
 
-def test_get_weakness_summary_bulbasaur(type_utils, example_pokemon):
+def test_get_weakness_summary_bulbasaur(type_utils):
     expected: dict = {
         "offensive_weaknesses": {"grass": sorted(["flying", "poison", "bug", "steel", "fire", "grass", "dragon"]),
                                  "poison": sorted(["poison", "ground", "rock", "ghost"])},
@@ -157,12 +157,12 @@ def test_get_weakness_summary_bulbasaur(type_utils, example_pokemon):
         "immune_defenders": {"grass": [], "poison": ["steel"]},
     }
 
-    actual: dict = type_utils.get_weakness_summary(example_pokemon["bulbasaur"])
+    actual: dict = type_utils.get_weakness_summary(Pokemon.query.filter_by(name="BULBASAUR").first())
 
     assert actual == expected
 
 
-def test_get_weakness_summary_lunala(type_utils, example_pokemon):
+def test_get_weakness_summary_lunala(type_utils):
     expected: dict = {
 
         "offensive_weaknesses": {"psychic": sorted(["steel", "psychic"]), "ghost": ["dark"]},
@@ -171,13 +171,13 @@ def test_get_weakness_summary_lunala(type_utils, example_pokemon):
         "immune_defenders": {"psychic": ["dark"], "ghost": ["normal"]},
     }
 
-    actual: dict = type_utils.get_weakness_summary(example_pokemon["lunala"])
+    actual: dict = type_utils.get_weakness_summary(Pokemon.query.filter_by(name="LUNALA").first())
 
     assert actual == expected
 
 
-def test_get_weakness_summary_invalid_type(type_utils, example_pokemon):
-    pokemon: Pokemon = example_pokemon["fake"]
+def test_get_weakness_summary_invalid_type(type_utils):
+    pokemon: Pokemon = Pokemon.query.filter_by(name="FAKE_POKEMON").first()
     expected: dict = {"error": "'Sound' is not a valid type"}
     actual: dict = type_utils.get_weakness_summary(pokemon)
 
