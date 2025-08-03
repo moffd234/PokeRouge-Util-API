@@ -1,8 +1,10 @@
 from flask import Response
 
+from Application.Models.Pokemon import Pokemon
 
-def test_pokedex_success(client, example_pokemon):
-    example_pokemon = example_pokemon["bulbasaur"]
+
+def test_pokedex_success(client):
+    example_pokemon = Pokemon.query.filter_by(name="BULBASAUR").first()
     expected_pokemon_info: dict = example_pokemon.to_dict()
     expected_status_code: int = 200
 
