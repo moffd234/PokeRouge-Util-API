@@ -70,8 +70,6 @@ class TypeUtils:
             type_util_logger.warning(f"Invalid type '{pokemon_type.title()}' provided.")
             raise ValueError(f"'{pokemon_type.title()}' is not a valid type")
 
-
-
     def get_offensive_weaknesses(self, atk_type: str) -> list[str]:
         """
         Returns a list of defending types that take half damage (0.5x) from the given attacking type.
@@ -83,9 +81,7 @@ class TypeUtils:
         """
         atk_type = atk_type.lower()
 
-        if atk_type not in self.types:
-            type_util_logger.warning(f"Invalid type '{atk_type.title()}' provided.")
-            raise ValueError(f"'{atk_type.title()}' is not a valid type")
+        self.validate_type(atk_type)
 
         matchups: dict[str, float] = self.types[atk_type]
 
@@ -104,17 +100,13 @@ class TypeUtils:
         """
         type_1 = type_1.lower()
 
-        if type_1 not in self.types:
-            type_util_logger.warning(f"Invalid type '{type_1.title()}' provided.")
-            raise ValueError(f"'{type_1.title()}' is not a valid type")
+        self.validate_type(type_1)
 
         if type_2 is None or type_2 == type_1:
             return sorted([attacker for attacker in self.types if self.types[attacker][type_1] > 1.0])
 
         type_2 = type_2.lower()
-        if type_2 not in self.types:
-            type_util_logger.warning(f"Invalid type '{type_2.title()}' provided.")
-            raise ValueError(f"'{type_2.title()}' is not a valid type")
+        self.validate_type(type_2)
 
         output: list[str] = []
 
@@ -141,15 +133,11 @@ class TypeUtils:
         """
         type_1 = type_1.lower()
 
-        if type_1 not in self.types:
-            type_util_logger.warning(f"Invalid type '{type_1.title()}' provided.")
-            raise ValueError(f"'{type_1.title()}' is not a valid type")
+        self.validate_type(type_1)
 
         if type_2 is not None:
             type_2 = type_2.lower()
-            if type_2 not in self.types:
-                type_util_logger.warning(f"Invalid type '{type_2.title()}' provided.")
-                raise ValueError(f"'{type_2.title()}' is not a valid type")
+            self.validate_type(type_2)
 
         output: list[str] = []
 
@@ -176,9 +164,7 @@ class TypeUtils:
         """
         attacker = attacker.lower()
 
-        if attacker not in self.types:
-            type_util_logger.warning(f"Invalid type '{attacker.title()}' provided.")
-            raise ValueError(f"'{attacker.title()}' is not a valid type")
+        self.validate_type(attacker)
 
         attacker_matchups = self.types[attacker]
 
