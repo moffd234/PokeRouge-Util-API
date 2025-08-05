@@ -1,3 +1,4 @@
+import logging
 import re
 import requests
 import json
@@ -30,6 +31,8 @@ FIELD_NAMES = [
     "baseFriendship",
     "baseExp","growthRate","malePercent","genderDiffs","canChangeForm"
 ]
+
+extractor_logger = logging.getLogger("utils.extractor")
 
 
 def extract_species_blocks(source):
@@ -85,7 +88,13 @@ def parse_simple_value(val):
 
 
 def main():
-    source = requests.get(POKEMON_SPECIES_TS_URL).text
+    try:
+        source = requests.get(POKEMON_SPECIES_TS_URL).text
+
+    except requests.exceptions.RequestException as error:
+        extractor_logger.critical(f"Failed to get species data from pokerouge repo: {error}", exc_info=True)
+        return
+
     species_blocks = extract_species_blocks(source)
 
     all_species = []
@@ -102,7 +111,7 @@ def main():
     with open("../Data/pokemon_species.json", "w", encoding="utf-8") as f:
         json.dump(all_species, f, indent=4, ensure_ascii=False)
 
-    print(f"Extracted {len(all_species)} Pokémon species into pokemon_species.json")
+    extractor_logger.info(f"Extracted {len(all_species)} Pokémon species into pokemon_species.json")
 
 
 if __name__ == "__main__":
