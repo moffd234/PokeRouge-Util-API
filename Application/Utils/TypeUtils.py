@@ -1,4 +1,8 @@
+import logging
+
 from Application.Models.Pokemon import Pokemon
+
+type_util_logger = logging.getLogger("utils.type")
 
 
 class TypeUtils:
@@ -73,6 +77,7 @@ class TypeUtils:
         atk_type = atk_type.lower()
 
         if atk_type not in self.types:
+            type_util_logger.warning(f"Invalid type '{atk_type.title()}' provided.")
             raise ValueError(f"'{atk_type.title()}' is not a valid type")
 
         matchups: dict[str, float] = self.types[atk_type]
@@ -93,6 +98,7 @@ class TypeUtils:
         type_1 = type_1.lower()
 
         if type_1 not in self.types:
+            type_util_logger.warning(f"Invalid type '{type_1.title()}' provided.")
             raise ValueError(f"'{type_1.title()}' is not a valid type")
 
         if type_2 is None or type_2 == type_1:
@@ -100,6 +106,7 @@ class TypeUtils:
 
         type_2 = type_2.lower()
         if type_2 not in self.types:
+            type_util_logger.warning(f"Invalid type '{type_2.title()}' provided.")
             raise ValueError(f"'{type_2.title()}' is not a valid type")
 
         output: list[str] = []
@@ -128,11 +135,13 @@ class TypeUtils:
         type_1 = type_1.lower()
 
         if type_1 not in self.types:
+            type_util_logger.warning(f"Invalid type '{type_1.title()}' provided.")
             raise ValueError(f"'{type_1.title()}' is not a valid type")
 
         if type_2 is not None:
             type_2 = type_2.lower()
             if type_2 not in self.types:
+                type_util_logger.warning(f"Invalid type '{type_2.title()}' provided.")
                 raise ValueError(f"'{type_2.title()}' is not a valid type")
 
         output: list[str] = []
@@ -161,6 +170,7 @@ class TypeUtils:
         attacker = attacker.lower()
 
         if attacker not in self.types:
+            type_util_logger.warning(f"Invalid type '{attacker.title()}' provided.")
             raise ValueError(f"'{attacker.title()}' is not a valid type")
 
         attacker_matchups = self.types[attacker]
@@ -195,4 +205,6 @@ class TypeUtils:
             }
 
         except ValueError as error:
+            type_util_logger.error(f"Error getting weakness summary for '{pokemon_species.name}': {error}",
+                                   exc_info=True)
             return {"error": str(error)}
