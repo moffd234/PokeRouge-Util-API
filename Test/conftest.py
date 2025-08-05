@@ -1,4 +1,6 @@
 import json
+import os
+
 import pytest
 from flask import Flask
 from Application import create_app, db
@@ -29,8 +31,10 @@ def client(app):
 
 @pytest.fixture(scope="session", autouse=True)
 def seeded_pokemon(app):
+    base_dir = os.path.dirname(__file__)
+    json_path = os.path.join(base_dir, "../Application/Data/pokemon_species.json")
 
-    with open("../Application/Data/pokemon_species.json") as f:
+    with open(json_path) as f:
         data = json.load(f)
 
     for entry in data:
