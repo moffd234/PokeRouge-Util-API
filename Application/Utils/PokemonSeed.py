@@ -1,6 +1,11 @@
 import json
+import logging
+from json import JSONDecodeError
+
 from Application import create_app, db
 from Application.Models.Pokemon import Pokemon
+
+seed_logger = logging.getLogger("data.seed")
 
 
 def build_pokemon(entry: dict) -> Pokemon:
@@ -52,14 +57,17 @@ def seed_pokemon_species():
     app = create_app()
 
     with app.app_context():
-        with open("../Data/pokemon_species.json", "r") as file:
-            data: dict = json.load(file)
+        try:
+            with open("../Data/pokemon_species.json", "r") as file:
+                data: dict = json.load(file)
+        except (FileNotFoundError, JSONDecodeError) as error:
+            seed_logger.critical(f"Failed to load pokemon_species.json: {error}")
 
         added: int = 0
         for entry in data:
             try:
                 if db.session.get(Pokemon, entry["id"]):
-                    print(f"⚠️  Skipped: {entry['id']}")
+                    seed_logger.warning(f"Skipped existing Pokémon: {entry['id']}")
                     continue
 
                 pokemon = build_pokemon(entry)
@@ -67,18 +75,19 @@ def seed_pokemon_species():
                 db.session.flush()
 
                 added += 1
-                print(f"✅ Added: {entry['id']}")
+                seed_logger.info(f"✅ Added: {entry['id']}")
 
-            except Exception as e:
+            except Exception as error:
                 db.session.rollback()
-                print(f"Failed to add Pokémon {entry.get('id', 'UNKNOWN')}: {e}")
+
+                seed_logger.error(f"Failed to add Pokémon {entry.get('id', 'UNKNOWN')}: {error}", exc_info=True)
 
         try:
             db.session.commit()
-            print(f"\nSeed complete. {added} Pokémon added.")
-        except Exception as e:
+            seed_logger.info(f"Seed complete. {added} Pokémon added.")
+        except Exception as error:
             db.session.rollback()
-            print(f"Final db commit failed: {e}")
+            seed_logger.error(f"Final database commit failed: {error}", exc_info=True)
 
 
 if __name__ == "__main__":
