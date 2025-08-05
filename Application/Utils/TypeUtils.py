@@ -66,6 +66,12 @@ class TypeUtils:
         }
 
     def validate_type(self, pokemon_type: str) -> None:
+        """
+        Validates if a given Pokémon type is supported.
+
+        :param pokemon_type: The Pokémon type to validate.
+        :return: None, if the type is valid. Raises ValueError otherwise.
+        """
         if pokemon_type.lower() not in self.types:
             type_util_logger.warning(f"Invalid type '{pokemon_type.title()}' provided.")
             raise ValueError(f"'{pokemon_type.title()}' is not a valid type")
