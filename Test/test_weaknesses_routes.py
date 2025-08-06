@@ -88,15 +88,17 @@ def test_get_weakness_summary_pokemon_empty_space(client):
     assert actual.json == expected_response
     assert actual.status_code == 404
 
+# ============================================================
+# Mono-type tests
+# ============================================================
 
+valid_types: list = list(type_util.types.keys()) + ['FiRe', 'FIRE']
 route_methods: dict = {
     "offensive": type_util.get_offensive_weaknesses,
     "defensive": type_util.get_defensive_weaknesses,
     "immunities": type_util.get_immunities,
     "immune-defenders": type_util.get_immune_defenders,
 }
-
-valid_types: list = list(type_util.types.keys()) + ['FiRe', 'FIRE']
 
 @pytest.mark.parametrize("route", route_methods.keys())
 @pytest.mark.parametrize('valid_type', valid_types)
@@ -117,6 +119,29 @@ def test_valid_inputs(client, route: str, valid_type: str):
 
     assert actual_list == expected_list
     assert actual_status == expected_status
+
+# ============================================================
+# Dual-type tests
+# ============================================================
+dual_type_routes = ["defensive", "immunities"]
+
+@pytest.mark.parametrize("route", dual_type_routes)
+@pytest.mark.parametrize('valid_type_1', ["fire", "ghost", "fIrE"])
+@pytest.mark.parametrize('valid_type_2', valid_types)
+def test_valid_inputs_dual_type(client, route: str, valid_type_1: str, valid_type_2: str):
+    """Tests dual type routes with valid inputs"""
+    subject = route_methods[route]
+
+    expected_list: list = subject(valid_type_1, valid_type_2)
+    expected_status: int = 200
+
+    response: Response = client.get(f'/weaknesses/{route}/{valid_type_1}/{valid_type_2}')
+    actual_list: Response = response.json
+    actual_status: int = response.status_code
+
+    assert actual_list == expected_list
+    assert actual_status == expected_status
+
 
 
 # ============================================================
