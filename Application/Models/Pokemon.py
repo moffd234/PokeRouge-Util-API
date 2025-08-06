@@ -68,10 +68,20 @@ class Pokemon(db.Model):
     male_percent = db.Column(db.Float, nullable=True)
     gender_diffs = db.Column(db.Boolean, nullable=False)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """
+        Returns a string representation of the Pokémon object.
+
+        :return: A formatted string with name, generation, and types.
+        """
         return f"<Pokemon {self.name} (Gen {self.generation}, Type: {self.type_1} {self.type_2})>"
 
     def to_dict(self) -> dict:
+        """
+        Serializes the Pokémon object into a dictionary format.
+
+        :return: A dictionary containing all Pokémon attributes, grouped by category.
+        """
         return {
             "id": self.id,
             "name": self.name,
