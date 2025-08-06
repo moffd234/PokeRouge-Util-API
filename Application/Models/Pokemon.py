@@ -14,7 +14,7 @@ class Pokemon(db.Model):
         self.mythical: bool = mythical
         self.category: str = category
         self.type_1: str = type_1
-        self.type_2: str | None= type_2
+        self.type_2: str | None = type_2
         self.ability_1: str = ability_1
         self.ability_2: str | None = ability_2
         self.hidden_ability: str = hidden_ability
@@ -33,7 +33,6 @@ class Pokemon(db.Model):
         self.growth_rate: str = growth_rate
         self.male_percent: float | None = male_percent
         self.gender_diffs: bool = gender_diffs
-
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(12), unique=True, nullable=False)
