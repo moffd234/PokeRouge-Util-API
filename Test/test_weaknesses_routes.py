@@ -89,6 +89,35 @@ def test_get_weakness_summary_pokemon_empty_space(client):
     assert actual.status_code == 404
 
 
+route_methods: dict = {
+    "offensive": type_util.get_offensive_weaknesses,
+    "defensive": type_util.get_defensive_weaknesses,
+    "immunities": type_util.get_immunities,
+    "immune-defenders": type_util.get_immune_defenders,
+}
+
+
+@pytest.mark.parametrize("route", route_methods.keys())
+@pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
+def test_valid_inputs(client, route: str, valid_type: str):
+    """Tests all weaknesses routes with valid inputs"""
+    subject = route_methods[route]
+
+    if route == "defensive" or route == "immunities":
+        expected_list: list = subject(valid_type, None)
+
+    else:
+        expected_list: list = subject(valid_type)
+    expected_status: int = 200
+
+    response: Response = client.get(f'/weaknesses/{route}/{valid_type}')
+    actual_list: Response = response.json
+    actual_status: int = response.status_code
+
+    assert actual_list == expected_list
+    assert actual_status == expected_status
+
+
 # ============================================================
 # /weaknesses/offensive/<type>
 # ============================================================
@@ -96,19 +125,6 @@ def test_get_weakness_summary_pokemon_empty_space(client):
 @pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
 def test_get_offensive_weakness_bad_route(client, bad_route):
     assert_empty_response(client, f'/weaknesses/offensive/{bad_route}')
-
-
-@pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
-def test_get_offensive_weakness_valid_types(client, valid_type):
-    expected_list: list[str] = type_util.get_offensive_weaknesses(valid_type)
-    expected_status: int = 200
-
-    response: Response = client.get(f'/weaknesses/offensive/{valid_type}')
-    actual_list: Response = response.json
-    actual_status: int = response.status_code
-
-    assert actual_list == expected_list
-    assert actual_status == expected_status
 
 
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
@@ -127,19 +143,6 @@ def test_get_offensive_weakness_invalid_type(client, invalid_type):
 @pytest.mark.parametrize("bad_route", ["", "/"])
 def test_get_defensive_weakness_bad_routes(client, bad_route):
     assert_empty_response(client, f'/weaknesses/defensive/{bad_route}')
-
-
-@pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
-def test_get_defensive_weakness_valid_types(client, valid_type):
-    expected_list: list[str] = type_util.get_defensive_weaknesses(valid_type, type_2=None)
-    expected_status: int = 200
-
-    response: Response = client.get(f'/weaknesses/defensive/{valid_type}')
-    actual_list: Response = response.json
-    actual_status: int = response.status_code
-
-    assert actual_list == expected_list
-    assert actual_status == expected_status
 
 
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
@@ -192,19 +195,6 @@ def test_get_immunities_bad_route(client, bad_route):
     assert_empty_response(client, f'/weaknesses/immunities/{bad_route}')
 
 
-@pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
-def test_get_immunities_valid_types(client, valid_type):
-    expected_list: list[str] = type_util.get_immunities(valid_type, None)
-    expected_status: int = 200
-
-    response: Response = client.get(f'/weaknesses/immunities/{valid_type}')
-    actual_list: Response = response.json
-    actual_status: int = response.status_code
-
-    assert actual_list == expected_list
-    assert actual_status == expected_status
-
-
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_immunities_invalid_type(client, invalid_type):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
@@ -255,19 +245,6 @@ def test_get_immunities_invalid_dual_type(client, invalid_type):
 @pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
 def test_get_immune_defenders_bad_route_dual_types(client, bad_route):
     assert_empty_response(client, f'/weaknesses/immune-defenders/{bad_route}')
-
-
-@pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
-def test_get_immune_defenders_valid_types(client, valid_type):
-    expected_list: list[str] = type_util.get_immune_defenders(valid_type)
-    expected_status: int = 200
-
-    response: Response = client.get(f'/weaknesses/immune-defenders/{valid_type}')
-    actual_list: Response = response.json
-    actual_status: int = response.status_code
-
-    assert actual_list == expected_list
-    assert actual_status == expected_status
 
 
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
