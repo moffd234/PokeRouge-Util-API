@@ -96,9 +96,10 @@ route_methods: dict = {
     "immune-defenders": type_util.get_immune_defenders,
 }
 
+valid_types: list = list(type_util.types.keys()) + ['FiRe', 'FIRE']
 
 @pytest.mark.parametrize("route", route_methods.keys())
-@pytest.mark.parametrize('valid_type', ['fire', 'ghost', 'poison', 'FiRe', 'FIRE'])
+@pytest.mark.parametrize('valid_type', valid_types)
 def test_valid_inputs(client, route: str, valid_type: str):
     """Tests all weaknesses routes with valid inputs"""
     subject = route_methods[route]
