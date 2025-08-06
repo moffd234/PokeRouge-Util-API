@@ -123,6 +123,11 @@ def test_valid_inputs(client, route: str, valid_type: str):
     assert actual_status == expected_status
 
 
+@pytest.mark.parametrize("route", route_methods.keys())
+@pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
+def test_bad_route(client, route, bad_route):
+    assert_empty_response(client, f'weaknesses/{route}/{bad_route}')
+
 # ============================================================
 # Dual-type tests
 # ============================================================
@@ -151,11 +156,6 @@ def test_valid_inputs_dual_type(client, route: str, valid_type_1: str, valid_typ
 # /weaknesses/offensive/<type>
 # ============================================================
 
-@pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
-def test_get_offensive_weakness_bad_route(client, bad_route):
-    assert_empty_response(client, f'/weaknesses/offensive/{bad_route}')
-
-
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_offensive_weakness_invalid_type(client, invalid_type):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
@@ -169,11 +169,6 @@ def test_get_offensive_weakness_invalid_type(client, invalid_type):
 # ============================================================
 # /weaknesses/defensive/<type>
 # ============================================================
-@pytest.mark.parametrize("bad_route", ["", "/"])
-def test_get_defensive_weakness_bad_routes(client, bad_route):
-    assert_empty_response(client, f'/weaknesses/defensive/{bad_route}')
-
-
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_defensive_weakness_invalid_type(client, invalid_type):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
@@ -187,11 +182,6 @@ def test_get_defensive_weakness_invalid_type(client, invalid_type):
 # ============================================================
 # /weaknesses/defensive/<type>/<type>
 # ============================================================
-@pytest.mark.parametrize("bad_route", ["", "/", "ghost/water"])
-def test_get_defensive_weakness_multitype_bad_routes(client, bad_route):
-    assert_empty_response(client, f'/weaknesses/defensive/poison/{bad_route}')
-
-
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_defensive_weakness_invalid_multitype(client, invalid_type):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
@@ -205,12 +195,6 @@ def test_get_defensive_weakness_invalid_multitype(client, invalid_type):
 # ============================================================
 # /weaknesses/immunities/<type>
 # ============================================================
-
-@pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
-def test_get_immunities_bad_route(client, bad_route):
-    assert_empty_response(client, f'/weaknesses/immunities/{bad_route}')
-
-
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_immunities_invalid_type(client, invalid_type):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
@@ -224,12 +208,6 @@ def test_get_immunities_invalid_type(client, invalid_type):
 # ============================================================
 # /weaknesses/immunities/<type>/<type>
 # ============================================================
-
-@pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
-def test_get_immunities_bad_route_dual_types(client, bad_route):
-    assert_empty_response(client, f'/weaknesses/immunities/ghost/{bad_route}')
-
-
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_immunities_invalid_dual_type(client, invalid_type):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
@@ -243,12 +221,6 @@ def test_get_immunities_invalid_dual_type(client, invalid_type):
 # ============================================================
 # /weaknesses/immune-defenders/<type>
 # ============================================================
-
-
-@pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
-def test_get_immune_defenders_bad_route_dual_types(client, bad_route):
-    assert_empty_response(client, f'/weaknesses/immune-defenders/{bad_route}')
-
 
 @pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
 def test_get_immune_defenders_invalid_type(client, invalid_type):
