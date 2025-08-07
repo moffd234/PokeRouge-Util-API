@@ -146,6 +146,24 @@ def test_get_immune_defenders_type_does_not_exist(type_utils, input_type):
 
 
 # ========================================================================================
+# get_offensive_strengths(self, attacker: str):
+# ========================================================================================
+@pytest.mark.parametrize("input_type, expected", [
+    ("fighting", ["normal", "rock", "steel", "ice", "dark"]), ("normal", []), ("dark", ["ghost", "psychic"])])
+def test_get_offensive_strengths_valid(type_utils, input_type, expected):
+    actual: list[str] = type_utils.get_offensive_strengths(input_type)
+    assert actual == sorted(expected)
+
+
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_offensive_strengths_type_does_not_exist(type_utils, input_type):
+    with pytest.raises(ValueError) as error:
+        type_utils.get_offensive_strengths(input_type)
+
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
+
+
+# ========================================================================================
 # get_weakness_summary(self, pokemon_species: Pokemon):
 # ========================================================================================
 
@@ -185,6 +203,10 @@ def test_get_weakness_summary_invalid_type(type_utils):
     assert actual == expected
 
 
+# ========================================================================================
+# validate_type(self, pokemon_type: str):
+# ========================================================================================
+
 @pytest.mark.parametrize("input_type", ["Fire", "fire", "FiRe", "water", "ground", "normal", "fighting", "flying",
                                         "poison", "rock", "bug", "ghost", "steel", "grass", "electric", "psychic",
                                         "ice", "dragon", "dark", "fairy"])
@@ -193,6 +215,7 @@ def test_validate_type_valid(type_utils, input_type):
     actual: None = type_utils.validate_type(input_type)
 
     assert actual == expected
+
 
 @pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
 def test_validate_type_invalid(type_utils, input_type):
