@@ -164,6 +164,67 @@ def test_get_offensive_strengths_type_does_not_exist(type_utils, input_type):
 
 
 # ========================================================================================
+# get_defensive_strengths(self, type_1: str, type_2: str | None)
+# ========================================================================================
+@pytest.mark.parametrize("input_type, expected", [
+    ("fighting", ["rock", "bug", "dark"]), ("normal", []), ("dark", ["ghost", "dark"]),
+    ("fire", ["bug", "steel", "fire", "grass", "ice", "fairy"]),
+    ("fIrE", ["bug", "steel", "fire", "grass", "ice", "fairy"])])
+def test_get_defensive_strengths_valid_mono_type(type_utils, input_type, expected):
+    actual: list[str] = type_utils.get_defensive_strengths(input_type, None)
+    assert actual == sorted(expected)
+
+
+@pytest.mark.parametrize("input_type, expected", [
+    ("fighting", ["bug", "steel", "fire", "grass", "ice", "dark"]),
+    ("normal", ["bug", "steel", "fire", "grass", "ice", "fairy"]),
+    ("dark", ["ghost", "dark", "fire", "steel", "grass", "ice"]),
+    ("fire", ["bug", "steel", "fire", "grass", "ice", "fairy"]),
+    ("fIrE", ["bug", "steel", "fire", "grass", "ice", "fairy"])])
+def test_get_defensive_strengths_valid_dual_type(type_utils, input_type, expected):
+    actual: list[str] = type_utils.get_defensive_strengths("fire", input_type)
+    assert actual == sorted(expected)
+
+
+def test_get_defensive_strengths_valid_dual_type_no_strength(type_utils):
+    expected: list[str] = []
+    actual: list[str] = type_utils.get_defensive_strengths("normal", "normal")
+
+    assert actual == expected
+
+
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_defensive_strengths_mono_type_does_not_exist(type_utils, input_type):
+    with pytest.raises(ValueError) as error:
+        type_utils.get_defensive_strengths(input_type, None)
+
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
+
+
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_defensive_strengths_dual_type_first_type_does_not_exist(type_utils, input_type):
+    with pytest.raises(ValueError) as error:
+        type_utils.get_defensive_strengths(input_type, "fire")
+
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
+
+
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_defensive_strengths_dual_type_second_type_does_not_exist(type_utils, input_type):
+    with pytest.raises(ValueError) as error:
+        type_utils.get_defensive_strengths("fire", input_type)
+
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
+
+@pytest.mark.parametrize("input_type", ["sound", "", " ", " fire ", " Fire ", " f"])
+def test_get_defensive_strengths_dual_type_both_types_do_not_exist(type_utils, input_type):
+    with pytest.raises(ValueError) as error:
+        type_utils.get_defensive_strengths(input_type, input_type)
+
+    assert str(error.value) == f"'{input_type.title()}' is not a valid type"
+
+
+# ========================================================================================
 # get_weakness_summary(self, pokemon_species: Pokemon):
 # ========================================================================================
 
