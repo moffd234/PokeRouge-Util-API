@@ -209,6 +209,12 @@ class TypeUtils:
             return {"error": str(error)}
 
     def get_offensive_strengths(self, attacker: str) -> list[str]:
+        """
+        Returns a sorted list of types that the attacker is super-effective against (deals 2x or 4x damage)
+
+        :param attacker: The attacking Pokémon type.
+        :return: Sorted list of defending types that receive super-effective damage.
+        """
         attacker = attacker.lower()
         self.validate_type(attacker)
 
@@ -217,6 +223,13 @@ class TypeUtils:
         return sorted([defender for defender, multiplier in matchups.items() if multiplier > 1.0])
 
     def get_defensive_strengths(self, type_1: str, type_2: str | None) -> list[str]:
+        """
+        Returns a sorted list of types that this type combination resists (takes 0.5x or 0.25x damage).
+
+        :param type_1: The primary Pokémon type.
+        :param type_2: The secondary Pokémon type, or None for monotypes.
+        :return: Sorted list of attacking types that deal reduced damage.
+        """
         output: list[str] = []
 
         self.validate_type(type_1)
