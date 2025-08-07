@@ -95,11 +95,14 @@ def test_get_weakness_summary_pokemon_empty_space(client):
 
 valid_types: list = list(type_util.types.keys()) + ['FiRe', 'FIRE']
 route_methods: dict = {
-    "offensive": type_util.get_offensive_weaknesses,
-    "defensive": type_util.get_defensive_weaknesses,
-    "immunities": type_util.get_immunities,
-    "immune-defenders": type_util.get_immune_defenders,
+    "weaknesses/offensive": type_util.get_offensive_weaknesses,
+    "weaknesses/defensive": type_util.get_defensive_weaknesses,
+    "weaknesses/immunities": type_util.get_immunities,
+    "weaknesses/immune-defenders": type_util.get_immune_defenders,
+    "strengths/offensive": type_util.get_offensive_strengths,
+    "strengths/defensive": type_util.get_defensive_strengths
 }
+dual_type_routes = ["weaknesses/defensive", "weaknesses/immunities", "strengths/defensive"]
 
 
 @pytest.mark.parametrize("route", route_methods.keys())
@@ -108,14 +111,14 @@ def test_valid_inputs(client, route: str, valid_type: str):
     """Tests all weaknesses routes with valid inputs"""
     subject = route_methods[route]
 
-    if route == "defensive" or route == "immunities":
+    if route in dual_type_routes:
         expected_list: list = subject(valid_type, None)
 
     else:
         expected_list: list = subject(valid_type)
     expected_status: int = 200
 
-    response: Response = client.get(f'/weaknesses/{route}/{valid_type}')
+    response: Response = client.get(f'/{route}/{valid_type}')
     actual_list: Response = response.json
     actual_status: int = response.status_code
 
@@ -126,7 +129,7 @@ def test_valid_inputs(client, route: str, valid_type: str):
 @pytest.mark.parametrize("route", route_methods.keys())
 @pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
 def test_bad_route(client, route: str, bad_route: str):
-    assert_empty_response(client, f'weaknesses/{route}/{bad_route}')
+    assert_empty_response(client, f'/{route}/{bad_route}')
 
 
 @pytest.mark.parametrize("route", route_methods.keys())
@@ -136,7 +139,7 @@ def test_invalid_types(client, route: str, invalid_type: str):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
     expected_status: int = 404
 
-    response: Response = client.get(f"/weaknesses/{route}/{invalid_type}")
+    response: Response = client.get(f"/{route}/{invalid_type}")
     assert response.status_code == expected_status
     assert response.json.get("error") == expected_error_message
 
@@ -144,7 +147,6 @@ def test_invalid_types(client, route: str, invalid_type: str):
 # ============================================================
 # Dual-type tests
 # ============================================================
-dual_type_routes = ["defensive", "immunities"]
 
 
 @pytest.mark.parametrize("route", dual_type_routes)
@@ -157,7 +159,7 @@ def test_valid_inputs_dual_type(client, route: str, valid_type_1: str, valid_typ
     expected_list: list = subject(valid_type_1, valid_type_2)
     expected_status: int = 200
 
-    response: Response = client.get(f'/weaknesses/{route}/{valid_type_1}/{valid_type_2}')
+    response: Response = client.get(f'/{route}/{valid_type_1}/{valid_type_2}')
     actual_list: Response = response.json
     actual_status: int = response.status_code
 
@@ -172,6 +174,6 @@ def test_invalid_types(client, route: str, invalid_type: str):
     expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
     expected_status: int = 404
 
-    response: Response = client.get(f"/weaknesses/{route}/fire/{invalid_type}")
+    response: Response = client.get(f"/{route}/fire/{invalid_type}")
     assert response.status_code == expected_status
     assert response.json.get("error") == expected_error_message
