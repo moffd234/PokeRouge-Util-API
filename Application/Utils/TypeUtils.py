@@ -215,3 +215,20 @@ class TypeUtils:
         matchups: dict[str, float] = self.types[attacker]
 
         return sorted([defender for defender, multiplier in matchups.items() if multiplier > 1.0])
+
+    def get_defensive_strengths(self, type_1: str, type_2: str | None) -> list[str]:
+        output: list[str] = []
+
+        self.validate_type(type_1)
+
+        for attacker in self.types:
+            total_multiplier = self.types[attacker][type_1.lower()]
+
+            if type_2 is not None:
+                self.validate_type(type_2)
+                total_multiplier *= self.types[attacker][type_2.lower()]
+
+            if 0.0 < total_multiplier < 1.0:
+                output.append(attacker)
+
+        return sorted(output)
