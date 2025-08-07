@@ -207,3 +207,11 @@ class TypeUtils:
             type_util_logger.error(f"Error getting weakness summary for '{pokemon_species.name}': {error}",
                                    exc_info=True)
             return {"error": str(error)}
+
+    def get_offensive_strengths(self, attacker: str) -> list[str]:
+        attacker = attacker.lower()
+        self.validate_type(attacker)
+
+        matchups: dict[str, float] = self.types[attacker]
+
+        return sorted([defender for defender, multiplier in matchups.items() if multiplier > 1.0])
