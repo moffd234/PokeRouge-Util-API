@@ -272,8 +272,8 @@ def test_get_weakness_summary_invalid_type(type_utils):
                                         "poison", "rock", "bug", "ghost", "steel", "grass", "electric", "psychic",
                                         "ice", "dragon", "dark", "fairy"])
 def test_validate_type_valid(type_utils, input_type):
-    expected: None = type_utils.validate_type(input_type)
-    actual: None = type_utils.validate_type(input_type)
+    expected: str = input_type.lower()
+    actual: str = type_utils.validate_type(input_type)
 
     assert actual == expected
 
