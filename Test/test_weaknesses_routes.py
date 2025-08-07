@@ -125,8 +125,20 @@ def test_valid_inputs(client, route: str, valid_type: str):
 
 @pytest.mark.parametrize("route", route_methods.keys())
 @pytest.mark.parametrize("bad_route", ["", "/", "fire/grass"])
-def test_bad_route(client, route, bad_route):
+def test_bad_route(client, route: str, bad_route: str):
     assert_empty_response(client, f'weaknesses/{route}/{bad_route}')
+
+@pytest.mark.parametrize("route", route_methods.keys())
+@pytest.mark.parametrize("invalid_type", ["sound", " fire ", " "])
+def test_invalid_types(client, route: str, invalid_type: str):
+    """Tests all monotype weaknesses routes with invalid inputs"""
+    expected_error_message: str = f"'{invalid_type.title()}' is not a valid type"
+    expected_status: int = 404
+
+    response: Response = client.get(f"/weaknesses/{route}/{invalid_type}")
+    assert response.status_code == expected_status
+    assert response.json.get("error") == expected_error_message
+
 
 # ============================================================
 # Dual-type tests
