@@ -22,6 +22,49 @@ and **Biome Data**.
 - **Biome Data Lookup**: Get Pokémon availability by biome and plot your path to get to specific biomes.
 - **Interactive Front-End**: A user-friendly interface for interacting with API features.
 ---
+## API Endpoints
+
+Base URL: **[https://pokerouge-util-api.onrender.com](https://pokerouge-util-api.onrender.com)**
+
+> All endpoints accept `GET` requests and return JSON responses.  
+> Replace `<type>` and `<pokemon_species>` with the appropriate values (e.g., `fire`, `pikachu`).
+
+---
+
+### Weakness Endpoints
+
+#### `/weaknesses/summary/<pokemon_species>`
+Returns a full weakness summary for a Pokémon by species name.
+<br/><br/>
+
+#### `/weaknesses/offensive/<pokemon_type>`
+Returns the types that are weak to a given offensive type.
+<br/><br/>
+
+#### `/weaknesses/defensive/<type_1>` or `/weaknesses/defensive/<type_1>/<type_2>`
+Returns the weaknesses for a given defensive type combination.
+<br/><br/>
+
+#### `/weaknesses/immunities/<type_1>` or `/weaknesses/immunities/<type_1>/<type_2>`
+Returns any immunities for the type(s).
+<br/><br/>
+
+#### `/weaknesses/immune-defenders/<type_1>`
+Returns types that are immune to a specific attacking type.
+
+---
+
+### Strength Endpoints
+
+#### `/strengths/offensive/<type_1>`
+Returns the types that a given attacking type is strong against.
+<br/><br/>
+
+#### `/strengths/defensive/<type_1>` or `/strengths/defensive/<type_1>/<type_2>`
+Returns the types that a defensive type combination resists.
+
+---
+
 
 ## Usage
 
