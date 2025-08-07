@@ -65,16 +65,19 @@ class TypeUtils:
                       "dragon": 2, "dark": 2, "steel": 0.5, "fairy": 1},
         }
 
-    def validate_type(self, pokemon_type: str) -> None:
+    def validate_type(self, pokemon_type: str) -> str | None:
         """
-        Validates if a given Pokémon type is supported.
+        Validates if a given Pokémon type is supported and returns the lowercase version if so. Otherwise, raises
+        a ValueError.
 
         :param pokemon_type: The Pokémon type to validate.
-        :return: None, if the type is valid. Raises ValueError otherwise.
+        :return: The lowercase version of the validated type.
         """
         if pokemon_type.lower() not in self.types:
             type_util_logger.warning(f"Invalid type '{pokemon_type.title()}' provided.")
             raise ValueError(f"'{pokemon_type.title()}' is not a valid type")
+
+        return pokemon_type.lower()
 
     def get_offensive_weaknesses(self, atk_type: str) -> list[str]:
         """
