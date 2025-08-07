@@ -18,7 +18,7 @@ def return_output(output: dict | list) -> tuple[Response, int] | Response:
     return jsonify(output)
 
 
-def call_and_catch(func: callable, *args) -> tuple[Response, int] | Response:
+def call_and_catch(func, *args) -> tuple[Response, int] | Response:
     try:
         output: list = func(*args)
         return return_output(output)
@@ -65,3 +65,8 @@ def get_immunities(type_1: str, type_2: str = None) -> tuple[Response, int] | Re
 def get_immune_defenders(type_1: str) -> tuple[Response, int] | Response:
     api_logger.info(f"Received request for immune defenders for attacker type: {type_1}")
     return call_and_catch(type_util.get_immune_defenders, type_1)
+
+@weaknesses_bp.route('/strengths/offensive/<string:type_1>', methods=['GET'])
+def get_offensive_strengths(type_1: str) -> tuple[Response, int] | Response:
+    api_logger.info(f"Received request for offensive strengths for attacker type: {type_1}")
+    return call_and_catch(type_util.get_offensive_strengths, type_1)
