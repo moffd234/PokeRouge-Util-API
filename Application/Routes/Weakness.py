@@ -66,7 +66,15 @@ def get_immune_defenders(type_1: str) -> tuple[Response, int] | Response:
     api_logger.info(f"Received request for immune defenders for attacker type: {type_1}")
     return call_and_catch(type_util.get_immune_defenders, type_1)
 
+
 @weaknesses_bp.route('/strengths/offensive/<string:type_1>', methods=['GET'])
 def get_offensive_strengths(type_1: str) -> tuple[Response, int] | Response:
     api_logger.info(f"Received request for offensive strengths for attacker type: {type_1}")
     return call_and_catch(type_util.get_offensive_strengths, type_1)
+
+
+@weaknesses_bp.route('/strengths/defensive/<string:type_1>', methods=['GET'])
+@weaknesses_bp.route('/strengths/defensive/<string:type_1>/<string:type_2>', methods=['GET'])
+def get_defensive_strengths(type_1: str, type_2: str | None = None) -> tuple[Response, int] | Response:
+    api_logger.info(f"Received request for defensive strengths for defender type: {type_1} {type_2}")
+    return call_and_catch(type_util.get_defensive_strengths, type_1, type_2)
