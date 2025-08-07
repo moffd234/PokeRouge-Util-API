@@ -88,9 +88,7 @@ class TypeUtils:
         :param atk_type: The attacking Pokémon type.
         :return: List of defending types that resist the given attacking type.
         """
-        atk_type = atk_type.lower()
-
-        self.validate_type(atk_type)
+        atk_type = self.validate_type(atk_type)
 
         matchups: dict[str, float] = self.types[atk_type]
 
@@ -107,15 +105,12 @@ class TypeUtils:
         :param type_2: The secondary defending type, or None.
         :return: A list of attacking types that are strong against the given type combination.
         """
-        type_1 = type_1.lower()
-
-        self.validate_type(type_1)
+        type_1 = self.validate_type(type_1)
 
         if type_2 is None or type_2 == type_1:
             return sorted([attacker for attacker in self.types if self.types[attacker][type_1] > 1.0])
 
-        type_2 = type_2.lower()
-        self.validate_type(type_2)
+        type_2 = self.validate_type(type_2)
 
         output: list[str] = []
 
@@ -140,9 +135,7 @@ class TypeUtils:
         :param type_2: The secondary defending type, or None.
         :return: A list of attacking types the Pokémon is immune to.
         """
-        type_1 = type_1.lower()
-
-        self.validate_type(type_1)
+        type_1 = self.validate_type(type_1)
 
         if type_2 is not None:
             type_2 = type_2.lower()
@@ -171,9 +164,7 @@ class TypeUtils:
         :param attacker: The attacking Pokémon type.
         :return: A list of defending types immune to the given attacker.
         """
-        attacker = attacker.lower()
-
-        self.validate_type(attacker)
+        attacker = self.validate_type(attacker)
 
         attacker_matchups = self.types[attacker]
 
@@ -218,8 +209,7 @@ class TypeUtils:
         :param attacker: The attacking Pokémon type.
         :return: Sorted list of defending types that receive super-effective damage.
         """
-        attacker = attacker.lower()
-        self.validate_type(attacker)
+        attacker = self.validate_type(attacker)
 
         matchups: dict[str, float] = self.types[attacker]
 
@@ -235,14 +225,14 @@ class TypeUtils:
         """
         output: list[str] = []
 
-        self.validate_type(type_1)
+        type_1 = self.validate_type(type_1)
 
         for attacker in self.types:
-            total_multiplier = self.types[attacker][type_1.lower()]
+            total_multiplier = self.types[attacker][type_1]
 
             if type_2 is not None:
-                self.validate_type(type_2)
-                total_multiplier *= self.types[attacker][type_2.lower()]
+                type_2 = self.validate_type(type_2)
+                total_multiplier *= self.types[attacker][type_2]
 
             if 0.0 < total_multiplier < 1.0:
                 output.append(attacker)
