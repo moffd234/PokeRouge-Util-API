@@ -170,38 +170,6 @@ class TypeUtils:
 
         return sorted([defender for defender, multiplier in attacker_matchups.items() if multiplier == 0])
 
-    def get_weakness_summary(self, pokemon_species: Pokemon):
-        """
-        Returns a summary of type-based interactions for the given Pokémon species.
-
-        This method will raise a ValueError if any of the Pokémon's types are not valid or unrecognized.
-
-        :param pokemon_species: The Pokémon whose type weaknesses and immunities are being analyzed.
-        :return: A dictionary summarizing offensive weaknesses, defensive weaknesses, immunities, and immune defenders.
-        """
-        try:
-            type_1 = pokemon_species.type_1.lower()
-            type_2 = pokemon_species.type_2.lower()
-
-            offensive_weaknesses = {type_1: self.get_offensive_weaknesses(type_1)}
-            immune_defenders = {type_1: self.get_immune_defenders(type_1)}
-
-            if type_2:
-                offensive_weaknesses[type_2] = self.get_offensive_weaknesses(type_2)
-                immune_defenders[type_2] = self.get_immune_defenders(type_2)
-
-            return {
-                "offensive_weaknesses": offensive_weaknesses,
-                "defensive_weaknesses": self.get_defensive_weaknesses(type_1, type_2),
-                "immunities": self.get_immunities(type_1, type_2),
-                "immune_defenders": immune_defenders
-            }
-
-        except ValueError as error:
-            type_util_logger.error(f"Error getting weakness summary for '{pokemon_species.name}': {error}",
-                                   exc_info=True)
-            return {"error": str(error)}
-
     def get_offensive_strengths(self, attacker: str) -> list[str]:
         """
         Returns a sorted list of types that the attacker is super-effective against (deals 2x or 4x damage)
@@ -238,3 +206,39 @@ class TypeUtils:
                 output.append(attacker)
 
         return sorted(output)
+
+    def get_weakness_strength_summary(self, pokemon_species: Pokemon):
+        """
+        Returns a summary of type-based interactions for the given Pokémon species.
+
+        This method will raise a ValueError if any of the Pokémon's types are not valid or unrecognized.
+
+        :param pokemon_species: The Pokémon whose type weaknesses and immunities are being analyzed.
+        :return: A dictionary summarizing offensive weaknesses, defensive weaknesses, immunities, and immune defenders.
+        """
+        try:
+            type_1 = pokemon_species.type_1.lower()
+            type_2 = pokemon_species.type_2.lower()
+
+            offensive_weaknesses = {type_1: self.get_offensive_weaknesses(type_1)}
+            immune_defenders = {type_1: self.get_immune_defenders(type_1)}
+            offensive_strengths = self.get_offensive_strengths(type_1)
+
+            if type_2:
+                offensive_weaknesses[type_2] = self.get_offensive_weaknesses(type_2)
+                immune_defenders[type_2] = self.get_immune_defenders(type_2)
+                offensive_strengths = self.get_immune_defenders(type_2)
+
+            return {
+                "offensive_weaknesses": offensive_weaknesses,
+                "defensive_weaknesses": self.get_defensive_weaknesses(type_1, type_2),
+                "immunities": self.get_immunities(type_1, type_2),
+                "immune_defenders": immune_defenders,
+                "offensive_strength": offensive_strengths,
+                "defensive_strength": self.get_defensive_strengths(type_1, type_2)
+            }
+
+        except ValueError as error:
+            type_util_logger.error(f"Error getting weakness summary for '{pokemon_species.name}': {error}",
+                                   exc_info=True)
+            return {"error": str(error)}

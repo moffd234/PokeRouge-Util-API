@@ -237,7 +237,7 @@ def test_get_weakness_summary_bulbasaur(type_utils):
         "immune_defenders": {"grass": [], "poison": ["steel"]},
     }
 
-    actual: dict = type_utils.get_weakness_summary(Pokemon.query.filter_by(name="BULBASAUR").first())
+    actual: dict = type_utils.get_weakness_strength_summary(Pokemon.query.filter_by(name="BULBASAUR").first())
 
     assert actual == expected
 
@@ -251,7 +251,7 @@ def test_get_weakness_summary_lunala(type_utils):
         "immune_defenders": {"psychic": ["dark"], "ghost": ["normal"]},
     }
 
-    actual: dict = type_utils.get_weakness_summary(Pokemon.query.filter_by(name="LUNALA").first())
+    actual: dict = type_utils.get_weakness_strength_summary(Pokemon.query.filter_by(name="LUNALA").first())
 
     assert actual == expected
 
@@ -259,7 +259,7 @@ def test_get_weakness_summary_lunala(type_utils):
 def test_get_weakness_summary_invalid_type(type_utils):
     pokemon: Pokemon = Pokemon.query.filter_by(name="FAKE_POKEMON").first()
     expected: dict = {"error": "'Sound' is not a valid type"}
-    actual: dict = type_utils.get_weakness_summary(pokemon)
+    actual: dict = type_utils.get_weakness_strength_summary(pokemon)
 
     assert actual == expected
 

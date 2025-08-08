@@ -37,7 +37,7 @@ def get_weakness_summary(pokemon_species: str) -> tuple[Response, int] | Respons
         api_logger.warning(f"Pokemon '{pokemon_species}' not found for weakness summary.")
         return jsonify({'message': 'Pokemon not found'}), 404
 
-    output: dict = type_util.get_weakness_summary(pokemon)
+    output: dict = type_util.get_weakness_strength_summary(pokemon)
     return return_output(output)
 
 
