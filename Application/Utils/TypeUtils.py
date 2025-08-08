@@ -222,20 +222,20 @@ class TypeUtils:
 
             offensive_weaknesses = {type_1: self.get_offensive_weaknesses(type_1)}
             immune_defenders = {type_1: self.get_immune_defenders(type_1)}
-            offensive_strengths = self.get_offensive_strengths(type_1)
+            offensive_strengths = {type_1: self.get_offensive_strengths(type_1)}
 
             if type_2:
                 offensive_weaknesses[type_2] = self.get_offensive_weaknesses(type_2)
                 immune_defenders[type_2] = self.get_immune_defenders(type_2)
-                offensive_strengths = self.get_immune_defenders(type_2)
+                offensive_strengths[type_2] = self.get_offensive_strengths(type_2)
 
             return {
                 "offensive_weaknesses": offensive_weaknesses,
                 "defensive_weaknesses": self.get_defensive_weaknesses(type_1, type_2),
                 "immunities": self.get_immunities(type_1, type_2),
                 "immune_defenders": immune_defenders,
-                "offensive_strength": offensive_strengths,
-                "defensive_strength": self.get_defensive_strengths(type_1, type_2)
+                "offensive_strengths": offensive_strengths,
+                "defensive_strengths": self.get_defensive_strengths(type_1, type_2)
             }
 
         except ValueError as error:
