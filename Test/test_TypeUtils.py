@@ -228,13 +228,16 @@ def test_get_defensive_strengths_dual_type_both_types_do_not_exist(type_utils, i
 # get_weakness_summary(self, pokemon_species: Pokemon):
 # ========================================================================================
 
-def test_get_weakness_summary_bulbasaur(type_utils):
+def test_get_weakness_strength_summary_bulbasaur(type_utils):
     expected: dict = {
         "offensive_weaknesses": {"grass": sorted(["flying", "poison", "bug", "steel", "fire", "grass", "dragon"]),
                                  "poison": sorted(["poison", "ground", "rock", "ghost"])},
         "defensive_weaknesses": sorted(["flying", "fire", "psychic", "ice"]),
         "immunities": [],
         "immune_defenders": {"grass": [], "poison": ["steel"]},
+        "offensive_strengths": {"grass": sorted(["ground", "rock", "water"]),
+                                "poison": sorted(["grass", "fairy"])},
+        "defensive_strengths": sorted(["fighting", "water", "electric", "fairy", "grass"])
     }
 
     actual: dict = type_utils.get_weakness_strength_summary(Pokemon.query.filter_by(name="BULBASAUR").first())
@@ -242,13 +245,15 @@ def test_get_weakness_summary_bulbasaur(type_utils):
     assert actual == expected
 
 
-def test_get_weakness_summary_lunala(type_utils):
+def test_get_weakness_strength_summary_lunala(type_utils):
     expected: dict = {
 
         "offensive_weaknesses": {"psychic": sorted(["steel", "psychic"]), "ghost": ["dark"]},
         "defensive_weaknesses": sorted(["ghost", "dark"]),
         "immunities": sorted(["normal", "fighting"]),
         "immune_defenders": {"psychic": ["dark"], "ghost": ["normal"]},
+        "offensive_strengths": {"psychic": sorted(["fighting", "poison"]), "ghost": sorted(["ghost", "psychic"])},
+        "defensive_strengths": sorted(["poison", "psychic"])
     }
 
     actual: dict = type_utils.get_weakness_strength_summary(Pokemon.query.filter_by(name="LUNALA").first())
