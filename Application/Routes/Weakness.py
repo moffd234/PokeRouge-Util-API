@@ -11,6 +11,15 @@ api_logger = logging.getLogger("api")
 
 
 def return_output(output: dict | list) -> tuple[Response, int] | Response:
+    """
+    Returns a Flask JSON response based on the provided output.
+
+    If the output contains an "error" key, a 400 Bad Request response is returned.
+    Otherwise, the data is returned as a standard JSON response.
+
+    :param output: The output data to return, either a dictionary or list.
+    :return: A Flask JSON response, optionally with a status code.
+    """
     if "error" in output:
         api_logger.error(f"API call returned an error: {output.get('error')}")
         return jsonify(output), 400
@@ -19,6 +28,16 @@ def return_output(output: dict | list) -> tuple[Response, int] | Response:
 
 
 def call_and_catch(func, *args) -> tuple[Response, int] | Response:
+    """
+    Executes a given function and returns its output as a JSON response.
+
+    Wraps the function call in a try/except block to handle ValueError exceptions.
+    If a ValueError occurs, returns a 404 response with the error message.
+
+    :param func: The function to execute.
+    :param args: Positional arguments to pass to the function.
+    :return: A Flask JSON response containing the function output or an error.
+    """
     try:
         output: list = func(*args)
         return return_output(output)
