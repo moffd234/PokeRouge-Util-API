@@ -5,7 +5,6 @@ import pytest
 from flask import Flask
 from Application import create_app, db
 from Application.Models.Pokemon import Pokemon
-from Application.Utils.TypeUtils import TypeUtils
 from Application.Utils.PokemonSeed import build_pokemon
 
 
@@ -54,7 +53,3 @@ def seeded_pokemon(app):
     db.session.query(Pokemon).delete()
     db.session.commit()
 
-
-@pytest.fixture
-def type_utils():
-    return TypeUtils()

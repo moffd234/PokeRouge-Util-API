@@ -4,241 +4,237 @@ from Application.Models.Pokemon import Pokemon
 
 type_util_logger = logging.getLogger("utils.type")
 
+pokemon_types: dict[str, dict[str, float]] = {
+    "normal": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 1,
+               "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 0.5, "ghost": 0,
+               "dragon": 1, "dark": 1, "steel": 0.5, "fairy": 1},
+    "fire": {"normal": 1, "fire": 0.5, "water": 0.5, "electric": 1, "grass": 2, "ice": 2, "fighting": 1,
+             "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 2, "rock": 0.5, "ghost": 1,
+             "dragon": 0.5, "dark": 1, "steel": 2, "fairy": 1},
+    "water": {"normal": 1, "fire": 2, "water": 0.5, "electric": 1, "grass": 0.5, "ice": 1, "fighting": 1,
+              "poison": 1, "ground": 2, "flying": 1, "psychic": 1, "bug": 1, "rock": 2, "ghost": 1,
+              "dragon": 0.5, "dark": 1, "steel": 1, "fairy": 1},
+    "electric": {"normal": 1, "fire": 1, "water": 2, "electric": 0.5, "grass": 0.5, "ice": 1, "fighting": 1,
+                 "poison": 1, "ground": 0, "flying": 2, "psychic": 1, "bug": 1, "rock": 1, "ghost": 1,
+                 "dragon": 0.5, "dark": 1, "steel": 1, "fairy": 1},
+    "grass": {"normal": 1, "fire": 0.5, "water": 2, "electric": 1, "grass": 0.5, "ice": 1, "fighting": 1,
+              "poison": 0.5, "ground": 2, "flying": 0.5, "psychic": 1, "bug": 0.5, "rock": 2, "ghost": 1,
+              "dragon": 0.5, "dark": 1, "steel": 0.5, "fairy": 1},
+    "ice": {"normal": 1, "fire": 0.5, "water": 0.5, "electric": 1, "grass": 2, "ice": 0.5, "fighting": 1,
+            "poison": 1, "ground": 2, "flying": 2, "psychic": 1, "bug": 1, "rock": 1, "ghost": 1, "dragon": 2,
+            "dark": 1, "steel": 0.5, "fairy": 1},
+    "fighting": {"normal": 2, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 2, "fighting": 1,
+                 "poison": 0.5, "ground": 1, "flying": 0.5, "psychic": 0.5, "bug": 0.5, "rock": 2, "ghost": 0,
+                 "dragon": 1, "dark": 2, "steel": 2, "fairy": 0.5},
+    "poison": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 2, "ice": 1, "fighting": 1,
+               "poison": 0.5, "ground": 0.5, "flying": 1, "psychic": 1, "bug": 1, "rock": 0.5, "ghost": 0.5,
+               "dragon": 1, "dark": 1, "steel": 0, "fairy": 2},
+    "ground": {"normal": 1, "fire": 2, "water": 1, "electric": 2, "grass": 0.5, "ice": 1, "fighting": 1,
+               "poison": 2, "ground": 1, "flying": 0, "psychic": 1, "bug": 0.5, "rock": 2, "ghost": 1,
+               "dragon": 1, "dark": 1, "steel": 2, "fairy": 1},
+    "flying": {"normal": 1, "fire": 1, "water": 1, "electric": 0.5, "grass": 2, "ice": 1, "fighting": 2,
+               "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 2, "rock": 0.5, "ghost": 1,
+               "dragon": 1, "dark": 1, "steel": 0.5, "fairy": 1},
+    "psychic": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 2,
+                "poison": 2, "ground": 1, "flying": 1, "psychic": 0.5, "bug": 1, "rock": 1, "ghost": 1,
+                "dragon": 1, "dark": 0, "steel": 0.5, "fairy": 1},
+    "bug": {"normal": 1, "fire": 0.5, "water": 1, "electric": 1, "grass": 2, "ice": 1, "fighting": 0.5,
+            "poison": 0.5, "ground": 1, "flying": 0.5, "psychic": 2, "bug": 1, "rock": 1, "ghost": 0.5,
+            "dragon": 1, "dark": 2, "steel": 0.5, "fairy": 0.5},
+    "rock": {"normal": 1, "fire": 2, "water": 1, "electric": 1, "grass": 1, "ice": 2, "fighting": 0.5,
+             "poison": 1, "ground": 0.5, "flying": 2, "psychic": 1, "bug": 2, "rock": 1, "ghost": 1,
+             "dragon": 1, "dark": 1, "steel": 0.5, "fairy": 1},
+    "ghost": {"normal": 0, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 1,
+              "poison": 1, "ground": 1, "flying": 1, "psychic": 2, "bug": 1, "rock": 1, "ghost": 2, "dragon": 1,
+              "dark": 0.5, "steel": 1, "fairy": 1},
+    "dragon": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 1,
+               "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 1, "ghost": 1,
+               "dragon": 2, "dark": 1, "steel": 0.5, "fairy": 0},
+    "dark": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 0.5,
+             "poison": 1, "ground": 1, "flying": 1, "psychic": 2, "bug": 1, "rock": 1, "ghost": 2, "dragon": 1,
+             "dark": 0.5, "steel": 1, "fairy": 0.5},
+    "steel": {"normal": 1, "fire": 0.5, "water": 0.5, "electric": 0.5, "grass": 1, "ice": 2, "fighting": 1,
+              "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 2, "ghost": 1, "dragon": 1,
+              "dark": 1, "steel": 0.5, "fairy": 2},
+    "fairy": {"normal": 1, "fire": 0.5, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 2,
+              "poison": 0.5, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 1, "ghost": 1,
+              "dragon": 2, "dark": 2, "steel": 0.5, "fairy": 1},
+}
 
-class TypeUtils:
+def validate_type(pokemon_type: str) -> str | None:
+    """
+    Validates if a given Pokémon type is supported and returns the lowercase version if so. Otherwise, raises
+    a ValueError.
 
-    def __init__(self):
-        self.types: dict[str, dict[str, float]] = {
-            "normal": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 1,
-                       "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 0.5, "ghost": 0,
-                       "dragon": 1, "dark": 1, "steel": 0.5, "fairy": 1},
-            "fire": {"normal": 1, "fire": 0.5, "water": 0.5, "electric": 1, "grass": 2, "ice": 2, "fighting": 1,
-                     "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 2, "rock": 0.5, "ghost": 1,
-                     "dragon": 0.5, "dark": 1, "steel": 2, "fairy": 1},
-            "water": {"normal": 1, "fire": 2, "water": 0.5, "electric": 1, "grass": 0.5, "ice": 1, "fighting": 1,
-                      "poison": 1, "ground": 2, "flying": 1, "psychic": 1, "bug": 1, "rock": 2, "ghost": 1,
-                      "dragon": 0.5, "dark": 1, "steel": 1, "fairy": 1},
-            "electric": {"normal": 1, "fire": 1, "water": 2, "electric": 0.5, "grass": 0.5, "ice": 1, "fighting": 1,
-                         "poison": 1, "ground": 0, "flying": 2, "psychic": 1, "bug": 1, "rock": 1, "ghost": 1,
-                         "dragon": 0.5, "dark": 1, "steel": 1, "fairy": 1},
-            "grass": {"normal": 1, "fire": 0.5, "water": 2, "electric": 1, "grass": 0.5, "ice": 1, "fighting": 1,
-                      "poison": 0.5, "ground": 2, "flying": 0.5, "psychic": 1, "bug": 0.5, "rock": 2, "ghost": 1,
-                      "dragon": 0.5, "dark": 1, "steel": 0.5, "fairy": 1},
-            "ice": {"normal": 1, "fire": 0.5, "water": 0.5, "electric": 1, "grass": 2, "ice": 0.5, "fighting": 1,
-                    "poison": 1, "ground": 2, "flying": 2, "psychic": 1, "bug": 1, "rock": 1, "ghost": 1, "dragon": 2,
-                    "dark": 1, "steel": 0.5, "fairy": 1},
-            "fighting": {"normal": 2, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 2, "fighting": 1,
-                         "poison": 0.5, "ground": 1, "flying": 0.5, "psychic": 0.5, "bug": 0.5, "rock": 2, "ghost": 0,
-                         "dragon": 1, "dark": 2, "steel": 2, "fairy": 0.5},
-            "poison": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 2, "ice": 1, "fighting": 1,
-                       "poison": 0.5, "ground": 0.5, "flying": 1, "psychic": 1, "bug": 1, "rock": 0.5, "ghost": 0.5,
-                       "dragon": 1, "dark": 1, "steel": 0, "fairy": 2},
-            "ground": {"normal": 1, "fire": 2, "water": 1, "electric": 2, "grass": 0.5, "ice": 1, "fighting": 1,
-                       "poison": 2, "ground": 1, "flying": 0, "psychic": 1, "bug": 0.5, "rock": 2, "ghost": 1,
-                       "dragon": 1, "dark": 1, "steel": 2, "fairy": 1},
-            "flying": {"normal": 1, "fire": 1, "water": 1, "electric": 0.5, "grass": 2, "ice": 1, "fighting": 2,
-                       "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 2, "rock": 0.5, "ghost": 1,
-                       "dragon": 1, "dark": 1, "steel": 0.5, "fairy": 1},
-            "psychic": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 2,
-                        "poison": 2, "ground": 1, "flying": 1, "psychic": 0.5, "bug": 1, "rock": 1, "ghost": 1,
-                        "dragon": 1, "dark": 0, "steel": 0.5, "fairy": 1},
-            "bug": {"normal": 1, "fire": 0.5, "water": 1, "electric": 1, "grass": 2, "ice": 1, "fighting": 0.5,
-                    "poison": 0.5, "ground": 1, "flying": 0.5, "psychic": 2, "bug": 1, "rock": 1, "ghost": 0.5,
-                    "dragon": 1, "dark": 2, "steel": 0.5, "fairy": 0.5},
-            "rock": {"normal": 1, "fire": 2, "water": 1, "electric": 1, "grass": 1, "ice": 2, "fighting": 0.5,
-                     "poison": 1, "ground": 0.5, "flying": 2, "psychic": 1, "bug": 2, "rock": 1, "ghost": 1,
-                     "dragon": 1, "dark": 1, "steel": 0.5, "fairy": 1},
-            "ghost": {"normal": 0, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 1,
-                      "poison": 1, "ground": 1, "flying": 1, "psychic": 2, "bug": 1, "rock": 1, "ghost": 2, "dragon": 1,
-                      "dark": 0.5, "steel": 1, "fairy": 1},
-            "dragon": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 1,
-                       "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 1, "ghost": 1,
-                       "dragon": 2, "dark": 1, "steel": 0.5, "fairy": 0},
-            "dark": {"normal": 1, "fire": 1, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 0.5,
-                     "poison": 1, "ground": 1, "flying": 1, "psychic": 2, "bug": 1, "rock": 1, "ghost": 2, "dragon": 1,
-                     "dark": 0.5, "steel": 1, "fairy": 0.5},
-            "steel": {"normal": 1, "fire": 0.5, "water": 0.5, "electric": 0.5, "grass": 1, "ice": 2, "fighting": 1,
-                      "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 2, "ghost": 1, "dragon": 1,
-                      "dark": 1, "steel": 0.5, "fairy": 2},
-            "fairy": {"normal": 1, "fire": 0.5, "water": 1, "electric": 1, "grass": 1, "ice": 1, "fighting": 2,
-                      "poison": 0.5, "ground": 1, "flying": 1, "psychic": 1, "bug": 1, "rock": 1, "ghost": 1,
-                      "dragon": 2, "dark": 2, "steel": 0.5, "fairy": 1},
-        }
+    :param pokemon_type: The Pokémon type to validate.
+    :return: The lowercase version of the validated type.
+    """
+    if pokemon_type.lower() not in pokemon_types:
+        type_util_logger.warning(f"Invalid type '{pokemon_type.title()}' provided.")
+        raise ValueError(f"'{pokemon_type.title()}' is not a valid type")
 
-    def validate_type(self, pokemon_type: str) -> str | None:
-        """
-        Validates if a given Pokémon type is supported and returns the lowercase version if so. Otherwise, raises
-        a ValueError.
+    return pokemon_type.lower()
 
-        :param pokemon_type: The Pokémon type to validate.
-        :return: The lowercase version of the validated type.
-        """
-        if pokemon_type.lower() not in self.types:
-            type_util_logger.warning(f"Invalid type '{pokemon_type.title()}' provided.")
-            raise ValueError(f"'{pokemon_type.title()}' is not a valid type")
+def get_offensive_weaknesses(atk_type: str) -> list[str]:
+    """
+    Returns a list of defending types that take half damage (0.5x) from the given attacking type.
 
-        return pokemon_type.lower()
+    This method will raise a ValueError if the given attacking type is not recognized.
 
-    def get_offensive_weaknesses(self, atk_type: str) -> list[str]:
-        """
-        Returns a list of defending types that take half damage (0.5x) from the given attacking type.
+    :param atk_type: The attacking Pokémon type.
+    :return: List of defending types that resist the given attacking type.
+    """
+    atk_type = validate_type(atk_type)
 
-        This method will raise a ValueError if the given attacking type is not recognized.
+    matchups: dict[str, float] = pokemon_types[atk_type]
 
-        :param atk_type: The attacking Pokémon type.
-        :return: List of defending types that resist the given attacking type.
-        """
-        atk_type = self.validate_type(atk_type)
+    return sorted([defender for defender, multiplier in matchups.items() if multiplier == 0.5])
 
-        matchups: dict[str, float] = self.types[atk_type]
+def get_defensive_weaknesses(type_1: str, type_2: str | None) -> list[str]:
+    """
+    Returns a list of attacking types that deal super-effective damage (>1x)
+    to the given combination of defending types.
 
-        return sorted([defender for defender, multiplier in matchups.items() if multiplier == 0.5])
+    This method will raise a ValueError if either `type_1` or `type_2` is not recognized.
 
-    def get_defensive_weaknesses(self, type_1: str, type_2: str | None) -> list[str]:
-        """
-        Returns a list of attacking types that deal super-effective damage (>1x)
-        to the given combination of defending types.
+    :param type_1: The primary defending type.
+    :param type_2: The secondary defending type, or None.
+    :return: A list of attacking types that are strong against the given type combination.
+    """
+    type_1 = validate_type(type_1)
 
-        This method will raise a ValueError if either `type_1` or `type_2` is not recognized.
+    if type_2 is None or type_2 == type_1:
+        return sorted([attacker for attacker in pokemon_types if pokemon_types[attacker][type_1] > 1.0])
 
-        :param type_1: The primary defending type.
-        :param type_2: The secondary defending type, or None.
-        :return: A list of attacking types that are strong against the given type combination.
-        """
-        type_1 = self.validate_type(type_1)
+    type_2 = validate_type(type_2)
 
-        if type_2 is None or type_2 == type_1:
-            return sorted([attacker for attacker in self.types if self.types[attacker][type_1] > 1.0])
+    output: list[str] = []
 
-        type_2 = self.validate_type(type_2)
+    for attacker in pokemon_types:
+        multiplier = pokemon_types[attacker][type_1]
 
-        output: list[str] = []
+        if type_2:
+            multiplier *= pokemon_types[attacker][type_2]
 
-        for attacker in self.types:
-            multiplier = self.types[attacker][type_1]
+        if multiplier > 1.0:
+            output.append(attacker)
 
-            if type_2:
-                multiplier *= self.types[attacker][type_2]
+    return sorted(output)
 
-            if multiplier > 1.0:
-                output.append(attacker)
+def get_immunities(type_1: str, type_2) -> list[str]:
+    """
+    Returns a list of attacking types that deal no damage (0x) to the given defending type(s).
 
-        return sorted(output)
+    This method will raise a ValueError if either `type_1` or `type_2` is not recognized.
 
-    def get_immunities(self, type_1: str, type_2) -> list[str]:
-        """
-        Returns a list of attacking types that deal no damage (0x) to the given defending type(s).
+    :param type_1: The primary defending type.
+    :param type_2: The secondary defending type, or None.
+    :return: A list of attacking types the Pokémon is immune to.
+    """
+    type_1 = validate_type(type_1)
 
-        This method will raise a ValueError if either `type_1` or `type_2` is not recognized.
+    if type_2 is not None:
+        type_2 = type_2.lower()
+        validate_type(type_2)
 
-        :param type_1: The primary defending type.
-        :param type_2: The secondary defending type, or None.
-        :return: A list of attacking types the Pokémon is immune to.
-        """
-        type_1 = self.validate_type(type_1)
+    output: list[str] = []
+
+    for attacker in pokemon_types:
+        multiplier = pokemon_types[attacker][type_1]
+
+        if type_2:
+            multiplier *= pokemon_types[attacker][type_2]
+
+        if multiplier == 0:
+            output.append(attacker)
+
+    return sorted(output)
+
+def get_immune_defenders(attacker: str) -> list[str]:
+    """
+    Returns a list of defending types that are completely immune (0x damage)
+    to the given attacking type.
+
+    This method will raise a ValueError if the attacker type is not recognized.
+
+    :param attacker: The attacking Pokémon type.
+    :return: A list of defending types immune to the given attacker.
+    """
+    attacker = validate_type(attacker)
+
+    attacker_matchups = pokemon_types[attacker]
+
+    return sorted([defender for defender, multiplier in attacker_matchups.items() if multiplier == 0])
+
+def get_offensive_strengths(attacker: str) -> list[str]:
+    """
+    Returns a sorted list of types that the attacker is super-effective against (deals 2x or 4x damage)
+
+    :param attacker: The attacking Pokémon type.
+    :return: Sorted list of defending types that receive super-effective damage.
+    """
+    attacker = validate_type(attacker)
+
+    matchups: dict[str, float] = pokemon_types[attacker]
+
+    return sorted([defender for defender, multiplier in matchups.items() if multiplier > 1.0])
+
+def get_defensive_strengths(type_1: str, type_2: str | None) -> list[str]:
+    """
+    Returns a sorted list of types that this type combination resists (takes 0.5x or 0.25x damage).
+
+    :param type_1: The primary Pokémon type.
+    :param type_2: The secondary Pokémon type, or None for monotypes.
+    :return: Sorted list of attacking types that deal reduced damage.
+    """
+    output: list[str] = []
+
+    type_1 = validate_type(type_1)
+
+    for attacker in pokemon_types:
+        total_multiplier = pokemon_types[attacker][type_1]
 
         if type_2 is not None:
-            type_2 = type_2.lower()
-            self.validate_type(type_2)
+            type_2 = validate_type(type_2)
+            total_multiplier *= pokemon_types[attacker][type_2]
 
-        output: list[str] = []
+        if 0.0 < total_multiplier < 1.0:
+            output.append(attacker)
 
-        for attacker in self.types:
-            multiplier = self.types[attacker][type_1]
+    return sorted(output)
 
-            if type_2:
-                multiplier *= self.types[attacker][type_2]
+def get_weakness_strength_summary(pokemon_species: Pokemon):
+    """
+    Returns a summary of type-based interactions for the given Pokémon species.
 
-            if multiplier == 0:
-                output.append(attacker)
+    This method will raise a ValueError if any of the Pokémon's types are not valid or unrecognized.
 
-        return sorted(output)
+    :param pokemon_species: The Pokémon whose type weaknesses and immunities are being analyzed.
+    :return: A dictionary summarizing offensive weaknesses, defensive weaknesses, immunities, and immune defenders.
+    """
+    try:
+        type_1 = pokemon_species.type_1.lower()
+        type_2 = pokemon_species.type_2.lower()
 
-    def get_immune_defenders(self, attacker: str) -> list[str]:
-        """
-        Returns a list of defending types that are completely immune (0x damage)
-        to the given attacking type.
+        offensive_weaknesses = {type_1: get_offensive_weaknesses(type_1)}
+        immune_defenders = {type_1: get_immune_defenders(type_1)}
+        offensive_strengths = {type_1: get_offensive_strengths(type_1)}
 
-        This method will raise a ValueError if the attacker type is not recognized.
+        if type_2:
+            offensive_weaknesses[type_2] = get_offensive_weaknesses(type_2)
+            immune_defenders[type_2] = get_immune_defenders(type_2)
+            offensive_strengths[type_2] = get_offensive_strengths(type_2)
 
-        :param attacker: The attacking Pokémon type.
-        :return: A list of defending types immune to the given attacker.
-        """
-        attacker = self.validate_type(attacker)
+        return {
+            "offensive_weaknesses": offensive_weaknesses,
+            "defensive_weaknesses": get_defensive_weaknesses(type_1, type_2),
+            "immunities": get_immunities(type_1, type_2),
+            "immune_defenders": immune_defenders,
+            "offensive_strengths": offensive_strengths,
+            "defensive_strengths": get_defensive_strengths(type_1, type_2)
+        }
 
-        attacker_matchups = self.types[attacker]
-
-        return sorted([defender for defender, multiplier in attacker_matchups.items() if multiplier == 0])
-
-    def get_offensive_strengths(self, attacker: str) -> list[str]:
-        """
-        Returns a sorted list of types that the attacker is super-effective against (deals 2x or 4x damage)
-
-        :param attacker: The attacking Pokémon type.
-        :return: Sorted list of defending types that receive super-effective damage.
-        """
-        attacker = self.validate_type(attacker)
-
-        matchups: dict[str, float] = self.types[attacker]
-
-        return sorted([defender for defender, multiplier in matchups.items() if multiplier > 1.0])
-
-    def get_defensive_strengths(self, type_1: str, type_2: str | None) -> list[str]:
-        """
-        Returns a sorted list of types that this type combination resists (takes 0.5x or 0.25x damage).
-
-        :param type_1: The primary Pokémon type.
-        :param type_2: The secondary Pokémon type, or None for monotypes.
-        :return: Sorted list of attacking types that deal reduced damage.
-        """
-        output: list[str] = []
-
-        type_1 = self.validate_type(type_1)
-
-        for attacker in self.types:
-            total_multiplier = self.types[attacker][type_1]
-
-            if type_2 is not None:
-                type_2 = self.validate_type(type_2)
-                total_multiplier *= self.types[attacker][type_2]
-
-            if 0.0 < total_multiplier < 1.0:
-                output.append(attacker)
-
-        return sorted(output)
-
-    def get_weakness_strength_summary(self, pokemon_species: Pokemon):
-        """
-        Returns a summary of type-based interactions for the given Pokémon species.
-
-        This method will raise a ValueError if any of the Pokémon's types are not valid or unrecognized.
-
-        :param pokemon_species: The Pokémon whose type weaknesses and immunities are being analyzed.
-        :return: A dictionary summarizing offensive weaknesses, defensive weaknesses, immunities, and immune defenders.
-        """
-        try:
-            type_1 = pokemon_species.type_1.lower()
-            type_2 = pokemon_species.type_2.lower()
-
-            offensive_weaknesses = {type_1: self.get_offensive_weaknesses(type_1)}
-            immune_defenders = {type_1: self.get_immune_defenders(type_1)}
-            offensive_strengths = {type_1: self.get_offensive_strengths(type_1)}
-
-            if type_2:
-                offensive_weaknesses[type_2] = self.get_offensive_weaknesses(type_2)
-                immune_defenders[type_2] = self.get_immune_defenders(type_2)
-                offensive_strengths[type_2] = self.get_offensive_strengths(type_2)
-
-            return {
-                "offensive_weaknesses": offensive_weaknesses,
-                "defensive_weaknesses": self.get_defensive_weaknesses(type_1, type_2),
-                "immunities": self.get_immunities(type_1, type_2),
-                "immune_defenders": immune_defenders,
-                "offensive_strengths": offensive_strengths,
-                "defensive_strengths": self.get_defensive_strengths(type_1, type_2)
-            }
-
-        except ValueError as error:
-            type_util_logger.error(f"Error getting weakness summary for '{pokemon_species.name}': {error}",
-                                   exc_info=True)
-            return {"error": str(error)}
+    except ValueError as error:
+        type_util_logger.error(f"Error getting weakness summary for '{pokemon_species.name}': {error}",
+                               exc_info=True)
+        return {"error": str(error)}
