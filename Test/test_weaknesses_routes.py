@@ -3,9 +3,7 @@ from unittest.mock import patch
 import pytest
 from flask import Response
 
-from Application.Utils.TypeUtils import TypeUtils
-
-type_util: TypeUtils = TypeUtils()
+from Application.Utils.TypeUtils import *
 
 
 def assert_empty_response(client, route: str):
@@ -76,7 +74,7 @@ def test_get_weakness_summary_pokemon_not_found(client):
     assert actual.status_code == 404
 
 
-@patch("Application.Routes.Weakness.TypeUtils.get_weakness_strength_summary",
+@patch("Application.Routes.Weakness.get_weakness_strength_summary",
        return_value={"error": "'Sound' is not a valid type"})
 def test_get_mock_get_summary(mock_type_util, client):
     expected_response: dict[str, str] = {"error": "'Sound' is not a valid type"}
@@ -99,14 +97,14 @@ def test_get_weakness_summary_pokemon_empty_space(client):
 # Mono-type tests
 # ============================================================
 
-valid_types: list = list(type_util.types.keys()) + ['FiRe', 'FIRE']
+valid_types: list = list(pokemon_types.keys()) + ['FiRe', 'FIRE']
 route_methods: dict = {
-    "weaknesses/offensive": type_util.get_offensive_weaknesses,
-    "weaknesses/defensive": type_util.get_defensive_weaknesses,
-    "weaknesses/immunities": type_util.get_immunities,
-    "weaknesses/immune-defenders": type_util.get_immune_defenders,
-    "strengths/offensive": type_util.get_offensive_strengths,
-    "strengths/defensive": type_util.get_defensive_strengths
+    "weaknesses/offensive": get_offensive_weaknesses,
+    "weaknesses/defensive": get_defensive_weaknesses,
+    "weaknesses/immunities": get_immunities,
+    "weaknesses/immune-defenders": get_immune_defenders,
+    "strengths/offensive": get_offensive_strengths,
+    "strengths/defensive": get_defensive_strengths
 }
 dual_type_routes = ["weaknesses/defensive", "weaknesses/immunities", "strengths/defensive"]
 
