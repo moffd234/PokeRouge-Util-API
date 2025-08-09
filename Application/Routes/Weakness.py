@@ -49,6 +49,12 @@ def call_and_catch(func, *args) -> tuple[Response, int] | Response:
 
 @weaknesses_bp.route('/weaknesses/summary/<string:pokemon_species>', methods=['GET'])
 def bp_get_weakness_summary(pokemon_species: str) -> tuple[Response, int] | Response:
+    """
+    Retrieves a pokémon's type weakness and strength summary.
+
+    :param pokemon_species: The name of the pokémon to query.
+    :return: JSON response containing the weakness/strength summary, or 404 if not found.
+    """
     api_logger.info(f"Received request for weakness summary for: {pokemon_species}")
     pokemon: Pokemon | None = Pokemon.query.filter_by(name=pokemon_species.upper()).first()
 
@@ -62,6 +68,13 @@ def bp_get_weakness_summary(pokemon_species: str) -> tuple[Response, int] | Resp
 
 @weaknesses_bp.route('/weaknesses/offensive/<string:pokemon_type>', methods=['GET'])
 def bp_get_offensive_weaknesses(pokemon_type: str) -> tuple[Response, int] | Response:
+    """
+    Retrieves all pokémon types that take less damage from the given attacking type.
+
+    :param pokemon_type: The attacking pokémon type to evaluate.
+    :return: JSON response containing offensive weaknesses.
+    """
+
     api_logger.info(f"Received request for offensive weaknesses for: {pokemon_type}")
     return call_and_catch(get_offensive_weaknesses, pokemon_type)
 
@@ -69,6 +82,13 @@ def bp_get_offensive_weaknesses(pokemon_type: str) -> tuple[Response, int] | Res
 @weaknesses_bp.route('/weaknesses/defensive/<string:type_1>', methods=['GET'])
 @weaknesses_bp.route('/weaknesses/defensive/<string:type_1>/<string:type_2>', methods=['GET'])
 def bp_get_defensive_weaknesses(type_1: str, type_2: str = None) -> tuple[Response, int] | Response:
+    """
+    Retrieves all pokémon types that deal more damage to the given defensive types.
+
+    :param type_1: The primary defensive pokémon type.
+    :param type_2: The secondary defensive pokémon type, if applicable.
+    :return: JSON response containing defensive weaknesses.
+    """
     api_logger.info(f"Received request for defensive weaknesses for: {type_1}, {type_2}")
     return call_and_catch(get_defensive_weaknesses, type_1, type_2)
 
@@ -76,18 +96,38 @@ def bp_get_defensive_weaknesses(type_1: str, type_2: str = None) -> tuple[Respon
 @weaknesses_bp.route('/weaknesses/immunities/<string:type_1>', methods=['GET'])
 @weaknesses_bp.route('/weaknesses/immunities/<string:type_1>/<string:type_2>', methods=['GET'])
 def bp_get_immunities(type_1: str, type_2: str = None) -> tuple[Response, int] | Response:
+    """
+    Retrieves all attacking pokémon types that do no damage to the given defensive types.
+
+    :param type_1: The primary defensive pokémon type.
+    :param type_2: The secondary defensive pokémon type, if applicable.
+    :return: JSON response containing immunities.
+    """
     api_logger.info(f"Received request for immunities for: {type_1}, {type_2}")
     return call_and_catch(get_immunities, type_1, type_2)
 
 
 @weaknesses_bp.route('/weaknesses/immune-defenders/<string:type_1>', methods=['GET'])
 def bp_get_immune_defenders(type_1: str) -> tuple[Response, int] | Response:
+    """
+    Retrieves all defensive pokémon types that are immune to the given attacking type.
+
+    :param type_1: The attacking pokémon type.
+    :return: JSON response containing immune defenders.
+    """
     api_logger.info(f"Received request for immune defenders for attacker type: {type_1}")
     return call_and_catch(get_immune_defenders, type_1)
 
 
 @weaknesses_bp.route('/strengths/offensive/<string:type_1>', methods=['GET'])
 def bp_get_offensive_strengths(type_1: str) -> tuple[Response, int] | Response:
+    """
+    Retrieves all pokémon types that take extra damage from the given attacking type.
+
+    :param type_1: The attacking pokémon type.
+    :return: JSON response containing offensive strengths.
+    """
+
     api_logger.info(f"Received request for offensive strengths for attacker type: {type_1}")
     return call_and_catch(get_offensive_strengths, type_1)
 
@@ -95,5 +135,13 @@ def bp_get_offensive_strengths(type_1: str) -> tuple[Response, int] | Response:
 @weaknesses_bp.route('/strengths/defensive/<string:type_1>', methods=['GET'])
 @weaknesses_bp.route('/strengths/defensive/<string:type_1>/<string:type_2>', methods=['GET'])
 def bp_get_defensive_strengths(type_1: str, type_2: str | None = None) -> tuple[Response, int] | Response:
+    """
+    Retrieves all attacking pokémon types that deal reduced damage to the given defensive types.
+
+    :param type_1: The primary defensive pokémon type.
+    :param type_2: The secondary defensive pokémon type, if applicable.
+    :return: JSON response containing defensive strengths.
+    """
+
     api_logger.info(f"Received request for defensive strengths for defender type: {type_1} {type_2}")
     return call_and_catch(get_defensive_strengths, type_1, type_2)
