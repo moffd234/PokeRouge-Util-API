@@ -39,6 +39,9 @@ def test_get_weakness_summary(client):
         "defensive_weaknesses": sorted(["flying", "fire", "psychic", "ice"]),
         "immunities": [],
         "immune_defenders": {"grass": [], "poison": ["steel"]},
+        "offensive_strengths": {"grass": sorted(["ground", "rock", "water"]),
+                                "poison": sorted(["grass", "fairy"])},
+        "defensive_strengths": sorted(["fighting", "water", "electric", "fairy", "grass"])
     }
 
     actual: Response = client.get('/weaknesses/summary/bulbasaur')
@@ -54,6 +57,9 @@ def test_get_weakness_summary_mixed_case(client):
         "defensive_weaknesses": sorted(["flying", "fire", "psychic", "ice"]),
         "immunities": [],
         "immune_defenders": {"grass": [], "poison": ["steel"]},
+        "offensive_strengths": {"grass": sorted(["ground", "rock", "water"]),
+                                "poison": sorted(["grass", "fairy"])},
+        "defensive_strengths": sorted(["fighting", "water", "electric", "fairy", "grass"])
     }
 
     actual: Response = client.get('/weaknesses/summary/bUlBaSaUr')
@@ -70,7 +76,7 @@ def test_get_weakness_summary_pokemon_not_found(client):
     assert actual.status_code == 404
 
 
-@patch("Application.Routes.Weakness.TypeUtils.get_weakness_summary",
+@patch("Application.Routes.Weakness.TypeUtils.get_weakness_strength_summary",
        return_value={"error": "'Sound' is not a valid type"})
 def test_get_mock_get_summary(mock_type_util, client):
     expected_response: dict[str, str] = {"error": "'Sound' is not a valid type"}
