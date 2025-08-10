@@ -1,4 +1,3 @@
-from Application.Models.Pokemon import Pokemon
 from Application.Utils.TypeUtils import *
 
 
