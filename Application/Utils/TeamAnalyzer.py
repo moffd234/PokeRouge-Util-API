@@ -1,5 +1,5 @@
-from Application.Utils.TypeUtils import *
 from Application.Models.Pokemon import Pokemon
+from Application.Utils.TypeUtils import *
 
 
 def get_team_weaknesses(team: list[Pokemon]) -> dict[str, set[str]]:
@@ -13,7 +13,15 @@ def get_team_weaknesses(team: list[Pokemon]) -> dict[str, set[str]]:
 
     return output
 
+
 def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
+    """
+    Calculates the number of Pokémon in the given team that resist each Pokémon type.
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary mapping each Pokémon type to the number of team members
+             that resist it.
+    """
     resistances: dict = {pkm_type: 0 for pkm_type in pokemon_types}
 
     for pokemon in team:
