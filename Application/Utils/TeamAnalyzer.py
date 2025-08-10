@@ -12,3 +12,12 @@ def get_team_weaknesses(team: list[Pokemon]) -> dict[str, set[str]]:
     output["defensive_weakness"] -= output["immunities"]
 
     return output
+
+def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
+    resistances: dict = {pkm_type: 0 for pkm_type in pokemon_types}
+
+    for pokemon in team:
+        for resistance in get_defensive_strengths(pokemon.type_1, pokemon.type_2):
+            resistances[resistance] += 1
+
+    return resistances
