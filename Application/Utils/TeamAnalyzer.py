@@ -37,12 +37,14 @@ def get_team_defensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
 
     return weaknesses
 
+
 def get_team_defensive_summary(team: list[Pokemon]) -> dict[str, dict[str, int]]:
     return {
         "defensive_weaknesses": get_team_defensive_weaknesses(team),
         "immunities": get_team_immunities(team),
         "resistances": get_team_resistances(team)
     }
+
 
 def get_team_offensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
     weaknesses: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
@@ -58,6 +60,7 @@ def get_team_offensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
 
     return weaknesses
 
+
 def get_team_offensive_strengths(team: list[Pokemon]) -> dict[str, int]:
     strengths: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
 
@@ -71,3 +74,18 @@ def get_team_offensive_strengths(team: list[Pokemon]) -> dict[str, int]:
             strengths[weakness] += 1
 
     return strengths
+
+
+def get_team_immune_defenders(team: list[Pokemon]) -> dict[str, int]:
+    defenders: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
+
+    for pokemon in team:
+        immune_defenders = set()
+
+        immune_defenders.update(get_immune_defenders(pokemon.type_1))
+        immune_defenders.update(get_immune_defenders(pokemon.type_2))
+
+        for weakness in immune_defenders:
+            defenders[weakness] += 1
+
+    return defenders
