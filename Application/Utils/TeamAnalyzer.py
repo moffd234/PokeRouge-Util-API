@@ -19,7 +19,7 @@ def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
 
 
 def get_team_immunities(team: list[Pokemon]) -> dict[str, int]:
-    immunities: dict[str, int] = {}
+    immunities: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
 
     for pokemon in team:
         for immunity in get_immunities(pokemon.type_1, pokemon.type_2):
