@@ -1,4 +1,16 @@
+from typing import Callable
+
 from Application.Utils.TypeUtils import *
+
+
+def get_team_defensive_info(team: list[Pokemon], defensive_method: Callable) -> dict[str, int]:
+    output: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
+
+    for pokemon in team:
+        for item in defensive_method(pokemon.type_1, pokemon.type_2):
+            output[item] += 1
+
+    return output
 
 
 def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
@@ -9,33 +21,15 @@ def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
     :return: Dictionary mapping each Pokémon type to the number of team members
              that resist it.
     """
-    resistances: dict = {pkm_type: 0 for pkm_type in pokemon_types}
-
-    for pokemon in team:
-        for resistance in get_defensive_strengths(pokemon.type_1, pokemon.type_2):
-            resistances[resistance] += 1
-
-    return resistances
+    return get_team_defensive_info(team, get_defensive_strengths)
 
 
 def get_team_immunities(team: list[Pokemon]) -> dict[str, int]:
-    immunities: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
-
-    for pokemon in team:
-        for immunity in get_immunities(pokemon.type_1, pokemon.type_2):
-            immunities[immunity] += 1
-
-    return immunities
+    return get_team_defensive_info(team, get_immunities)
 
 
 def get_team_defensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
-    weaknesses: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
-
-    for pokemon in team:
-        for weakness in get_defensive_weaknesses(pokemon.type_1, pokemon.type_2):
-            weaknesses[weakness] += 1
-
-    return weaknesses
+    return get_team_defensive_info(team, get_defensive_weaknesses)
 
 
 def get_team_defensive_summary(team: list[Pokemon]) -> dict[str, dict[str, int]]:
