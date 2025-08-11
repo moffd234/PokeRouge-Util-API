@@ -57,3 +57,17 @@ def get_team_offensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
             weaknesses[weakness] += 1
 
     return weaknesses
+
+def get_team_offensive_strengths(team: list[Pokemon]) -> dict[str, int]:
+    strengths: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
+
+    for pokemon in team:
+        pokemon_strengths = set()
+
+        pokemon_strengths.update(get_offensive_strengths(pokemon.type_1))
+        pokemon_strengths.update(get_offensive_strengths(pokemon.type_2))
+
+        for weakness in pokemon_strengths:
+            strengths[weakness] += 1
+
+    return strengths
