@@ -26,3 +26,13 @@ def get_team_immunities(team: list[Pokemon]) -> dict[str, int]:
             immunities[immunity] += 1
 
     return immunities
+
+
+def get_team_defensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
+    weaknesses: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
+
+    for pokemon in team:
+        for weakness in get_defensive_weaknesses(pokemon.type_1, pokemon.type_2):
+            weaknesses[weakness] += 1
+
+    return weaknesses
