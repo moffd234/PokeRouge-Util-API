@@ -36,3 +36,11 @@ def get_team_defensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
             weaknesses[weakness] += 1
 
     return weaknesses
+
+def get_team_defensive_summary(team: list[Pokemon]) -> dict[str, dict[str, int]]:
+    return {
+        "defensive_weaknesses": get_team_defensive_weaknesses(team),
+        "immunities": get_team_immunities(team),
+        "resistances": get_team_resistances(team)
+    }
+
