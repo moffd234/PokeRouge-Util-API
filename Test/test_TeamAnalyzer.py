@@ -1,3 +1,5 @@
+import pytest
+
 from Application.Models.Pokemon import Pokemon
 from Application.Utils.TeamAnalyzer import get_team_resistances, get_team_immunities
 from Test.conftest import example_team
@@ -5,6 +7,13 @@ from Test.conftest import example_team
 type_dict_zeros: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
                                    "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
                                    "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+
+@pytest.mark.parametrize('method', [get_team_immunities, get_team_resistances])
+def test_empty_teams(method):
+    expected: dict[str, int] = type_dict_zeros
+    actual: dict[str, int] = method([])
+
+    assert actual == expected
 
 def test_get_team_resistances_full_team(example_team):
     expected: dict = {"normal": 2, "fire": 2, "water": 2, "electric": 2, "grass": 2, "ice": 2, "fighting": 2,
@@ -45,13 +54,6 @@ def test_get_team_resistances_all_bulbasaur():
     assert actual == expected
 
 
-def test_get_team_resistances_none():
-    team: list[Pokemon] = []
-    actual: dict = get_team_resistances(team)
-
-    assert actual == type_dict_zeros
-
-
 def test_get_team_resistances_all_types_resisted():
     team: list[Pokemon] = [Pokemon.query.filter_by(name="GYARADOS").first(),
                            Pokemon.query.filter_by(name="STEELIX").first(),
@@ -75,3 +77,4 @@ def test_get_team_resistances_no_resistances():
     actual: dict = get_team_resistances(team)
 
     assert actual == type_dict_zeros
+
