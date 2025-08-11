@@ -3,6 +3,7 @@ import os
 
 import pytest
 from flask import Flask
+
 from Application import create_app, db
 from Application.Models.Pokemon import Pokemon
 from Application.Utils.PokemonSeed import build_pokemon
@@ -53,3 +54,11 @@ def seeded_pokemon(app):
     db.session.query(Pokemon).delete()
     db.session.commit()
 
+@pytest.fixture
+def example_team():
+    return [Pokemon.query.filter_by(name="BULBASAUR").first(),
+            Pokemon.query.filter_by(name="PIKACHU").first(),
+            Pokemon.query.filter_by(name="INFERNAPE").first(),
+            Pokemon.query.filter_by(name="EMPOLEON").first(),
+            Pokemon.query.filter_by(name="GOLEM").first(),
+            Pokemon.query.filter_by(name="ABRA").first()]
