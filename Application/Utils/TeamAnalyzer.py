@@ -1,18 +1,6 @@
 from Application.Utils.TypeUtils import *
 
 
-def get_team_weaknesses(team: list[Pokemon]) -> dict[str, set[str]]:
-    output: dict[str, set[str]] = {"defensive_weakness": set(), "immunities": set(), "immune_defenders": set()}
-
-    for pokemon in team:
-        output["defensive_weakness"].update(get_defensive_weaknesses(pokemon.type_1, pokemon.type_2))
-        output["immune_defenders"].update(get_immune_defenders(pokemon.type_1) + get_immune_defenders(pokemon.type_2))
-
-    output["defensive_weakness"] -= output["immunities"]
-
-    return output
-
-
 def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
     """
     Calculates the number of Pokémon in the given team that resist each Pokémon type.
@@ -28,3 +16,13 @@ def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
             resistances[resistance] += 1
 
     return resistances
+
+
+def get_team_immunities(team: list[Pokemon]) -> dict[str, int]:
+    immunities: dict[str, int] = {}
+
+    for pokemon in team:
+        for immunity in get_immunities(pokemon.type_1, pokemon.type_2):
+            immunities[immunity] += 1
+
+    return immunities
