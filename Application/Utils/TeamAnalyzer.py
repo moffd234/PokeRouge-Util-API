@@ -3,11 +3,21 @@ from typing import Callable
 from Application.Utils.TypeUtils import *
 
 
-def get_team_defensive_info(team: list[Pokemon], defensive_method: Callable) -> dict[str, int]:
+def get_team_defensive_info(team: list[Pokemon], defensive_func: Callable) -> dict[str, int]:
+    """
+    Counts how many Pokémon in the team meet a given defensive condition.
+
+    The given `defensive_method` should take two type strings (type_1, type_2)
+    and return a list of types that satisfy the condition (i.e., resistances, weaknesses, immunities).
+
+    :param team: List of Pokémon objects representing the team.
+    :param defensive_func: Function returning a list of types matching the defensive condition.
+    :return: Dictionary mapping each type to the number of Pokémon that meet the condition.
+    """
     output: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
 
     for pokemon in team:
-        for item in defensive_method(pokemon.type_1, pokemon.type_2):
+        for item in defensive_func(pokemon.type_1, pokemon.type_2):
             output[item] += 1
 
     return output
