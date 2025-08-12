@@ -1,7 +1,7 @@
 import pytest
 
 from Application.Models.Pokemon import Pokemon
-from Application.Utils.TeamAnalyzer import get_team_resistances, get_team_immunities
+from Application.Utils.TeamAnalyzer import get_team_resistances, get_team_immunities, get_team_defensive_weaknesses
 from Test.conftest import example_team
 
 type_dict_zeros: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
@@ -9,7 +9,7 @@ type_dict_zeros: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric
                                    "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
 
 
-@pytest.mark.parametrize('method', [get_team_immunities, get_team_resistances])
+@pytest.mark.parametrize('method', [get_team_immunities, get_team_resistances, get_team_defensive_weaknesses])
 def test_empty_teams(method):
     expected: dict[str, int] = type_dict_zeros
     actual: dict[str, int] = method([])
@@ -86,6 +86,8 @@ def test_get_team_resistances_no_resistances():
 
 # ========================================================================================
 # def get_team_immunities(team: list[Pokemon]) -> dict[str, int]:
+# Notes:
+#   We can't have a team that is weak to every type (nothing is immune to Fire, Water, etc.)
 # ========================================================================================
 
 def test_get_team_immunities_full_team(example_team):
@@ -144,5 +146,59 @@ def test_get_team_immunities_dual_type():
                                 "fighting": 0, "poison": 0, "ground": 1, "flying": 0, "psychic": 0, "bug": 0,
                                 "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
     actual: dict[str, int] = get_team_immunities(team)
+
+    assert actual == expected
+
+
+# ========================================================================================
+# def get_team_defensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
+#
+# Notes:
+#   We can't have a team that is weak to every type (nothing is weak to Normal)
+#   No team can have 0 weaknesses as every type has a weaknesses as of gen 6+
+# ========================================================================================
+
+def test_get_team_defensive_weaknesses_full_team(example_team):
+    expected: dict[str, int] = {"normal": 0, "fire": 1, "water": 2, "electric": 1, "grass": 1, "ice": 2,
+                                "fighting": 2, "poison": 0, "ground": 4, "flying": 2, "psychic": 2, "bug": 1,
+                                "rock": 0, "ghost": 1, "dragon": 0, "dark": 1, "steel": 1, "fairy": 0}
+    actual: dict[str, int] = get_team_defensive_weaknesses(example_team)
+
+    assert actual == expected
+
+
+def test_get_team_defensive_weaknesses_one_member():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="VAPOREON").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 1, "grass": 1, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+    actual: dict[str, int] = get_team_defensive_weaknesses(team)
+
+    assert actual == expected
+
+
+def test_get_team_defensive_weaknesses_all_eevee():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
+                                "fighting": 6, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+    actual: dict[str, int] = get_team_defensive_weaknesses(team)
+
+    assert actual == expected
+
+def test_get_team_defensive_weaknesses_dual_type():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="VOLCANION").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 1, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 1, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 1, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+    actual: dict[str, int] = get_team_defensive_weaknesses(team)
 
     assert actual == expected
