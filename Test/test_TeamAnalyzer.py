@@ -46,12 +46,7 @@ def test_get_team_resistances_one_member():
 
 
 def test_get_team_resistances_all_bulbasaur():
-    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first()]
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first() for _ in range(0, 6)]
 
     expected: dict = {"normal": 0, "fire": 0, "water": 6, "electric": 6, "grass": 6, "ice": 0, "fighting": 6,
                       "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0, "rock": 0, "ghost": 0,
@@ -114,12 +109,7 @@ def test_get_team_immunities_one_member():
 
 
 def test_get_team_immunities_all_eevee():
-    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first()]
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first() for _ in range(0, 6)]
 
     expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
                                 "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
@@ -182,12 +172,7 @@ def test_get_team_defensive_weaknesses_one_member():
 
 
 def test_get_team_defensive_weaknesses_all_eevee():
-    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first()]
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first() for _ in range(0, 6)]
 
     expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
                                 "fighting": 6, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
@@ -244,12 +229,7 @@ def test_get_team_defensive_summary_empty_team():
 
 
 def test_get_team_defensive_summary_all_eevee():
-    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first(),
-                           Pokemon.query.filter_by(name="EEVEE").first()]
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first() for _ in range(0, 6)]
 
     expected: dict[str, dict[str, int]] = {
         "defensive_weaknesses": {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
@@ -292,12 +272,7 @@ def test_get_offensive_weakness_one_member():
 
 
 def test_get_offensive_weaknesses_all_bulbasaur():
-    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first()]
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first() for _ in range(0, 6)]
 
     expected: dict[str, int] = {"normal": 0, "fire": 6, "water": 0, "electric": 0, "grass": 6, "ice": 0,
                                 "fighting": 0, "poison": 6, "ground": 6, "flying": 6, "psychic": 0, "bug": 6,
@@ -343,12 +318,7 @@ def test_get_offensive_strengths_one_member():
 
 
 def test_get_offensive_strengths_all_bulbasaur():
-    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first(),
-                           Pokemon.query.filter_by(name="BULBASAUR").first()]
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first() for _ in range(0, 6)]
 
     expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 6, "electric": 0, "grass": 6, "ice": 0,
                                 "fighting": 0, "poison": 0, "ground": 6, "flying": 0, "psychic": 0, "bug": 0,
@@ -372,4 +342,3 @@ def test_get_team_offensive_strengths_mono_type():
     actual: dict[str, int] = get_team_offensive_strengths(team)
 
     assert actual == expected
-
