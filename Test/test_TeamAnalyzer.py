@@ -342,3 +342,35 @@ def test_get_team_offensive_strengths_mono_type():
     actual: dict[str, int] = get_team_offensive_strengths(team)
 
     assert actual == expected
+
+
+# ========================================================================================
+# def get_team_immune_defenders(team: list[Pokemon]) -> dict[str, int]:
+# ========================================================================================
+def get_team_immune_defenders(example_team):
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 1, "flying": 1, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 1, "dragon": 0, "dark": 1, "steel": 1, "fairy": 0}
+    actual: dict[str, int] = get_team_immune_defenders(example_team)
+
+    assert actual == expected
+
+
+def get_team_immune_defenders_one_member():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first()]
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 1, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+    actual: dict[str, int] = get_team_immune_defenders(team)
+
+    assert actual == expected
+
+
+def get_team_immune_defenders_all_eevee():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first() for _ in range(0, 6)]
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 6, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+    actual: dict[str, int] = get_team_immune_defenders(team)
+
+    assert actual == expected
