@@ -2,7 +2,7 @@ import pytest
 
 from Application.Models.Pokemon import Pokemon
 from Application.Utils.TeamAnalyzer import get_team_resistances, get_team_immunities, get_team_defensive_weaknesses, \
-    get_team_defensive_summary
+    get_team_defensive_summary, get_team_offensive_weaknesses, get_team_offensive_strengths, get_team_immune_defenders
 from Test.conftest import example_team
 
 type_dict_zeros: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
@@ -10,7 +10,9 @@ type_dict_zeros: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric
                                    "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
 
 
-@pytest.mark.parametrize('method', [get_team_immunities, get_team_resistances, get_team_defensive_weaknesses])
+@pytest.mark.parametrize('method', [get_team_immunities, get_team_resistances, get_team_defensive_weaknesses,
+                                    get_team_offensive_weaknesses, get_team_offensive_strengths,
+                                    get_team_immune_defenders])
 def test_empty_teams(method):
     expected: dict[str, int] = type_dict_zeros
     actual: dict[str, int] = method([])
