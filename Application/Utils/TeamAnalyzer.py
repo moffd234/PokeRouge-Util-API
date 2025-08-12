@@ -94,23 +94,54 @@ def get_team_offensive_info(team: list[Pokemon], offensive_func: Callable) -> di
 
 
 def get_team_offensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
+    """
+    Calculates how many Pokémon in the team are offensively weak against each type.
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary mapping each type to the number of Pokémon weak against it offensively.
+    """
     return get_team_offensive_info(team, get_offensive_weaknesses)
 
 
 def get_team_offensive_strengths(team: list[Pokemon]) -> dict[str, int]:
+    """
+    Calculates how many Pokémon in the team are offensively strong against each type.
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary mapping each type to the number of Pokémon strong against it offensively.
+    """
     return get_team_offensive_info(team, get_offensive_strengths)
 
 
 def get_team_immune_defenders(team: list[Pokemon]) -> dict[str, int]:
+    """
+    Calculates how many Pokémon in the team are resisted by each type
+    (i.e. ghost would be resisted 2 times if the team was Eevee, Snorlax, and Infernape).
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary mapping each type to the number of Pokémon in the team that doesn't affect that type.
+    """
     return get_team_offensive_info(team, get_immune_defenders)
 
 
 def get_team_offensive_summary(team: list[Pokemon]) -> dict[str, dict[str, int]]:
+    """
+    Generates an offensive summary for the team.
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary containing counts for offensive weaknesses, strengths, and immune defenders.
+    """
     return {"offensive_weaknesses": get_team_offensive_weaknesses(team),
             "offensive_strengths": get_team_offensive_strengths(team),
             "immune_defenders": get_team_immune_defenders(team)}
 
 
 def get_full_team_summary(team: list[Pokemon]) -> dict[str, dict[str, dict[str, int]]]:
+    """
+    Generates a complete offensive and defensive summary for the team.
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary containing both offensive and defensive summaries.
+    """
     return {"offensive": get_team_offensive_summary(team),
             "defensive": get_team_defensive_summary(team)}
