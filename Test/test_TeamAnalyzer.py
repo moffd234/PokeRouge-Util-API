@@ -266,3 +266,53 @@ def test_get_team_defensive_summary_all_eevee():
     actual: dict[str, dict[str, int]] = get_team_defensive_summary(team)
 
     assert actual == expected
+
+
+# ========================================================================================
+# def get_team_offensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
+# ========================================================================================
+def test_get_team_offensive_weaknesses(example_team):
+    expected: dict[str, int] = {"normal": 0, "fire": 3, "water": 2, "electric": 2, "grass": 4, "ice": 0,
+                                "fighting": 1, "poison": 2, "ground": 2, "flying": 2, "psychic": 2, "bug": 3,
+                                "rock": 2, "ghost": 1, "dragon": 4, "dark": 0, "steel": 4, "fairy": 1}
+    actual: dict[str, int] = get_team_offensive_weaknesses(example_team)
+
+    assert actual == expected
+
+
+def test_get_offensive_weakness_one_member():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 1, "ghost": 0, "dragon": 0, "dark": 0, "steel": 1, "fairy": 0}
+    actual: dict[str, int] = get_team_offensive_weaknesses(team)
+
+    assert actual == expected
+
+
+def test_get_offensive_weaknesses_all_bulbasaur():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 6, "water": 0, "electric": 0, "grass": 6, "ice": 0,
+                                "fighting": 0, "poison": 6, "ground": 6, "flying": 6, "psychic": 0, "bug": 6,
+                                "rock": 6, "ghost": 6, "dragon": 6, "dark": 0, "steel": 6, "fairy": 0}
+    actual: dict[str, int] = get_team_offensive_weaknesses(team)
+
+    assert actual == expected
+
+
+def test_get_offensive_weakness_dual_type():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 1, "water": 0, "electric": 0, "grass": 1, "ice": 0,
+                                "fighting": 0, "poison": 1, "ground": 1, "flying": 1, "psychic": 0, "bug": 1,
+                                "rock": 1, "ghost": 1, "dragon": 1, "dark": 0, "steel": 1, "fairy": 0}
+    actual: dict[str, int] = get_team_offensive_weaknesses(team)
+
+    assert actual == expected
