@@ -50,49 +50,41 @@ def get_team_defensive_summary(team: list[Pokemon]) -> dict[str, dict[str, int]]
     }
 
 
-def get_team_offensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
-    weaknesses: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
+def get_team_offensive_info(team: list[Pokemon], offensive_func: Callable) -> dict[str, int]:
+    """
+    Counts how many Pokémon in the team meet a given offensive condition. (i.e. offensively strong against a type)
+
+    :param team: List of Pokémon objects representing the team.
+    :param offensive_func: Function returning a list of types matching the defensive condition/
+    :return: Dictionary mapping each target type to the number of Pokémon
+             that can hit it effectively.
+    """
+    output: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
 
     for pokemon in team:
-        pokemon_weaknesses = set()
+        pokemon_set = set()
 
-        pokemon_weaknesses.update(get_offensive_weaknesses(pokemon.type_1))
-        pokemon_weaknesses.update(get_offensive_weaknesses(pokemon.type_2))
+        pokemon_set.update(offensive_func(pokemon.type_1))
 
-        for weakness in pokemon_weaknesses:
-            weaknesses[weakness] += 1
+        if pokemon.type_2 is not None:
+            pokemon_set.update(offensive_func(pokemon.type_2))
 
-    return weaknesses
+        for item in pokemon_set:
+            output[item] += 1
+
+    return output
+
+
+def get_team_offensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
+    return get_team_offensive_info(team, get_offensive_weaknesses)
 
 
 def get_team_offensive_strengths(team: list[Pokemon]) -> dict[str, int]:
-    strengths: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
-
-    for pokemon in team:
-        pokemon_strengths = set()
-
-        pokemon_strengths.update(get_offensive_strengths(pokemon.type_1))
-        pokemon_strengths.update(get_offensive_strengths(pokemon.type_2))
-
-        for weakness in pokemon_strengths:
-            strengths[weakness] += 1
-
-    return strengths
+    return get_team_offensive_info(team, get_offensive_strengths)
 
 
 def get_team_immune_defenders(team: list[Pokemon]) -> dict[str, int]:
-    defenders: dict[str, int] = {pkm_type: 0 for pkm_type in pokemon_types}
-
-    for pokemon in team:
-        immune_defenders = set()
-
-        immune_defenders.update(get_immune_defenders(pokemon.type_1))
-        immune_defenders.update(get_immune_defenders(pokemon.type_2))
-
-        for weakness in immune_defenders:
-            defenders[weakness] += 1
-
-    return defenders
+    return get_team_offensive_info(team, get_immune_defenders)
 
 
 def get_team_offensive_summary(team: list[Pokemon]) -> dict[str, dict[str, int]]:
