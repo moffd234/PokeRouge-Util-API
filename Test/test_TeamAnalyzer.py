@@ -316,3 +316,44 @@ def test_get_offensive_weakness_dual_type():
     actual: dict[str, int] = get_team_offensive_weaknesses(team)
 
     assert actual == expected
+
+
+# ========================================================================================
+# def get_team_offensive_strengths(team: list[Pokemon]) -> dict[str, int]:
+# ========================================================================================
+
+def test_get_offensive_strengths(example_team):
+    expected: dict[str, int] = {"normal": 1, "fire": 2, "water": 2, "electric": 1, "grass": 2, "ice": 3,
+                                "fighting": 1, "poison": 2, "ground": 2, "flying": 2, "psychic": 0, "bug": 2,
+                                "rock": 4, "ghost": 0, "dragon": 0, "dark": 1, "steel": 2, "fairy": 2}
+    actual: dict[str, int] = get_team_offensive_strengths(example_team)
+
+    assert actual == expected
+
+
+def test_get_offensive_strengths_one_member():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 1, "electric": 0, "grass": 1, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 1, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 1, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 1}
+    actual: dict[str, int] = get_team_offensive_strengths(team)
+
+    assert actual == expected
+
+
+def test_get_offensive_strengths_all_bulbasaur():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first(),
+                           Pokemon.query.filter_by(name="BULBASAUR").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 6, "electric": 0, "grass": 6, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 6, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 6, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 6}
+    actual: dict[str, int] = get_team_offensive_strengths(team)
+
+    assert actual == expected
+
