@@ -357,3 +357,19 @@ def test_get_offensive_strengths_all_bulbasaur():
 
     assert actual == expected
 
+
+def test_get_team_offensive_strengths_mono_type():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="VAPOREON").first(),
+                           Pokemon.query.filter_by(name="JOLTEON").first(),
+                           Pokemon.query.filter_by(name="FLAREON").first(),
+                           Pokemon.query.filter_by(name="ESPEON").first(),
+                           Pokemon.query.filter_by(name="UMBREON").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 1, "water": 1, "electric": 0, "grass": 1, "ice": 1,
+                                "fighting": 1, "poison": 1, "ground": 1, "flying": 1, "psychic": 1, "bug": 1,
+                                "rock": 1, "ghost": 1, "dragon": 0, "dark": 0, "steel": 1, "fairy": 0}
+    actual: dict[str, int] = get_team_offensive_strengths(team)
+
+    assert actual == expected
+
