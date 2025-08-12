@@ -3,7 +3,7 @@ import pytest
 from Application.Models.Pokemon import Pokemon
 from Application.Utils.TeamAnalyzer import get_team_resistances, get_team_immunities, get_team_defensive_weaknesses, \
     get_team_defensive_summary, get_team_offensive_weaknesses, get_team_offensive_strengths, get_team_immune_defenders, \
-    get_team_offensive_summary
+    get_team_offensive_summary, get_full_team_summary
 from Test.conftest import example_team
 
 type_dict_zeros: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
@@ -460,5 +460,125 @@ def test_get_team_offensive_summary_empty_team():
                                            "offensive_strengths": type_dict_zeros,
                                            "immune_defenders": type_dict_zeros}
     actual: dict[str, dict[str, int]] = get_team_offensive_summary([])
+
+    assert actual == expected
+
+
+def test_get_full_team_summary(example_team):
+    expected: dict[str, dict[str, dict[str, int]]] = {'defensive': {
+        'defensive_weaknesses': {'bug': 1, 'dark': 1, 'dragon': 0, 'electric': 1, 'fairy': 0, 'fighting': 2, 'fire': 1,
+                                 'flying': 2, 'ghost': 1, 'grass': 1, 'ground': 4, 'ice': 2, 'normal': 0, 'poison': 0,
+                                 'psychic': 2, 'rock': 0, 'steel': 1, 'water': 2},
+        'immunities': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 1, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                       'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 1,
+                       'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'resistances': {'bug': 2, 'dark': 1, 'dragon': 1, 'electric': 2, 'fairy': 2, 'fighting': 2, 'fire': 2,
+                        'flying': 3, 'ghost': 0, 'grass': 2, 'ground': 0, 'ice': 2, 'normal': 2, 'poison': 1,
+                        'psychic': 2, 'rock': 2, 'steel': 3, 'water': 2}}, 'offensive': {
+        'immune_defenders': {'bug': 0, 'dark': 1, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                             'flying': 1, 'ghost': 1, 'grass': 0, 'ground': 1, 'ice': 0, 'normal': 0, 'poison': 0,
+                             'psychic': 0, 'rock': 0, 'steel': 1, 'water': 0},
+        'offensive_strengths': {'bug': 2, 'dark': 1, 'dragon': 0, 'electric': 1, 'fairy': 2, 'fighting': 1, 'fire': 2,
+                                'flying': 2, 'ghost': 0, 'grass': 2, 'ground': 2, 'ice': 3, 'normal': 1, 'poison': 2,
+                                'psychic': 0, 'rock': 4, 'steel': 2, 'water': 2},
+        'offensive_weaknesses': {'bug': 3, 'dark': 0, 'dragon': 4, 'electric': 2, 'fairy': 1, 'fighting': 1, 'fire': 3,
+                                 'flying': 2, 'ghost': 1, 'grass': 4, 'ground': 2, 'ice': 0, 'normal': 0, 'poison': 2,
+                                 'psychic': 2, 'rock': 2, 'steel': 4, 'water': 2}}}
+    actual: dict[str, dict[str, dict[str, int]]] = get_full_team_summary(example_team)
+
+    assert actual == expected
+
+
+def test_get_full_team_summary_one_member():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first()]
+
+    expected: dict[str, dict[str, dict[str, int]]] = {'defensive': {
+        'defensive_weaknesses': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 1, 'fire': 0,
+                                 'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                                 'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'immunities': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                       'flying': 0, 'ghost': 1, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                       'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'resistances': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                        'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                        'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0}}, 'offensive': {
+        'immune_defenders': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                             'flying': 0, 'ghost': 1, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                             'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'offensive_strengths': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                                'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                                'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'offensive_weaknesses': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                                 'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                                 'psychic': 0, 'rock': 1, 'steel': 1, 'water': 0}}}
+
+    actual: dict[str, dict[str, dict[str, int]]] = get_full_team_summary(team)
+
+    assert actual == expected
+
+
+def test_get_full_team_summary_all_eevee():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first() for _ in range(0, 6)]
+
+    expected: dict[str, dict[str, dict[str, int]]] = {'defensive': {
+        'defensive_weaknesses': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 6, 'fire': 0,
+                                 'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                                 'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'immunities': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                       'flying': 0, 'ghost': 6, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                       'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'resistances': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                        'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                        'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0}}, 'offensive': {
+        'immune_defenders': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                             'flying': 0, 'ghost': 6, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                             'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'offensive_strengths': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                                'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                                'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'offensive_weaknesses': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                                 'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                                 'psychic': 0, 'rock': 6, 'steel': 6, 'water': 0}}}
+    actual: dict[str, dict[str, dict[str, int]]] = get_full_team_summary(team)
+
+    assert actual == expected
+
+
+def test_get_full_team_summary_dual_type():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="BULBASAUR").first()]
+
+    expected: dict[str, dict[str, dict[str, int]]] = {'defensive': {
+        'defensive_weaknesses': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 1,
+                                 'flying': 1, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 1, 'normal': 0, 'poison': 0,
+                                 'psychic': 1, 'rock': 0, 'steel': 0, 'water': 0},
+        'immunities': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                       'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                       'psychic': 0, 'rock': 0, 'steel': 0, 'water': 0},
+        'resistances': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 1, 'fairy': 1, 'fighting': 1, 'fire': 0,
+                        'flying': 0, 'ghost': 0, 'grass': 1, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                        'psychic': 0, 'rock': 0, 'steel': 0, 'water': 1}}, 'offensive': {
+        'immune_defenders': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 0,
+                             'flying': 0, 'ghost': 0, 'grass': 0, 'ground': 0, 'ice': 0, 'normal': 0, 'poison': 0,
+                             'psychic': 0, 'rock': 0, 'steel': 1, 'water': 0},
+        'offensive_strengths': {'bug': 0, 'dark': 0, 'dragon': 0, 'electric': 0, 'fairy': 1, 'fighting': 0, 'fire': 0,
+                                'flying': 0, 'ghost': 0, 'grass': 1, 'ground': 1, 'ice': 0, 'normal': 0, 'poison': 0,
+                                'psychic': 0, 'rock': 1, 'steel': 0, 'water': 1},
+        'offensive_weaknesses': {'bug': 1, 'dark': 0, 'dragon': 1, 'electric': 0, 'fairy': 0, 'fighting': 0, 'fire': 1,
+                                 'flying': 1, 'ghost': 1, 'grass': 1, 'ground': 1, 'ice': 0, 'normal': 0, 'poison': 1,
+                                 'psychic': 0, 'rock': 1, 'steel': 1, 'water': 0}}}
+    actual: dict[str, dict[str, dict[str, int]]] = get_full_team_summary(team)
+
+    assert actual == expected
+
+
+def test_get_full_team_summary_empty_team():
+    team: list[Pokemon] = []
+
+    expected: dict[str, dict[str, dict[str, int]]] = {
+        "defensive": {'defensive_weaknesses': type_dict_zeros, 'immunities': type_dict_zeros,
+                      'resistances': type_dict_zeros},
+        "offensive": {'immune_defenders': type_dict_zeros, 'offensive_strengths': type_dict_zeros,
+                      'offensive_weaknesses': type_dict_zeros}}
+    actual: dict[str, dict[str, dict[str, int]]] = get_full_team_summary(team)
 
     assert actual == expected
