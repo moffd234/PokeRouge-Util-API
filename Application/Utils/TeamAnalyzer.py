@@ -35,14 +35,32 @@ def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
 
 
 def get_team_immunities(team: list[Pokemon]) -> dict[str, int]:
+    """
+    Calculates how many Pokémon in the team are immune to each Pokémon type.
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary mapping each type to the number of Pokémon immune to it.
+    """
     return get_team_defensive_info(team, get_immunities)
 
 
 def get_team_defensive_weaknesses(team: list[Pokemon]) -> dict[str, int]:
+    """
+    Calculates how many Pokémon in the team are defensively weak to each Pokémon type.
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary mapping each type to the number of Pokémon defensively weak to it.
+    """
     return get_team_defensive_info(team, get_defensive_weaknesses)
 
 
 def get_team_defensive_summary(team: list[Pokemon]) -> dict[str, dict[str, int]]:
+    """
+    Generates a defensive summary for the team.
+
+    :param team: List of Pokémon objects representing the team.
+    :return: Dictionary containing counts for defensive weaknesses, immunities, and resistances.
+    """
     return {
         "defensive_weaknesses": get_team_defensive_weaknesses(team),
         "immunities": get_team_immunities(team),
