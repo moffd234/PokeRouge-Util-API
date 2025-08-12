@@ -8,6 +8,7 @@ type_dict_zeros: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric
                                    "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
                                    "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
 
+
 @pytest.mark.parametrize('method', [get_team_immunities, get_team_resistances])
 def test_empty_teams(method):
     expected: dict[str, int] = type_dict_zeros
@@ -15,6 +16,10 @@ def test_empty_teams(method):
 
     assert actual == expected
 
+
+# ========================================================================================
+# def get_team_resistances(team: list[Pokemon]) -> dict[str, int]:
+# ========================================================================================
 def test_get_team_resistances_full_team(example_team):
     expected: dict = {"normal": 2, "fire": 2, "water": 2, "electric": 2, "grass": 2, "ice": 2, "fighting": 2,
                       "poison": 1, "ground": 0, "flying": 3, "psychic": 2, "bug": 2, "rock": 2, "ghost": 0,
@@ -78,3 +83,66 @@ def test_get_team_resistances_no_resistances():
 
     assert actual == type_dict_zeros
 
+
+# ========================================================================================
+# def get_team_immunities(team: list[Pokemon]) -> dict[str, int]:
+# ========================================================================================
+
+def test_get_team_immunities_full_team(example_team):
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 1, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 1, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+
+    actual: dict[str, int] = get_team_immunities(example_team)
+    assert actual == expected
+
+
+def test_get_team_immunities_one_member():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 1, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+    actual: dict[str, int] = get_team_immunities(team)
+
+    assert actual == expected
+
+
+def test_get_team_immunities_all_eevee():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first(),
+                           Pokemon.query.filter_by(name="EEVEE").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 0, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 0, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 6, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+    actual: dict[str, int] = get_team_immunities(team)
+
+    assert actual == expected
+
+
+def test_get_team_immunities_no_immunities():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="FLAREON").first(),
+                           Pokemon.query.filter_by(name="VAPOREON").first(),
+                           Pokemon.query.filter_by(name="LEAFEON").first(),
+                           Pokemon.query.filter_by(name="GLACEON").first(),
+                           Pokemon.query.filter_by(name="ESPEON").first(), ]
+
+    expected: dict[str, int] = type_dict_zeros
+    actual: dict[str, int] = get_team_immunities(team)
+
+    assert actual == expected
+
+
+def test_get_team_immunities_dual_type():
+    team: list[Pokemon] = [Pokemon.query.filter_by(name="GLISCOR").first()]
+
+    expected: dict[str, int] = {"normal": 0, "fire": 0, "water": 0, "electric": 1, "grass": 0, "ice": 0,
+                                "fighting": 0, "poison": 0, "ground": 1, "flying": 0, "psychic": 0, "bug": 0,
+                                "rock": 0, "ghost": 0, "dragon": 0, "dark": 0, "steel": 0, "fairy": 0}
+    actual: dict[str, int] = get_team_immunities(team)
+
+    assert actual == expected
