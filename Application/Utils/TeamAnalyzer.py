@@ -154,8 +154,12 @@ def get_recommended_offensive_types(team: list[Pokemon]) -> set[str]:
     for defender_type, weakness_count in summary["offensive_weaknesses"].items():
 
         if weakness_count > 0 and summary["offensive_strengths"][defender_type] == 0:
-            counter_types = get_defensive_weaknesses(defender_type, None)
-            suggested.update(counter_types)
+            suggested.update(get_defensive_weaknesses(defender_type, None))
+
+    for immune_type, weakness_count in summary["immune_defenders"].items():
+
+        if weakness_count > 0 and summary["offensive_strengths"][immune_type] == 0:
+            suggested.update(get_defensive_weaknesses(immune_type, None))
 
     return suggested
 
