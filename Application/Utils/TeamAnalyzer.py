@@ -165,6 +165,12 @@ def get_recommended_offensive_types(team: list[Pokemon]) -> set[str]:
 
 
 def get_recommended_defensive_types(team: list[Pokemon]) -> set[str]:
+    """
+    Suggests Pokémon types to improve the team's defensive coverage.
+
+    :param team: List of Pokémon to analyze.
+    :return: Set of suggested Pokémon types to improve defensive coverage.
+    """
     summary: dict[str, dict[str, int]] = get_team_defensive_summary(team)
     suggested: set[str] = set()
 
