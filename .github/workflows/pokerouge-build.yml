@@ -66,5 +66,5 @@ jobs:
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
       - name: Run API tests
-        run: |
-          postman collection run "34748211-42f438b0-e880-49c7-8c9d-429b5e021289" -e "34748211-b2b7993a-5a7d-4fef-9ea7-54a430b5c338"
+        run: postman collection run "34748211-42f438b0-e880-49c7-8c9d-429b5e021289" \
+          -e "Postman/pokerouge-env.json"
