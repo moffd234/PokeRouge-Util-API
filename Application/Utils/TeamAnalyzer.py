@@ -145,3 +145,16 @@ def get_full_team_summary(team: list[Pokemon]) -> dict[str, dict[str, dict[str, 
     """
     return {"offensive": get_team_offensive_summary(team),
             "defensive": get_team_defensive_summary(team)}
+
+
+def get_recommended_offensive_types(team: list[Pokemon]) -> set[str]:
+    summary: dict[str, dict[str, int]] = get_team_offensive_summary(team)
+    suggested: set[str] = set()
+
+    for defender_type, weakness_count in summary["offensive_weaknesses"].items():
+
+        if weakness_count > 0 and summary["offensive_strengths"][defender_type] == 0:
+            counter_types = get_defensive_weaknesses(defender_type, None)
+            suggested.update(counter_types)
+
+    return suggested
