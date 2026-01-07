@@ -1,7 +1,8 @@
+import json
 import logging
 import re
+
 import requests
-import json
 
 POKEMON_SPECIES_TS_URL = "https://raw.githubusercontent.com/pagefaultgames/pokerogue/beta/src/data/pokemon-species.ts"
 
@@ -29,7 +30,7 @@ FIELD_NAMES = [
     "baseSpd",
     "catchRate",
     "baseFriendship",
-    "baseExp","growthRate","malePercent","genderDiffs","canChangeForm"
+    "baseExp", "growthRate", "malePercent", "genderDiffs", "canChangeForm"
 ]
 
 extractor_logger = logging.getLogger("utils.extractor")

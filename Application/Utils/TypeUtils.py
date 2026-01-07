@@ -61,6 +61,7 @@ pokemon_types: dict[str, dict[str, float]] = {
               "dragon": 2, "dark": 2, "steel": 0.5, "fairy": 1},
 }
 
+
 def validate_type(pokemon_type: str) -> str | None:
     """
     Validates if a given Pokémon type is supported and returns the lowercase version if so. Otherwise, raises
@@ -74,6 +75,7 @@ def validate_type(pokemon_type: str) -> str | None:
         raise ValueError(f"'{pokemon_type.title()}' is not a valid type")
 
     return pokemon_type.lower()
+
 
 def get_offensive_weaknesses(atk_type: str) -> list[str]:
     """
@@ -89,6 +91,7 @@ def get_offensive_weaknesses(atk_type: str) -> list[str]:
     matchups: dict[str, float] = pokemon_types[atk_type]
 
     return sorted([defender for defender, multiplier in matchups.items() if multiplier == 0.5])
+
 
 def get_defensive_weaknesses(type_1: str, type_2: str | None) -> list[str]:
     """
@@ -121,6 +124,7 @@ def get_defensive_weaknesses(type_1: str, type_2: str | None) -> list[str]:
 
     return sorted(output)
 
+
 def get_immunities(type_1: str, type_2) -> list[str]:
     """
     Returns a list of attacking types that deal no damage (0x) to the given defending type(s).
@@ -150,6 +154,7 @@ def get_immunities(type_1: str, type_2) -> list[str]:
 
     return sorted(output)
 
+
 def get_immune_defenders(attacker: str) -> list[str]:
     """
     Returns a list of defending types that are completely immune (0x damage)
@@ -166,6 +171,7 @@ def get_immune_defenders(attacker: str) -> list[str]:
 
     return sorted([defender for defender, multiplier in attacker_matchups.items() if multiplier == 0])
 
+
 def get_offensive_strengths(attacker: str) -> list[str]:
     """
     Returns a sorted list of types that the attacker is super-effective against (deals 2x or 4x damage)
@@ -178,6 +184,7 @@ def get_offensive_strengths(attacker: str) -> list[str]:
     matchups: dict[str, float] = pokemon_types[attacker]
 
     return sorted([defender for defender, multiplier in matchups.items() if multiplier > 1.0])
+
 
 def get_defensive_strengths(type_1: str, type_2: str | None) -> list[str]:
     """
@@ -202,6 +209,7 @@ def get_defensive_strengths(type_1: str, type_2: str | None) -> list[str]:
             output.append(attacker)
 
     return sorted(output)
+
 
 def get_weakness_strength_summary(pokemon_species: Pokemon):
     """

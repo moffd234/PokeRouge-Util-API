@@ -14,6 +14,7 @@ def inject_current_year():
 def index():
     return render_template("index.html")
 
+
 @views_bp.route("/weaknesses", methods=['GET'])
 def weaknesses():
     return render_template("weaknesses.html")

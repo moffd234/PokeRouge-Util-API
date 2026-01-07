@@ -187,4 +187,3 @@ def get_recommended_defensive_types(team: list[Pokemon]) -> set[str]:
             suggested.update(get_defensive_strengths(attacking_type, None) + get_immunities(attacking_type, None))
 
     return suggested
-

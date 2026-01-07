@@ -1,10 +1,11 @@
 import logging
 
 from flask import Blueprint, jsonify, Response
+
+from Application.Models.Pokemon import Pokemon
 from Application.Utils.TypeUtils import get_offensive_weaknesses, get_defensive_strengths, \
     get_weakness_strength_summary, get_immunities, get_immune_defenders, get_defensive_weaknesses, \
     get_offensive_strengths
-from Application.Models.Pokemon import Pokemon
 
 weaknesses_bp: Blueprint = Blueprint("weaknesses_bp", __name__)
 api_logger = logging.getLogger("api")
