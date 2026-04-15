@@ -1,19 +1,29 @@
+import os
+import secrets
+
 from flask import Flask
-from Application.Routes.Weakness import weaknesses_bp
-from Application.Routes.Pokedex import pokedex_bp
+
 from Application.Frontend.Views import views_bp
+from Application.Routes.Pokedex import pokedex_bp
+from Application.Routes.Weakness import weaknesses_bp
 from Application.extensions import db
 
 
 def create_app(test_config: dict = None) -> Flask:
     app = Flask(__name__, template_folder="./Frontend/templates", static_folder="./Frontend/static")
 
+    default_config = {
+        'SQLALCHEMY_DATABASE_URI': os.getenv('DATABASE_URL', 'sqlite:///pokerouge.db'),
+        'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+        'SECRET_KEY': os.getenv('SECRET_KEY', secrets.token_hex(32)),
+        'SESSION_COOKIE_HTTPONLY': True,
+        'SESSION_COOKIE_SAMESITE': 'Lax',
+    }
+
+    app.config.update(default_config)
+
     if test_config:
         app.config.update(test_config)
-
-    else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pokerouge.db'
-        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
 
