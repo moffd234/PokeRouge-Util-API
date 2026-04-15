@@ -64,7 +64,6 @@ db.sqlite3-journal
 # Flask stuff:
 .webassets-cache
 
-# Local instance data
 instance/
 *.db
 *.sqlite3
